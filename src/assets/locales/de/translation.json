@@ -1,0 +1,144 @@
+{
+    "welcome": "Willkommen beim Backlash-Projekt",
+    "project_title": "Demokratischer Rückschritt und Menschenrechts-Gegenreaktion",
+    "nav": {
+        "home": "Startseite",
+        "project": "Projekt",
+        "publications": "Publikationen",
+        "team": "Team",
+        "countries": "Länder",
+        "contact": "Kontakt",
+        "login": "Anmelden",
+        "logout": "Abmelden",
+        "search_placeholder": "Suchen..."
+    },
+    "team": {
+        "add_member": "Mitglied hinzufügen",
+        "initialize_db": "DB Initialisieren",
+        "delete_confirm": "Sind Sie sicher, dass Sie dieses Mitglied löschen möchten?",
+        "bio": "Biografie",
+        "no_bio": "Keine Biografie verfügbar.",
+        "contact": "Kontakt",
+        "back_to_list": "Zurück zum Team"
+    },
+    "map": {
+        "title": "Interaktive Karte",
+        "description": "Erkunden Sie den Zustand des Backlash in föderalen Staaten."
+    },
+    "home": {
+        "hero": {
+            "slide1": {
+                "title": "Backlash Verstehen",
+                "subtitle": "Analyse des demokratischen Rückschritts in Bundesstaaten."
+            },
+            "slide2": {
+                "title": "Vergleichende Forschung",
+                "subtitle": "Ein tiefer Einblick in Verfassungsrecht und Menschenrechte."
+            },
+            "slide3": {
+                "title": "Globale Perspektive",
+                "subtitle": "Fallstudien: Kanada, Schweiz, Deutschland, Brasilien und Indien."
+            }
+        },
+        "team_preview": {
+            "title": "Unser Team",
+            "subtitle": "Forscher, die sich dem Verständnis demokratischer Herausforderungen widmen."
+        },
+        "team_members": {
+            "nesa": "Assistenzprofessorin, UNINE",
+            "marie": "Postdoktorandin, UNINE",
+            "karen": "Postdoktorandin, UNINE und UOttawa",
+            "nicolo": "Postdoktorand, UNINE und UniDistance",
+            "maina": "Doktorandin, UNINE"
+        },
+        "publications": {
+            "subtitle": "Neueste Erkenntnisse und Updates",
+            "no_data": "Noch keine Publikationen."
+        }
+    },
+    "publications": {
+        "subtitle": "Neueste Nachrichten, Veranstaltungen und Artikel.",
+        "add_post": "Beitrag hinzufügen",
+        "read_more": "Weiterlesen",
+        "no_data": "Keine Publikationen gefunden.",
+        "seed_db": "DB initialisieren (Seed)",
+        "seed_confirm": "Datenbank mit Standardpublikationen füllen?",
+        "seeded": "Publikationen initialisiert!",
+        "delete_confirm": "Sind Sie sicher, dass Sie dieses Element löschen möchten?",
+        "initialize_db": "DB Initialisieren"
+    },
+    "countries": {
+        "title": "Länderanalyse",
+        "add_analysis": "Analyse hinzufügen",
+        "initialize_db": "DB Initialisieren",
+        "CAN": {
+            "name": "Kanada",
+            "desc": "Fokus auf Föderalismus und Rechte der Ureinwohner."
+        },
+        "CHE": {
+            "name": "Schweiz",
+            "desc": "Direkte Demokratie und kantonale Souveränität."
+        },
+        "DEU": {
+            "name": "Deutschland",
+            "desc": "Verfassungsgericht und Beziehungen der Bundesländer."
+        },
+        "BRA": {
+            "name": "Brasilien",
+            "desc": "Föderalismus unter Druck und justizieller Rückschlag."
+        },
+        "USA": {
+            "name": "Vereinigte Staaten",
+            "desc": "Polarisierung und Rückgang der Rechte auf staatlicher Ebene."
+        },
+        "IND": {
+            "name": "Indien",
+            "desc": "Zentralisierungstendenzen und staatliche Autonomie."
+        }
+    },
+    "project": {
+        "title": "Die Forschung",
+        "description": "Diese mehrjährige Forschungsinitiative untersucht das komplexe Phänomen des demokratischen Rückschritts und der Gegenreaktion gegen Menschenrechte in Bundesstaaten. Durch die Untersuchung des Spannungsverhältnisses zwischen zentraler Autorität und subnationaler Autonomie wollen wir aufdecken, wie föderale Theorien und Strukturen diese rückläufigen Trends sowohl abschwächen als auch verschärfen können. Das Projekt verbindet Rechtsanalyse, Politikwissenschaft und Soziologie, um ein umfassendes Verständnis dieser Dynamiken im 21. Jahrhundert zu bieten.",
+        "objectives": "Unsere Hauptziele sind dreifach: 1) Durchführung einer vergleichenden Verfassungsanalyse von fünf Schlüsseljurisdiktionen (Kanada, Schweiz, Deutschland, Brasilien, Indien); 2) Identifizierung der spezifischen rechtlichen Mechanismen, die von populistischen Bewegungen genutzt werden, um demokratische Normen auf subnationaler Ebene zu untergraben; und 3) Vorschlag robuster rechtlicher und politischer Rahmenbedingungen, die die föderale Resilienz stärken und grundlegende Menschenrechte vor autoritären Eingriffen schützen.",
+        "team_photo_alt": "Das Forschungsteam in Zusammenarbeit"
+    },
+    "languages": {
+        "fr": "Français",
+        "en": "English",
+        "de": "Deutsch",
+        "change_language": "Sprache ändern"
+    },
+    "brand": {
+        "name": "BACKLASH",
+        "suffix": "Projekt"
+    },
+    "footer": {
+        "rights": "Backlash-Projekt. Alle Rechte vorbehalten.",
+        "university": "Universität Neuenburg"
+    },
+    "contact": {
+        "title": "Kontaktieren Sie uns",
+        "intro": "Haben Sie Fragen zu unserer Forschung oder möchten Sie zusammenarbeiten? Wir freuen uns, von Ihnen zu hören.",
+        "address": "Avenue du 1er-Mars 26, 2000 Neuchâtel, Schweiz",
+        "email": "info@backlash.org",
+        "phone": "+41 32 718 10 00",
+        "form": {
+            "title": "Senden Sie uns eine Nachricht",
+            "name": "Name",
+            "email": "E-Mail",
+            "subject": "Betreff",
+            "message": "Nachricht",
+            "send": "Senden",
+            "sending": "Senden...",
+            "success": "Nachricht erfolgreich gesendet!",
+            "error": "Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+            "required": "Erforderlich",
+            "invalid_email": "Ungültige E-Mail-Adresse"
+        }
+    },
+    "search": {
+        "results_title": "Ergebnisse für \"{{query}}\"",
+        "enter_query": "Geben Sie eine Suchanfrage ein, um Länder, Publikationen und das Team zu durchsuchen.",
+        "no_results": "Keine Ergebnisse für Ihre Suchanfrage gefunden."
+    }
+}

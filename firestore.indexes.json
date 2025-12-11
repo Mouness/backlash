@@ -1,0 +1,35 @@
+{
+    "indexes": [
+        {
+            "collectionGroup": "publications",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "date",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "team",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "order",
+                    "order": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "countries",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "code",
+                    "order": "ASCENDING"
+                }
+            ]
+        }
+    ],
+    "fieldOverrides": []
+}

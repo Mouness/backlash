@@ -1,0 +1,144 @@
+{
+    "welcome": "Bienvenue au Projet Backlash",
+    "project_title": "Recul Démocratique et Réaction contre les Droits Humains",
+    "nav": {
+        "home": "Accueil",
+        "project": "Projet",
+        "publications": "Publications",
+        "team": "Équipe",
+        "countries": "Pays",
+        "contact": "Contact",
+        "login": "Connexion",
+        "logout": "Déconnexion",
+        "search_placeholder": "Rechercher..."
+    },
+    "team": {
+        "add_member": "Ajouter un Membre",
+        "initialize_db": "Initialiser BDD",
+        "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce membre ?",
+        "bio": "Biographie",
+        "no_bio": "Aucune biographie disponible.",
+        "contact": "Contact",
+        "back_to_list": "Retour à l'équipe"
+    },
+    "map": {
+        "title": "Carte Interactive",
+        "description": "Explorez l'état du recul dans les états fédéraux."
+    },
+    "home": {
+        "hero": {
+            "slide1": {
+                "title": "Comprendre le Backlash",
+                "subtitle": "Analyser le recul démocratique dans les états fédéraux."
+            },
+            "slide2": {
+                "title": "Recherche Comparative",
+                "subtitle": "Une plongée dans le droit constitutionnel et les droits humains."
+            },
+            "slide3": {
+                "title": "Perspective Mondiale",
+                "subtitle": "Études de cas : Canada, Suisse, Allemagne, Brésil et Inde."
+            }
+        },
+        "team_preview": {
+            "title": "Rencontrez notre Équipe",
+            "subtitle": "Des chercheurs dédiés à la compréhension des défis démocratiques."
+        },
+        "team_members": {
+            "nesa": "Professeure Assistante, UNINE",
+            "marie": "Postdoctorante UNINE",
+            "karen": "Postdoctorante UNINE et UOttawa",
+            "nicolo": "Postdoctorant UNINE et UniDistance",
+            "maina": "Doctorante UNINE"
+        },
+        "publications": {
+            "subtitle": "Dernières actualités et mises à jour",
+            "no_data": "Aucune publication pour le moment."
+        }
+    },
+    "publications": {
+        "subtitle": "Dernières nouvelles, événements et articles.",
+        "add_post": "Ajouter un article",
+        "read_more": "Lire la suite",
+        "no_data": "Aucune publication trouvée.",
+        "seed_db": "Initialiser la BDD (Seed)",
+        "seed_confirm": "Initialiser la base de données avec les publications par défaut ?",
+        "seeded": "Publications initialisées !",
+        "delete_confirm": "Êtes-vous sûr de vouloir supprimer cet élément ?",
+        "initialize_db": "Initialiser BDD"
+    },
+    "countries": {
+        "title": "Analyse Pays",
+        "add_analysis": "Ajouter une Analyse",
+        "initialize_db": "Initialiser BDD",
+        "CAN": {
+            "name": "Canada",
+            "desc": "Concentre sur l'interaction entre le fédéralisme, l'autodétermination autochtone et l'utilisation croissante de la clause dérogatoire pour passer outre les droits de la charte."
+        },
+        "CHE": {
+            "name": "Suisse",
+            "desc": "Analyse la tension entre les mécanismes de démocratie directe, la souveraineté cantonale et les obligations internationales en matière de droits humains."
+        },
+        "DEU": {
+            "name": "Allemagne",
+            "desc": "Enquête sur le rôle de la Cour constitutionnelle fédérale et les défis posés par l'extrémisme au sein des structures étatiques."
+        },
+        "BRA": {
+            "name": "Brésil",
+            "desc": "Examine la résilience des institutions fédérales face au populisme autoritaire et le rôle du pouvoir judiciaire dans la préservation des normes démocratiques."
+        },
+        "USA": {
+            "name": "États-Unis",
+            "desc": "Explore la polarisation politique extrême, le redécoupage électoral partisan et la régression des droits reproductifs et de vote au niveau des états."
+        },
+        "IND": {
+            "name": "Inde",
+            "desc": "Étudie la centralisation du pouvoir, l'érosion de l'autonomie des états et l'impact du nationalisme religieux sur la diversité fédérale."
+        }
+    },
+    "project": {
+        "title": "La Recherche",
+        "description": "Cette initiative de recherche pluriannuelle examine le phénomène complexe du recul démocratique et de la réaction contre les droits humains au sein des états fédéraux. En examinant la tension entre l'autorité centrale et l'autonomie infranationale, nous visons à découvrir comment les théories et structures fédérales peuvent à la fois atténuer et exacerber ces tendances régressives. Le projet combine l'analyse juridique, la science politique et la sociologie pour fournir une compréhension complète de ces dynamiques au 21ème siècle.",
+        "objectives": "Nos principaux objectifs sont triples : 1) Mener une analyse constitutionnelle comparative de cinq juridictions clés (Canada, Suisse, Allemagne, Brésil, Inde) ; 2) Identifier les mécanismes juridiques spécifiques utilisés par les mouvements populistes pour éroder les normes démocratiques au niveau infranational ; et 3) Proposer des cadres juridiques et politiques robustes qui renforcent la résilience fédérale et protègent les droits humains fondamentaux contre l'empiétement autoritaire.",
+        "team_photo_alt": "Collaboration de l'équipe de recherche"
+    },
+    "languages": {
+        "fr": "Français",
+        "en": "English",
+        "de": "Deutsch",
+        "change_language": "Changer de langue"
+    },
+    "brand": {
+        "name": "BACKLASH",
+        "suffix": "Projet"
+    },
+    "footer": {
+        "rights": "Projet Backlash. Tous droits réservés.",
+        "university": "Université de Neuchâtel"
+    },
+    "contact": {
+        "title": "Contactez-nous",
+        "intro": "Vous avez des questions sur nos recherches ou souhaitez collaborer ? N'hésitez pas à nous écrire.",
+        "address": "Avenue du 1er-Mars 26, 2000 Neuchâtel, Suisse",
+        "email": "info@backlash.org",
+        "phone": "+41 32 718 10 00",
+        "form": {
+            "title": "Envoyez-nous un message",
+            "name": "Nom",
+            "email": "Email",
+            "subject": "Sujet",
+            "message": "Message",
+            "send": "Envoyer",
+            "sending": "Envoi en cours...",
+            "success": "Message envoyé avec succès !",
+            "error": "Échec de l'envoi du message. Veuillez réessayer.",
+            "required": "Requis",
+            "invalid_email": "Adresse email invalide"
+        }
+    },
+    "search": {
+        "results_title": "Résultats pour \"{{query}}\"",
+        "enter_query": "Saisissez une recherche pour explorer pays, publications et équipe.",
+        "no_results": "Aucun résultat trouvé pour votre recherche."
+    }
+}
