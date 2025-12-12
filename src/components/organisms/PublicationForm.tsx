@@ -124,7 +124,7 @@ const PublicationForm: React.FC<PublicationFormProps> = ({ initialData, onSave, 
     }
   };
 
-  const currentLangCode = ['en', 'fr', 'de'][activeTab];
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -182,38 +182,43 @@ const PublicationForm: React.FC<PublicationFormProps> = ({ initialData, onSave, 
           </Tabs>
         </Box>
 
-        {/* Title & Description for selected language */}
-        <Box sx={{ mb: 2 }}>
-          <Controller
-            name={`title.${currentLangCode}` as `title.${'en' | 'fr' | 'de'}`}
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                margin="dense"
-                label={`${t('admin.common.title', 'Title')} (${currentLangCode.toUpperCase()})`}
-                fullWidth
-                variant="outlined"
-              />
-            )}
-          />
-          <Controller
-            name={`description.${currentLangCode}` as `description.${'en' | 'fr' | 'de'}`}
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                margin="dense"
-                label={`${t('admin.common.description', 'Description')} (${currentLangCode.toUpperCase()})`}
-                fullWidth
-                multiline
-                rows={4}
-                variant="outlined"
-                helperText={t('admin.country.content_helper')}
-              />
-            )}
-          />
-        </Box>
+        {/* Title & Description for ALL languages (rendering all, hiding inactive) */}
+        {['en', 'fr', 'de'].map((langCode, index) => (
+          <Box
+            key={langCode}
+            sx={{ mb: 2, display: activeTab === index ? 'block' : 'none' }}
+          >
+            <Controller
+              name={`title.${langCode}` as `title.${'en' | 'fr' | 'de'}`}
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  margin="dense"
+                  label={`${t('admin.common.title', 'Title')} (${langCode.toUpperCase()})`}
+                  fullWidth
+                  variant="outlined"
+                />
+              )}
+            />
+            <Controller
+              name={`description.${langCode}` as `description.${'en' | 'fr' | 'de'}`}
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  margin="dense"
+                  label={`${t('admin.common.description', 'Description')} (${langCode.toUpperCase()})`}
+                  fullWidth
+                  multiline
+                  rows={4}
+                  variant="outlined"
+                  helperText={t('admin.country.content_helper')}
+                />
+              )}
+            />
+          </Box>
+        ))}
 
         <Controller
           name="link"
