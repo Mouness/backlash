@@ -113,7 +113,7 @@ const Contact: React.FC = () => {
 
           {/* Contact Form */}
           <Grid size={{ xs: 12, md: 7 }}>
-            <Paper elevation={4} sx={{ p: 4, borderRadius: 4 }}>
+            <Paper elevation={0} sx={{ p: 4, borderRadius: 0, border: '1px solid #E0E0E0' }}>
               <Typography variant="h5" fontWeight={600} gutterBottom>
                 {t('contact.form.title')}
               </Typography>
@@ -132,6 +132,7 @@ const Contact: React.FC = () => {
                           error={!!errors.name}
                           helperText={errors.name?.message}
                           variant="outlined"
+                          sx={{ '& .MuiOutlinedInput-root': { borderRadius: 0 } }}
                         />
                       )}
                     />
@@ -155,6 +156,7 @@ const Contact: React.FC = () => {
                           error={!!errors.email}
                           helperText={errors.email?.message}
                           variant="outlined"
+                          sx={{ '& .MuiOutlinedInput-root': { borderRadius: 0 } }}
                         />
                       )}
                     />
@@ -172,6 +174,7 @@ const Contact: React.FC = () => {
                           error={!!errors.subject}
                           helperText={errors.subject?.message}
                           variant="outlined"
+                          sx={{ '& .MuiOutlinedInput-root': { borderRadius: 0 } }}
                         />
                       )}
                     />
@@ -191,6 +194,7 @@ const Contact: React.FC = () => {
                           error={!!errors.message}
                           helperText={errors.message?.message}
                           variant="outlined"
+                          sx={{ '& .MuiOutlinedInput-root': { borderRadius: 0 } }}
                         />
                       )}
                     />
@@ -203,7 +207,7 @@ const Contact: React.FC = () => {
                       endIcon={<SendIcon />}
                       disabled={isSubmitting}
                       fullWidth
-                      sx={{ py: 1.5, fontSize: '1.1rem' }}
+                      sx={{ py: 1.5, fontSize: '1.1rem', borderRadius: 0 }}
                     >
                       {isSubmitting ? t('contact.form.sending') : t('contact.form.send')}
                     </Button>

@@ -4,6 +4,8 @@ body {
   padding: 0;
   width: 100%;
   min-height: 100vh;
+  background-color: #FAFAFA; /* Academic Cream */
+  color: #212121;
 }
 
 #root {

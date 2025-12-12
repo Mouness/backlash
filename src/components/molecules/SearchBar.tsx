@@ -42,7 +42,7 @@ const SearchBar: React.FC = () => {
         alignItems: 'center',
         width: { xs: 'auto', sm: 200 },
         height: 32,
-        borderRadius: 20,
+        borderRadius: 0, // Sharp corners
         border: '1px solid #e0e0e0',
       }}
       elevation={0}

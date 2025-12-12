@@ -103,7 +103,7 @@ const TeamDetails: React.FC = () => {
         )}
       </Box>
 
-      <Paper elevation={3} sx={{ p: 0, overflow: 'hidden', borderRadius: 4 }}>
+      <Paper elevation={0} sx={{ p: 0, overflow: 'hidden', borderRadius: 0, border: '1px solid #E0E0E0' }}>
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
           {/* Left Column: Image & Contact */}
           <Box
@@ -163,7 +163,7 @@ const TeamDetails: React.FC = () => {
                   bgcolor: 'rgba(255,255,255,0.2)',
                   px: 2,
                   py: 1,
-                  borderRadius: 2,
+                  borderRadius: 0,
                 }}
               >
                 <EmailIcon fontSize="small" />
@@ -177,7 +177,7 @@ const TeamDetails: React.FC = () => {
             <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom>
               {t('team.bio')}
             </Typography>
-            <Box sx={{ width: 60, height: 4, bgcolor: 'secondary.main', mb: 4, borderRadius: 2 }} />
+            <Box sx={{ width: 60, height: 4, bgcolor: 'secondary.main', mb: 4 }} />
 
             <Typography
               variant="body1"

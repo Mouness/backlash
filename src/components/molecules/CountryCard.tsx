@@ -27,7 +27,9 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, currentUser, onEdit,
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
-                borderRadius: 3,
+                // borderRadius: 3, // REMOVED
+                boxShadow: 'none',
+                border: '1px solid #E0E0E0',
                 cursor: 'pointer',
                 transition: 'transform 0.2s',
                 '&:hover': { transform: 'translateY(-4px)' },
@@ -66,6 +68,10 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, currentUser, onEdit,
                                 fontWeight: 'bold',
                                 minWidth: 80,
                                 height: 24,
+                                borderRadius: 0, // Sharp corners for academic look
+                                textTransform: 'uppercase',
+                                fontSize: '0.7rem',
+                                letterSpacing: '0.05em',
                                 ...getScoreLevel(country.score).style,
                             }}
                         />

@@ -114,18 +114,28 @@ const PublicationDetails: React.FC = () => {
           sx={{
             width: '100%',
             height: { xs: 250, md: 500 },
-            borderRadius: 4,
+            borderRadius: 0, // Sharp Academic Style
             backgroundImage: `url(${publication.imageUrl})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             mb: 4,
-            boxShadow: 3,
+            boxShadow: 'none',
+            border: '1px solid #E0E0E0',
           }}
         />
       )}
 
       <Box sx={{ mb: 2 }}>
-        <Chip label={publication.category.toUpperCase()} color="primary" sx={{ mr: 2 }} />
+        <Chip
+          label={publication.category.toUpperCase()}
+          color="primary"
+          sx={{
+            mr: 2,
+            borderRadius: 0,
+            fontWeight: 'bold',
+            letterSpacing: '0.05em'
+          }}
+        />
         <Typography variant="caption" color="text.secondary">
           {publication.date?.toDate().toLocaleDateString()}
         </Typography>

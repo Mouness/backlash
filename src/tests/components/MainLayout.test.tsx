@@ -63,7 +63,7 @@ describe('MainLayout', () => {
         <div>Child</div>
       </MainLayout>,
     );
-    expect(screen.getByText('Admin')).toBeInTheDocument();
+    expect(screen.getByText('ADMIN')).toBeInTheDocument();
     expect(screen.getByText('nav.logout')).toBeInTheDocument();
   });
 

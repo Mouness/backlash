@@ -46,7 +46,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
         height: '100%',
         minHeight: minHeight,
         bgcolor: theme.palette.background.default,
-        borderRadius: 4,
+        borderRadius: 0, // Sharp for academic theme
         overflow: 'hidden',
         position: 'relative',
         boxShadow: 3,

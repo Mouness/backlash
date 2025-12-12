@@ -185,7 +185,7 @@ const Home: React.FC = () => {
           sx={{
             width: '100%',
             bgcolor: 'background.paper',
-            borderRadius: 4,
+            // borderRadius: 4, // REMOVED for academic theme
             overflow: 'hidden',
             border: '1px solid',
             borderColor: 'divider',
@@ -245,8 +245,9 @@ const Home: React.FC = () => {
                     height: '400px',
                     display: 'flex',
                     flexDirection: 'column',
-                    borderRadius: 4,
-                    boxShadow: theme.shadows[3],
+                    // borderRadius: 4, // REMOVED
+                    boxShadow: 'none', // Flat style
+                    border: `1px solid ${theme.palette.divider}`,
                     cursor: 'pointer',
                     transition: 'transform 0.2s',
                     '&:hover': { transform: 'translateY(-4px)' },
@@ -372,9 +373,9 @@ const Home: React.FC = () => {
               <Box
                 sx={{
                   p: 4,
-                  borderRadius: 4,
+                  // borderRadius: 4, // REMOVED
                   bgcolor: 'background.paper',
-                  boxShadow: theme.shadows[3],
+                  boxShadow: 'none',
                   textAlign: 'center',
                   height: '300px',
                   display: 'flex',

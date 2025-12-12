@@ -193,7 +193,7 @@ const Header: React.FC = (props) => {
                 flexGrow: 1,
                 display: { xs: 'none', md: 'flex' },
                 justifyContent: 'center',
-                gap: 2,
+                gap: 0.5, // Reduced gap as requested
               }}
             >
               {navItems.map((item) => {
@@ -281,16 +281,18 @@ const Header: React.FC = (props) => {
                 <>
                   <Box
                     sx={{
-                      bgcolor: theme.palette.success.light,
-                      color: theme.palette.success.contrastText,
+                      bgcolor: theme.palette.secondary.main, // Use Secondary for prestige
+                      color: theme.palette.secondary.contrastText,
                       px: 2,
                       py: 0.5,
-                      borderRadius: 2,
-                      fontSize: '0.8rem',
+                      borderRadius: 0, // Sharp corners
+                      fontSize: '0.75rem',
                       fontWeight: 'bold',
+                      textTransform: 'uppercase', // Compliant with academic style
+                      letterSpacing: '0.05em',
                     }}
                   >
-                    Admin
+                    ADMIN
                   </Box>
                   <Button variant="outlined" color="primary" size="small" onClick={logout}>
                     {t('nav.logout') || 'Logout'}

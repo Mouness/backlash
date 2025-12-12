@@ -83,7 +83,8 @@ const PublicationCard: React.FC<PublicationCardProps> = ({
                         fontWeight: 'bold',
                         boxShadow: 3,
                         border: `4px solid ${theme.palette.background.default}`,
-                        textTransform: 'capitalize',
+                        textTransform: 'uppercase',
+                        borderRadius: 0, // Sharp corners
                     }}
                 />
             </Box>
@@ -102,8 +103,9 @@ const PublicationCard: React.FC<PublicationCardProps> = ({
                         display: 'flex',
                         flexDirection: 'column',
                         position: 'relative',
-                        borderRadius: 4,
-                        boxShadow: theme.shadows[3],
+                        // borderRadius: 4, // REMOVED
+                        boxShadow: 'none', // Use thematic flat style
+                        border: `1px solid ${theme.palette.divider}`,
                         overflow: 'hidden',
                         transition: 'transform 0.2s',
                         cursor: 'pointer',
@@ -141,7 +143,13 @@ const PublicationCard: React.FC<PublicationCardProps> = ({
                                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                 color={getCategoryColor(publication.category) as any}
                                 size="small"
-                                sx={{ borderRadius: 1 }}
+                                sx={{
+                                    borderRadius: 0,
+                                    fontWeight: 'bold',
+                                    textTransform: 'uppercase',
+                                    fontSize: '0.7rem',
+                                    letterSpacing: '0.05em'
+                                }}
                             />
                         </Box>
 
@@ -174,7 +182,7 @@ const PublicationCard: React.FC<PublicationCardProps> = ({
                                 top: 8,
                                 right: 8,
                                 bgcolor: 'background.paper',
-                                borderRadius: 1,
+                                borderRadius: 0,
                                 boxShadow: 1,
                             }}
                         >
