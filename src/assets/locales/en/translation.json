@@ -19,7 +19,12 @@
         "bio": "Biography",
         "no_bio": "No biography available.",
         "contact": "Contact",
-        "back_to_list": "Back to Team"
+        "back_to_list": "Back to Team",
+        "delete_error": "Error deleting member",
+        "seed_start": "Starting Team Seed... Please wait.",
+        "seed_success": "Successfully added {{count}} team members!",
+        "seed_uptodate": "Team DB is already up to date.",
+        "seed_error": "Error seeding database: {{error}}"
     },
     "map": {
         "title": "Interactive Map",
@@ -65,7 +70,12 @@
         "seed_confirm": "Seed database with default publications?",
         "seeded": "Publications seeded!",
         "delete_confirm": "Are you sure you want to delete this item?",
-        "initialize_db": "Initialize DB"
+        "initialize_db": "Initialize DB",
+        "seed_start": "Starting Publication Seed... Please wait.",
+        "seed_success": "Successfully seeded {{count}} publications!",
+        "seed_uptodate": "Publications DB is already up to date.",
+        "seed_error": "Error seeding database: {{error}}",
+        "delete_error": "Error deleting publication"
     },
     "countries": {
         "title": "Country Analysis",
@@ -94,7 +104,13 @@
         "IND": {
             "name": "India",
             "desc": "Studies the centralization of power, the erosion of state autonomy, and the impact of religious nationalism on federal diversity."
-        }
+        },
+        "seed_confirm": "Initialize database with default countries?",
+        "seed_success": "Successfully added {{count}} countries.",
+        "seed_uptodate": "Database is already up to date.",
+        "seed_error": "Error seeding database: {{error}}",
+        "delete_error": "Failed to delete country.",
+        "score_label": "Democratic Score"
     },
     "project": {
         "title": "The Research",
@@ -117,6 +133,7 @@
         "university": "University of Neuchâtel"
     },
     "contact": {
+        "map_title": "Map",
         "title": "Get in Touch",
         "intro": "Have questions about our research or want to collaborate? We'd love to hear from you.",
         "address": "Avenue du 1er-Mars 26, 2000 Neuchâtel, Switzerland",
@@ -140,5 +157,63 @@
         "results_title": "Results for \"{{query}}\"",
         "enter_query": "Enter a query to search across countries, publications, and team.",
         "no_results": "No results found matching your query."
+    },
+    "login_form": {
+        "email_label": "Email Address",
+        "password_label": "Password",
+        "submit": "Sign In",
+        "submitting": "Logging in...",
+        "cancel": "Cancel",
+        "error_generic": "Failed to log in. Please check your credentials.",
+        "validation_required": "{{field}} is required",
+        "validation_email": "Invalid email"
+    },
+    "admin": {
+        "common": {
+            "cancel": "Cancel",
+            "save": "Save",
+            "saving": "Saving...",
+            "preview": "Preview",
+            "upload": "Upload",
+            "optional": "Optional"
+        },
+        "country": {
+            "title_new": "New Country Analysis",
+            "title_edit": "Edit Country Analysis",
+            "code": "Country Code (ISO 3)",
+            "code_helper": "Used for map matching (CAN, CHE, DEU, BRA, USA, IND)",
+            "content_helper": "Use full markdown for rich text.",
+            "score": "Democratic Score (0-100)",
+            "score_levels": {
+                "unknown": "Unknown",
+                "very_low": "Very Low",
+                "low": "Low",
+                "moderate": "Moderate",
+                "high": "High",
+                "very_high": "Very High"
+            }
+        },
+        "team": {
+            "title_new": "Add Team Member",
+            "title_edit": "Edit Team Member",
+            "gender": "Gender",
+            "order": "Order",
+            "photo_upload": "Upload Photo",
+            "no_file": "No file selected",
+            "section_multilingual": "Role & Biography (Multilingual)",
+            "female": "Female",
+            "male": "Male",
+            "upload_error": "Photo upload failed"
+        },
+        "publication": {
+            "title_new": "Add Publication",
+            "title_edit": "Edit Publication",
+            "category": "Category",
+            "date": "Date",
+            "link": "External Link",
+            "doc_upload": "Upload Document (PDF/Word)",
+            "current_doc": "Current document attached",
+            "save_error": "Failed to save publication"
+        }
     }
 }

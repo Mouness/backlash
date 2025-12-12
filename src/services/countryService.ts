@@ -24,6 +24,7 @@ export interface Country {
   summary: LocalizedContent;
   content: LocalizedContent; // Detailed analysis
   imageUrl?: string;
+  score?: number; // 0-100 indicating democratic resilience/backlash status
 }
 
 const COLLECTION_NAME = 'countries';

@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import type { TeamMember } from '../../services/teamService';
-// import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 interface AdminTeamDialogProps {
   open: boolean;
@@ -31,7 +31,7 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
   onSave,
   initialData,
 }) => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState(0); // 0=en, 1=fr, 2=de
@@ -104,7 +104,7 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
         data.photoUrl = url;
       } catch (error) {
         console.error('Upload failed', error);
-        alert('Photo upload failed');
+        alert(t('admin.team.upload_error'));
         return;
       }
     }
@@ -115,7 +115,7 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        {initialData ? 'Edit Team Member' : 'Add Team Member'}
+        {initialData ? t('admin.team.title_edit') : t('admin.team.title_new')}
         <IconButton onClick={onClose} size="small">
           <CloseIcon />
         </IconButton>
@@ -123,19 +123,19 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent dividers>
           <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-            <TextField label="Name" fullWidth required {...register('name', { required: true })} />
+            <TextField label={t('admin.common.name')} fullWidth required {...register('name', { required: true })} />
             <TextField
               select
-              label="Gender"
+              label={t('admin.team.gender')}
               fullWidth
               {...register('gender')}
               defaultValue="female"
             >
-              <MenuItem value="female">Female</MenuItem>
-              <MenuItem value="male">Male</MenuItem>
+              <MenuItem value="female">{t('admin.team.female')}</MenuItem>
+              <MenuItem value="male">{t('admin.team.male')}</MenuItem>
             </TextField>
             <TextField
-              label="Order"
+              label={t('admin.team.order')}
               type="number"
               sx={{ width: 150 }}
               {...register('order', { valueAsNumber: true })}
@@ -145,7 +145,7 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
           {/* Photo Upload */}
           <Box sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 2 }}>
             <Button variant="outlined" component="label">
-              Upload Photo
+              {t('admin.team.photo_upload')}
               <input type="file" hidden accept="image/*" onChange={handleFileChange} />
             </Button>
             {previewUrl && (
@@ -157,15 +157,14 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
               />
             )}
             <Typography variant="caption" color="text.secondary">
-              {photoFile ? photoFile.name : 'No file selected'}
+              {photoFile ? photoFile.name : t('admin.team.no_file')}
             </Typography>
           </Box>
-
           {/* Email Field */}
-          <TextField label="Email" type="email" fullWidth sx={{ mb: 2 }} {...register('email')} />
+          <TextField label={t('admin.common.email')} type="email" fullWidth sx={{ mb: 2 }} {...register('email')} />
 
           <Typography variant="subtitle2" sx={{ mt: 2, mb: 1 }}>
-            Role & Biography (Multilingual)
+            {t('admin.team.section_multilingual')}
           </Typography>
           <Tabs
             value={activeTab}
@@ -197,9 +196,9 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={onClose}>{t('admin.common.cancel')}</Button>
           <Button type="submit" variant="contained">
-            Save
+            {t('admin.common.save')}
           </Button>
         </DialogActions>
       </form>

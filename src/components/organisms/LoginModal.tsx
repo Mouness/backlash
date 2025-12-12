@@ -21,8 +21,8 @@ import { useTranslation } from 'react-i18next';
 
 const schema = yup
   .object({
-    email: yup.string().email('Invalid email').required('Email is required'),
-    password: yup.string().required('Password is required'),
+    email: yup.string().email('login_form.validation_email').required('login_form.validation_required'),
+    password: yup.string().required('login_form.validation_required'),
   })
   .required();
 
@@ -56,7 +56,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
       onClose(); // Close modal on success
     } catch (err) {
       console.error(err);
-      setError('Failed to log in. Please check your credentials.');
+      setError(t('login_form.error_generic'));
     }
   };
 
@@ -87,24 +87,24 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label={t('login_form.email_label')}
             autoComplete="email"
             autoFocus
             {...register('email')}
             error={!!errors.email}
-            helperText={errors.email?.message}
+            helperText={errors.email?.message ? t(errors.email.message, { field: t('login_form.email_label') }) : ''}
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            label="Password"
+            label={t('login_form.password_label')}
             type={showPassword ? 'text' : 'password'}
             id="password"
             autoComplete="current-password"
             {...register('password')}
             error={!!errors.password}
-            helperText={errors.password?.message}
+            helperText={errors.password?.message ? t(errors.password.message, { field: t('login_form.password_label') }) : ''}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -122,10 +122,10 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
         </DialogContent>
         <DialogActions sx={{ p: 2 }}>
           <Button onClick={handleClose} disabled={isSubmitting}>
-            Cancel
+            {t('login_form.cancel')}
           </Button>
           <Button type="submit" variant="contained" disabled={isSubmitting}>
-            {isSubmitting ? 'Logging in...' : 'Sign In'}
+            {isSubmitting ? t('login_form.submitting') : t('login_form.submit')}
           </Button>
         </DialogActions>
       </form>

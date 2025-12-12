@@ -19,7 +19,12 @@
         "bio": "Biographie",
         "no_bio": "Aucune biographie disponible.",
         "contact": "Contact",
-        "back_to_list": "Retour à l'équipe"
+        "back_to_list": "Retour à l'équipe",
+        "delete_error": "Erreur lors de la suppression du membre",
+        "seed_start": "Initialisation de l'équipe... Veuillez patienter.",
+        "seed_success": "{{count}} membres ajoutés avec succès !",
+        "seed_uptodate": "La BDD de l'équipe est déjà à jour.",
+        "seed_error": "Erreur lors de l'initialisation : {{error}}"
     },
     "map": {
         "title": "Carte Interactive",
@@ -65,7 +70,12 @@
         "seed_confirm": "Initialiser la base de données avec les publications par défaut ?",
         "seeded": "Publications initialisées !",
         "delete_confirm": "Êtes-vous sûr de vouloir supprimer cet élément ?",
-        "initialize_db": "Initialiser BDD"
+        "initialize_db": "Initialiser BDD",
+        "seed_start": "Initialisation des publications... Veuillez patienter.",
+        "seed_success": "{{count}} publications ajoutées avec succès !",
+        "seed_uptodate": "La BDD des publications est déjà à jour.",
+        "seed_error": "Erreur lors de l'initialisation : {{error}}",
+        "delete_error": "Erreur lors de la suppression de la publication"
     },
     "countries": {
         "title": "Analyse Pays",
@@ -94,7 +104,13 @@
         "IND": {
             "name": "Inde",
             "desc": "Étudie la centralisation du pouvoir, l'érosion de l'autonomie des états et l'impact du nationalisme religieux sur la diversité fédérale."
-        }
+        },
+        "seed_confirm": "Initialiser la base de données avec les pays par défaut ?",
+        "seed_success": "Succès ! {{count}} pays ajoutés.",
+        "seed_uptodate": "La base de données est déjà à jour.",
+        "seed_error": "Erreur lors de l'initialisation : {{error}}",
+        "delete_error": "Échec de la suppression du pays.",
+        "score_label": "Score Démocratique"
     },
     "project": {
         "title": "La Recherche",
@@ -117,6 +133,7 @@
         "university": "Université de Neuchâtel"
     },
     "contact": {
+        "map_title": "Carte",
         "title": "Contactez-nous",
         "intro": "Vous avez des questions sur nos recherches ou souhaitez collaborer ? N'hésitez pas à nous écrire.",
         "address": "Avenue du 1er-Mars 26, 2000 Neuchâtel, Suisse",
@@ -140,5 +157,63 @@
         "results_title": "Résultats pour \"{{query}}\"",
         "enter_query": "Saisissez une recherche pour explorer pays, publications et équipe.",
         "no_results": "Aucun résultat trouvé pour votre recherche."
+    },
+    "login_form": {
+        "email_label": "Adresse Email",
+        "password_label": "Mot de passe",
+        "submit": "Connexion",
+        "submitting": "Connexion...",
+        "cancel": "Annuler",
+        "error_generic": "Échec de connexion. Vérifiez vos identifiants.",
+        "validation_required": "{{field}} est requis",
+        "validation_email": "Email invalide"
+    },
+    "admin": {
+        "common": {
+            "cancel": "Annuler",
+            "save": "Enregistrer",
+            "saving": "Enregistrement...",
+            "preview": "Aperçu",
+            "upload": "Télécharger",
+            "optional": "Optionnel"
+        },
+        "country": {
+            "title_new": "Nouvelle Analyse Pays",
+            "title_edit": "Modifier Analyse Pays",
+            "code": "Code Pays (ISO 3)",
+            "code_helper": "Utilisé pour la correspondance carte (CAN, CHE, ...)",
+            "content_helper": "Utilisez le markdown complet pour le texte riche.",
+            "score": "Score Démocratique (0-100)",
+            "score_levels": {
+                "unknown": "Inconnu",
+                "very_low": "Très Faible",
+                "low": "Faible",
+                "moderate": "Modéré",
+                "high": "Élevé",
+                "very_high": "Très Élevé"
+            }
+        },
+        "team": {
+            "title_new": "Ajouter Membre",
+            "title_edit": "Modifier Membre",
+            "gender": "Genre",
+            "order": "Ordre",
+            "photo_upload": "Mettre photo",
+            "no_file": "Aucun fichier",
+            "section_multilingual": "Rôle & Biographie (Multilingue)",
+            "female": "Femme",
+            "male": "Homme",
+            "upload_error": "Échec du téléchargement de la photo"
+        },
+        "publication": {
+            "title_new": "Ajouter Publication",
+            "title_edit": "Modifier Publication",
+            "category": "Catégorie",
+            "date": "Date",
+            "link": "Lien Externe",
+            "doc_upload": "Mettre Document (PDF/Word)",
+            "current_doc": "Document actuel joint",
+            "save_error": "Échec de l'enregistrement de la publication"
+        }
     }
 }

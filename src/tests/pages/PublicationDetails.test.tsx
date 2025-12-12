@@ -5,7 +5,7 @@ import { MockProviders } from '../utils/test-utils';
 import PublicationDetails from '../../pages/PublicationDetails';
 
 describe('PublicationDetails Page', () => {
-  it.skip('renders publication details', () => {
+  it('renders publication details', async () => {
     render(
       <MemoryRouter initialEntries={['/publications/pub1']}>
         <MockProviders>
@@ -17,7 +17,7 @@ describe('PublicationDetails Page', () => {
     );
 
     // Expect details for Test Pub (id: pub1)
-    expect(screen.getByText('Test Pub')).toBeInTheDocument();
+    await screen.findByText('Test Pub');
     expect(screen.getByText('Desc')).toBeInTheDocument();
     expect(screen.getByText('ARTICLE')).toBeInTheDocument();
   });

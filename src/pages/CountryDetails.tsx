@@ -1,9 +1,10 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Typography, Box, Button, CircularProgress } from '@mui/material';
+import { Container, Typography, Box, Button, CircularProgress, Chip, Stack } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useTranslation } from 'react-i18next';
 import { useData } from '../contexts/DataContext';
+import { getScoreLevel } from '../utils/scoreUtils';
 // import type { Country } from '../services/countryService';
 
 const CountryDetails: React.FC = () => {
@@ -62,6 +63,25 @@ const CountryDetails: React.FC = () => {
       <Typography variant="h2" fontWeight={700} gutterBottom color="primary.main">
         {country.name[currentLang] || country.name['en']}
       </Typography>
+
+      {country.score !== undefined && (
+        <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 3 }}>
+          <Typography variant="h6" fontWeight="bold">
+            {i18n.t('countries.score_label')}:
+          </Typography>
+          <Chip
+            label={i18n.t(getScoreLevel(country.score).key)}
+            color={getScoreLevel(country.score).color}
+            sx={{
+              fontSize: '1rem',
+              height: 32,
+              px: 1,
+              fontWeight: 'bold',
+              ...getScoreLevel(country.score).style,
+            }}
+          />
+        </Stack>
+      )}
 
       <Typography
         variant="h5"

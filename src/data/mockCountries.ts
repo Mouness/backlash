@@ -20,6 +20,7 @@ export const MOCK_COUNTRIES: Omit<Country, 'id'>[] = [
     },
     imageUrl:
       'https://images.unsplash.com/photo-1517935706615-2717063c2225?q=80&w=800&auto=format&fit=crop', // Toronto
+    score: 85,
   },
   {
     code: 'CHE',
@@ -40,6 +41,7 @@ export const MOCK_COUNTRIES: Omit<Country, 'id'>[] = [
     },
     imageUrl:
       'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?q=80&w=800&auto=format&fit=crop', // Alps/Nature
+    score: 90,
   },
   {
     code: 'DEU',
@@ -60,6 +62,7 @@ export const MOCK_COUNTRIES: Omit<Country, 'id'>[] = [
     },
     imageUrl:
       'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=800&auto=format&fit=crop', // Berlin/City
+    score: 88,
   },
   {
     code: 'BRA',
@@ -80,6 +83,7 @@ export const MOCK_COUNTRIES: Omit<Country, 'id'>[] = [
     },
     imageUrl:
       'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?q=80&w=800&auto=format&fit=crop', // Rio
+    score: 65,
   },
   {
     code: 'USA',
@@ -100,6 +104,7 @@ export const MOCK_COUNTRIES: Omit<Country, 'id'>[] = [
     },
     imageUrl:
       'https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=800&auto=format&fit=crop', // Generic US/Coffee/City? Changed to generic
+    score: 75,
   },
   {
     code: 'IND',
@@ -120,5 +125,6 @@ export const MOCK_COUNTRIES: Omit<Country, 'id'>[] = [
     },
     imageUrl:
       'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=800&auto=format&fit=crop', // India/Taj
+    score: 60,
   },
 ];

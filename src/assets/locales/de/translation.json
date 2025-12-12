@@ -19,7 +19,12 @@
         "bio": "Biografie",
         "no_bio": "Keine Biografie verfügbar.",
         "contact": "Kontakt",
-        "back_to_list": "Zurück zum Team"
+        "back_to_list": "Zurück zum Team",
+        "delete_error": "Fehler beim Löschen des Mitglieds",
+        "seed_start": "Starte Team-Seed... Bitte warten.",
+        "seed_success": "{{count}} Mitglieder erfolgreich hinzugefügt!",
+        "seed_uptodate": "Team-DB ist bereits aktuell.",
+        "seed_error": "Fehler bei der Initialisierung: {{error}}"
     },
     "map": {
         "title": "Interaktive Karte",
@@ -65,7 +70,12 @@
         "seed_confirm": "Datenbank mit Standardpublikationen füllen?",
         "seeded": "Publikationen initialisiert!",
         "delete_confirm": "Sind Sie sicher, dass Sie dieses Element löschen möchten?",
-        "initialize_db": "DB Initialisieren"
+        "initialize_db": "DB Initialisieren",
+        "seed_start": "Starte Publikations-Seed... Bitte warten.",
+        "seed_success": "{{count}} Publikationen erfolgreich hinzugefügt!",
+        "seed_uptodate": "Publikations-DB ist bereits aktuell.",
+        "seed_error": "Fehler bei der Initialisierung: {{error}}",
+        "delete_error": "Fehler beim Löschen der Publikation"
     },
     "countries": {
         "title": "Länderanalyse",
@@ -94,7 +104,13 @@
         "IND": {
             "name": "Indien",
             "desc": "Zentralisierungstendenzen und staatliche Autonomie."
-        }
+        },
+        "seed_confirm": "Datenbank mit Standardländern initialisieren?",
+        "seed_success": "Erfolgreich {{count}} Länder hinzugefügt.",
+        "seed_uptodate": "Datenbank ist bereits auf dem neuesten Stand.",
+        "seed_error": "Fehler bei der Initialisierung: {{error}}",
+        "delete_error": "Länderlöschung fehlgeschlagen.",
+        "score_label": "Demokratie-Score"
     },
     "project": {
         "title": "Die Forschung",
@@ -117,6 +133,7 @@
         "university": "Universität Neuenburg"
     },
     "contact": {
+        "map_title": "Karte",
         "title": "Kontaktieren Sie uns",
         "intro": "Haben Sie Fragen zu unserer Forschung oder möchten Sie zusammenarbeiten? Wir freuen uns, von Ihnen zu hören.",
         "address": "Avenue du 1er-Mars 26, 2000 Neuchâtel, Schweiz",
@@ -140,5 +157,63 @@
         "results_title": "Ergebnisse für \"{{query}}\"",
         "enter_query": "Geben Sie eine Suchanfrage ein, um Länder, Publikationen und das Team zu durchsuchen.",
         "no_results": "Keine Ergebnisse für Ihre Suchanfrage gefunden."
+    },
+    "login_form": {
+        "email_label": "E-Mail-Adresse",
+        "password_label": "Passwort",
+        "submit": "Anmelden",
+        "submitting": "Anmelden...",
+        "cancel": "Abbrechen",
+        "error_generic": "Anmeldung fehlgeschlagen. Überprüfen Sie Ihre Zugangsdaten.",
+        "validation_required": "{{field}} ist erforderlich",
+        "validation_email": "Ungültige E-Mail"
+    },
+    "admin": {
+        "common": {
+            "cancel": "Abbrechen",
+            "save": "Speichern",
+            "saving": "Speichern...",
+            "preview": "Vorschau",
+            "upload": "Hochladen",
+            "optional": "Optional"
+        },
+        "country": {
+            "title_new": "Neue Länderanalyse",
+            "title_edit": "Länderanalyse bearbeiten",
+            "code": "Ländercode (ISO 3)",
+            "code_helper": "Für Kartenabgleich verwendet (CAN, CHE, ...)",
+            "content_helper": "Verwenden Sie Markdown für Rich Text.",
+            "score": "Demokratie-Score (0-100)",
+            "score_levels": {
+                "unknown": "Unbekannt",
+                "very_low": "Sehr Niedrig",
+                "low": "Niedrig",
+                "moderate": "Mittel",
+                "high": "Hoch",
+                "very_high": "Sehr Hoch"
+            }
+        },
+        "team": {
+            "title_new": "Mitglied hinzufügen",
+            "title_edit": "Mitglied bearbeiten",
+            "gender": "Geschlecht",
+            "order": "Reihenfolge",
+            "photo_upload": "Foto hochladen",
+            "no_file": "Keine Datei ausgewählt",
+            "section_multilingual": "Rolle & Biografie (Mehrsprachig)",
+            "female": "Weiblich",
+            "male": "Männlich",
+            "upload_error": "Foto-Upload fehlgeschlagen"
+        },
+        "publication": {
+            "title_new": "Publikation hinzufügen",
+            "title_edit": "Publikation bearbeiten",
+            "category": "Kategorie",
+            "date": "Datum",
+            "link": "Externer Link",
+            "doc_upload": "Dokument hochladen (PDF/Word)",
+            "current_doc": "Aktuelles Dokument angehängt",
+            "save_error": "Fehler beim Speichern der Publikation"
+        }
     }
 }

@@ -136,12 +136,12 @@ vi.mock('../contexts/DataContext', () => ({
 
 // Mock AuthContext
 vi.mock('../contexts/AuthContext', () => ({
-  useAuth: () => ({
+  useAuth: vi.fn(() => ({
     currentUser: null, // Default logged out
     loading: false,
     login: vi.fn(),
     logout: vi.fn(),
-  }),
+  })),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   AuthProvider: ({ children }: any) => <div>{children} </div>,
 }));
@@ -153,7 +153,7 @@ vi.mock('../components/atoms/ScrollToTop', () => ({
 
 vi.mock('../services/publicationService', () => ({
   publicationService: {
-    getPublications: vi.fn(),
+    getPublications: vi.fn().mockResolvedValue([]),
     getPublication: vi.fn().mockResolvedValue({
       id: 'pub1',
       title: { en: 'Test Pub' },
@@ -167,21 +167,24 @@ vi.mock('../services/publicationService', () => ({
     addPublication: vi.fn(),
     updatePublication: vi.fn(),
     deletePublication: vi.fn(),
-  },
+  }
 }));
 
 vi.mock('../services/countryService', () => ({
   countryService: {
-    getCountries: vi.fn(),
-    getCountry: vi.fn().mockResolvedValue({
-      id: 'ca',
-      name: { en: 'Canada' },
-      code: 'CA',
-      summary: { en: 'Desc' },
-      content: { en: 'Full Content' },
-    }),
+    getCountries: vi.fn().mockResolvedValue([]),
     addCountry: vi.fn(),
     updateCountry: vi.fn(),
     deleteCountry: vi.fn(),
-  },
+  }
+}));
+
+vi.mock('../services/teamService', () => ({
+  teamService: {
+    getTeam: vi.fn().mockResolvedValue([]),
+    addTeamMember: vi.fn(),
+    updateTeamMember: vi.fn(),
+    deleteTeamMember: vi.fn(),
+    uploadTeamMemberPhoto: vi.fn().mockResolvedValue('https://mock-url.com/photo.jpg'),
+  }
 }));

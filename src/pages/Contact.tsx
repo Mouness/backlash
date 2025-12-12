@@ -70,7 +70,7 @@ const Contact: React.FC = () => {
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          title="Map"
+          title={t('contact.map_title')}
         />
       </Box>
 

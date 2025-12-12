@@ -36,7 +36,12 @@ const Home: React.FC = () => {
   const { countries, teamMembers, publications } = useData();
 
   // Derived state for map
+  // Derived state for map
   const highlightedCodes = countries.map((c) => c.code);
+  const countryScores = countries.reduce((acc, c) => {
+    if (c.score !== undefined) acc[c.code] = c.score;
+    return acc;
+  }, {} as { [code: string]: number });
 
   const getCategoryColor = (cat: string) => {
     switch (cat) {
@@ -173,7 +178,6 @@ const Home: React.FC = () => {
         </Box>
         <Box
           sx={{
-            height: 600,
             width: '100%',
             bgcolor: 'background.paper',
             borderRadius: 4,
@@ -183,7 +187,13 @@ const Home: React.FC = () => {
             boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
           }}
         >
-          <InteractiveMap highlightedCodes={highlightedCodes} />
+          <InteractiveMap
+            highlightedCodes={highlightedCodes}
+            countryScores={countryScores}
+            minHeight="auto"
+            height={400}
+            center={[0, 0]}
+          />
         </Box>
       </Container>
 

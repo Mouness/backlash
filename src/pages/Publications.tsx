@@ -62,13 +62,13 @@ const Publications: React.FC = () => {
       refreshPublications();
     } catch (error) {
       console.error('Error deleting pub:', error);
-      alert('Error deleting publication');
+      alert(t('publications.delete_error'));
     }
   };
 
   const handleSeed = async () => {
     // Direct execution without confirm to avoid blocking
-    alert('Starting Publication Seed... Please wait.');
+    alert(t('publications.seed_start'));
 
     try {
       const currentDocs = await publicationService.getPublications();
@@ -84,13 +84,13 @@ const Publications: React.FC = () => {
       await refreshPublications();
 
       if (addedCount > 0) {
-        alert(`Successfully seeded ${addedCount} publications!`);
+        alert(t('publications.seed_success', { count: addedCount }));
       } else {
-        alert('Publications DB is already up to date.');
+        alert(t('publications.seed_uptodate'));
       }
     } catch (error) {
       console.error('Error seeding publications:', error);
-      alert(`Error seeding database: ${String(error)}`);
+      alert(t('publications.seed_error', { error: String(error) }));
     }
   };
 
@@ -126,10 +126,10 @@ const Publications: React.FC = () => {
         <Box>
           {(publications.length === 0 ||
             publications.some((p) => p.id && p.id.startsWith('mock-'))) && (
-            <Button variant="outlined" color="warning" onClick={handleSeed} sx={{ mr: 2 }}>
-              {t('publications.initialize_db')}
-            </Button>
-          )}
+              <Button variant="outlined" color="warning" onClick={handleSeed} sx={{ mr: 2 }}>
+                {t('publications.initialize_db')}
+              </Button>
+            )}
 
           {currentUser && (
             <Button variant="contained" startIcon={<AddIcon />} onClick={() => handleOpenDialog()}>

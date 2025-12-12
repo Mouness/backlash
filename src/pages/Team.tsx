@@ -62,7 +62,7 @@ const Team: React.FC = () => {
       refreshTeam();
     } catch (error) {
       console.error('Error deleting member:', error);
-      alert('Error deleting member');
+      alert(t('team.delete_error'));
     }
   };
 
@@ -70,7 +70,7 @@ const Team: React.FC = () => {
   // Initialization / Seeding function (Admin only)
   const handleSeed = async () => {
     // Direct execution without confirm to avoid blocking
-    alert('Starting Team Seed... Please wait.');
+    alert(t('team.seed_start'));
 
     try {
       // Fetch existing to prevent duplicates
@@ -86,13 +86,13 @@ const Team: React.FC = () => {
       }
       await refreshTeam();
       if (addedCount > 0) {
-        alert(`Successfully added ${addedCount} team members!`);
+        alert(t('team.seed_success', { count: addedCount }));
       } else {
-        alert('Team DB is already up to date.');
+        alert(t('team.seed_uptodate'));
       }
     } catch (error) {
       console.error('Error seeding team:', error);
-      alert(`Error seeding database: ${String(error)}`);
+      alert(t('team.seed_error', { error: String(error) }));
     }
   };
 
