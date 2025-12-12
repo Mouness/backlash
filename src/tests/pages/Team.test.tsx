@@ -9,14 +9,18 @@ const mocks = vi.hoisted(() => ({
   useAuth: vi.fn(),
 }));
 
+vi.mock('../../config', () => ({
+  ENABLE_MOCKS: true,
+}));
+
 vi.mock('../../contexts/AuthContext', () => ({
   useAuth: mocks.useAuth,
-  AuthProvider: ({ children }: any) => <div>{children}</div>
+  AuthProvider: ({ children }: any) => <div>{children}</div>,
 }));
 
 vi.mock('../../contexts/DataContext', () => ({
   useData: mocks.useData,
-  DataProvider: ({ children }: any) => <div>{children}</div>
+  DataProvider: ({ children }: any) => <div>{children}</div>,
 }));
 
 vi.mock('../../services/teamService');
@@ -43,7 +47,7 @@ vi.mock('../../services/teamService', () => ({
     addTeamMember: (data: any) => mockAddMember(data),
     updateTeamMember: (id: string, data: any) => mockUpdateMember(id, data),
     deleteTeamMember: (id: string) => mockDeleteMember(id),
-  }
+  },
 }));
 
 // Default team data
@@ -64,24 +68,24 @@ describe('Team Page', () => {
       currentUser: null,
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
 
-    vi.spyOn(window, 'alert').mockImplementation(() => { });
+    vi.spyOn(window, 'alert').mockImplementation(() => {});
   });
 
   it('renders seed button when empty/mock and calls seed logic', async () => {
     // Force empty state
     mocks.useData.mockReturnValue({
       ...defaultContext,
-      teamMembers: []
+      teamMembers: [],
     });
 
     mocks.useAuth.mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
 
     render(<Team />);
@@ -108,7 +112,7 @@ describe('Team Page', () => {
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
     render(<Team />);
     expect(screen.getByText('team.add_member')).toBeInTheDocument();
@@ -121,7 +125,7 @@ describe('Team Page', () => {
       currentUser: null,
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
     render(<Team />);
     expect(screen.queryByText('team.add_member')).not.toBeInTheDocument();
@@ -133,7 +137,7 @@ describe('Team Page', () => {
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
     render(<Team />);
     const addButton = screen.getByText('team.add_member');
@@ -146,7 +150,7 @@ describe('Team Page', () => {
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
     render(<Team />);
     const deleteIcons = screen.getAllByTestId('DeleteIcon');
@@ -165,7 +169,7 @@ describe('Team Page', () => {
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
     render(<Team />);
     const editIcons = screen.getAllByTestId('EditIcon');
@@ -176,5 +180,4 @@ describe('Team Page', () => {
       expect(screen.getByText('admin.team.title_edit')).toBeInTheDocument();
     }
   });
-
 });

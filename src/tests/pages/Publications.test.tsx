@@ -17,30 +17,35 @@ vi.mock('../../services/publicationService', () => ({
     addPublication: (data: any) => mockAddPublication(data),
     updatePublication: (id: string, data: any) => mockUpdatePublication(id, data),
     deletePublication: (id: string) => mockDeletePublication(id),
-  }
+  },
 }));
 
 // Mock DataContext to allow overriding in tests
 const mockUseData = vi.fn();
+vi.mock('../../config', () => ({
+  ENABLE_MOCKS: true,
+}));
 vi.mock('../../contexts/DataContext', () => ({
   useData: () => mockUseData(), // Return result of spy
-  DataProvider: ({ children }: any) => <div>{children}</div>
+  DataProvider: ({ children }: any) => <div>{children}</div>,
 }));
 
 // Default data
 const defaultContext = {
-  publications: [{
-    id: 'pub1',
-    title: { en: 'Test Pub' },
-    description: { en: 'Desc' },
-    category: 'article',
-    imageUrl: 'url',
-    date: {
-      seconds: 123,
-      toDate: () => new Date('2024-01-01'),
+  publications: [
+    {
+      id: 'pub1',
+      title: { en: 'Test Pub' },
+      description: { en: 'Desc' },
+      category: 'article',
+      imageUrl: 'url',
+      date: {
+        seconds: 123,
+        toDate: () => new Date('2024-01-01'),
+      },
+      link: 'http://test.com',
     },
-    link: 'http://test.com'
-  }],
+  ],
   loadingPublications: false,
   refreshPublications: vi.fn(),
 };
@@ -53,21 +58,21 @@ describe('Publications Page', () => {
     mockGetPublications.mockResolvedValue(MOCK_PUBLICATIONS);
     mockUseData.mockReturnValue(defaultContext);
     // Spy on alert
-    vi.spyOn(window, 'alert').mockImplementation(() => { });
+    vi.spyOn(window, 'alert').mockImplementation(() => {});
   });
 
   it('renders seed button when empty and calls seed logic', async () => {
     // Mock empty data
     mockUseData.mockReturnValue({
       ...defaultContext,
-      publications: []
+      publications: [],
     });
 
     (useAuth as any).mockReturnValue({
       currentUser: null, // Seed visible even for guests? No, code says button variant="outlined" ... wait it is inside Box, does it depend on auth? Checking source: No, depends on list length.
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
 
     render(<Publications />);
@@ -90,7 +95,7 @@ describe('Publications Page', () => {
   it('renders correctly with no data message', () => {
     mockUseData.mockReturnValue({
       ...defaultContext,
-      publications: []
+      publications: [],
     });
     (useAuth as any).mockReturnValue({ currentUser: null });
     render(<Publications />);
@@ -102,7 +107,7 @@ describe('Publications Page', () => {
       currentUser: null,
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
     render(<Publications />);
     expect(screen.getByText('nav.publications')).toBeInTheDocument();
@@ -115,7 +120,7 @@ describe('Publications Page', () => {
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
     render(<Publications />);
     expect(screen.getByText('publications.add_post')).toBeInTheDocument();
@@ -128,7 +133,7 @@ describe('Publications Page', () => {
       currentUser: null,
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
     render(<Publications />);
     expect(screen.queryByText('publications.add_post')).not.toBeInTheDocument();
@@ -140,7 +145,7 @@ describe('Publications Page', () => {
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
     render(<Publications />);
     const addButton = screen.getByText('publications.add_post');
@@ -156,7 +161,7 @@ describe('Publications Page', () => {
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
     render(<Publications />);
     const deleteIcons = screen.getAllByTestId('DeleteIcon');
@@ -175,7 +180,7 @@ describe('Publications Page', () => {
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
-      logout: vi.fn()
+      logout: vi.fn(),
     });
     render(<Publications />);
     const editIcons = screen.getAllByTestId('EditIcon');

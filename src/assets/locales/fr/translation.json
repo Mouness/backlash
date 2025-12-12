@@ -175,14 +175,21 @@
             "saving": "Enregistrement...",
             "preview": "Aperçu",
             "upload": "Télécharger",
-            "optional": "Optionnel"
+            "optional": "Optionnel",
+            "name": "Nom",
+            "email": "Email",
+            "title": "Titre",
+            "description": "Description",
+            "edit": "Modifier",
+            "delete": "Supprimer",
+            "confirm_delete": "Êtes-vous sûr de vouloir supprimer cet élément ?"
         },
         "country": {
             "title_new": "Nouvelle Analyse Pays",
             "title_edit": "Modifier Analyse Pays",
             "code": "Code Pays (ISO 3)",
             "code_helper": "Utilisé pour la correspondance carte (CAN, CHE, ...)",
-            "content_helper": "Utilisez le markdown complet pour le texte riche.",
+            "content_helper": "Supporte Markdown ou texte brut.",
             "score": "Score Démocratique (0-100)",
             "score_levels": {
                 "unknown": "Inconnu",
@@ -191,14 +198,20 @@
                 "moderate": "Modéré",
                 "high": "Élevé",
                 "very_high": "Très Élevé"
-            }
+            },
+            "image_url": "URL de l'image",
+            "summary_label": "Résumé",
+            "content_label": "Analyse Détaillée",
+            "doc_upload": "Télécharger Document (PDF/Word)",
+            "current_doc": "Document actuel joint",
+            "download_analysis": "Télécharger l'Analyse Complète"
         },
         "team": {
             "title_new": "Ajouter Membre",
             "title_edit": "Modifier Membre",
             "gender": "Genre",
             "order": "Ordre",
-            "photo_upload": "Mettre photo",
+            "photo_upload": "Télécharger une photo",
             "no_file": "Aucun fichier",
             "section_multilingual": "Rôle & Biographie (Multilingue)",
             "female": "Femme",
@@ -211,9 +224,10 @@
             "category": "Catégorie",
             "date": "Date",
             "link": "Lien Externe",
-            "doc_upload": "Mettre Document (PDF/Word)",
+            "doc_upload": "Télécharger Document (PDF/Word)",
             "current_doc": "Document actuel joint",
-            "save_error": "Échec de l'enregistrement de la publication"
+            "save_error": "Échec de l'enregistrement de la publication",
+            "upload_image": "Télécharger une image"
         }
     }
 }

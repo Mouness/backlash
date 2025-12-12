@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Typography, Box, Card, CardContent, Divider, Chip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useData } from '../contexts/DataContext';
+import { getLocalizedContent } from '../utils/dataUtils';
 import Grid from '@mui/material/Grid';
 
 const SearchPage: React.FC = () => {
@@ -27,8 +28,8 @@ const SearchPage: React.FC = () => {
 
     const filteredPublications = publications.filter(
       (p) =>
-        (p.title[currentLang] || '').toLowerCase().includes(lowerQuery) ||
-        (p.description[currentLang] || '').toLowerCase().includes(lowerQuery) ||
+        (getLocalizedContent(p.title, currentLang) || '').toLowerCase().includes(lowerQuery) ||
+        (getLocalizedContent(p.description, currentLang) || '').toLowerCase().includes(lowerQuery) ||
         p.category.toLowerCase().includes(lowerQuery),
     );
 
@@ -121,10 +122,10 @@ const SearchPage: React.FC = () => {
                   )}
                   <CardContent sx={{ flex: 1 }}>
                     <Typography variant="subtitle1" fontWeight="bold">
-                      {pub.title[currentLang]}
+                      {getLocalizedContent(pub.title, currentLang)}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" noWrap>
-                      {pub.description[currentLang]}
+                    <Typography variant="body2" color="text.secondary" paragraph>
+                      {getLocalizedContent(pub.description, currentLang)}
                     </Typography>
                   </CardContent>
                 </Card>

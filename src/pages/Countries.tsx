@@ -1,110 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Container,
-  Typography,
-  Box,
-  Card,
-  CardContent,
-  CardActions,
-  Button,
-  IconButton,
-  CircularProgress,
-  Chip,
-} from '@mui/material';
+import React from 'react';
+import { Container, Typography, Box, Button, CircularProgress } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+
 import { useAuth } from '../contexts/AuthContext';
-import { countryService } from '../services/countryService';
-import type { Country } from '../services/countryService';
+import { useCountryController } from '../hooks/useCountryController';
+
+import { ENABLE_MOCKS } from '../config';
+import CountryCard from '../components/molecules/CountryCard';
 import AdminCountryDialog from '../components/organisms/AdminCountryDialog';
 import InteractiveMap from '../components/organisms/InteractiveMap';
-import { useData } from '../contexts/DataContext';
-import { MOCK_COUNTRIES } from '../data/mockCountries';
-import { getScoreLevel } from '../utils/scoreUtils';
-
 const Countries: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { currentUser } = useAuth();
-  const { countries, loadingCountries: loading, refreshCountries } = useData();
-  const navigate = useNavigate();
-
-  // Local state for dialog only
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingCountry, setEditingCountry] = useState<Country | null>(null);
-
-  const currentLang = i18n.language.split('-')[0] as 'en' | 'fr' | 'de';
-
-  const handleAddClick = () => {
-    setEditingCountry(null);
-    setDialogOpen(true);
-  };
-
-  const handleEditClick = (country: Country) => {
-    setEditingCountry(country);
-    setDialogOpen(true);
-  };
-
-  const handleDeleteClick = async (id: string) => {
-    // Direct execution - relying on UI/Permissions
-    try {
-      console.log('Deleting country:', id);
-      await countryService.deleteCountry(id);
-      await refreshCountries();
-      // Optional: alert/toast here
-    } catch (error) {
-      console.error('Failed to delete country', error);
-      alert(t('countries.delete_error'));
-    }
-  };
-
-  const handleSeed = async () => {
-    if (!window.confirm(t('countries.seed_confirm'))) return;
-    try {
-      // Fetch fresh data to avoid stale state issues
-      const currentDocs = await countryService.getCountries();
-      const existingCodes = new Set(currentDocs.map((c) => c.code));
-
-      let addedCount = 0;
-      for (const mock of MOCK_COUNTRIES) {
-        if (!existingCodes.has(mock.code)) {
-          await countryService.addCountry(mock);
-          addedCount++;
-        }
-      }
-
-      await refreshCountries();
-      if (addedCount > 0) {
-        alert(t('countries.seed_success', { count: addedCount }));
-      } else {
-        alert(t('countries.seed_uptodate'));
-      }
-    } catch (error) {
-      console.error('Error seeding countries:', error);
-      alert(t('countries.seed_error', { error: String(error) }));
-    }
-  };
-
-  // Debug logging
-  useEffect(() => {
-    console.log('Current Countries State:', countries);
-  }, [countries]);
-
-  const handleDialogSubmit = async (data: Omit<Country, 'id'>) => {
-    try {
-      if (editingCountry) {
-        await countryService.updateCountry(editingCountry.id, data);
-      } else {
-        await countryService.addCountry(data);
-      }
-      refreshCountries();
-    } catch (error) {
-      console.error('Error saving country', error);
-    }
-  };
+  const {
+    countries,
+    loading,
+    dialogOpen,
+    editingCountry,
+    handleAddClick,
+    handleEditClick,
+    handleCloseDialog,
+    handleDeleteClick,
+    handleSeed,
+    handleDialogSubmit,
+  } = useCountryController();
 
   return (
     <Container maxWidth="xl" sx={{ py: 8 }}>
@@ -112,10 +33,13 @@ const Countries: React.FC = () => {
       <Box sx={{ mb: 8 }}>
         <InteractiveMap
           highlightedCodes={countries.map((c) => c.code)}
-          countryScores={countries.reduce((acc, c) => {
-            if (c.score !== undefined) acc[c.code] = c.score;
-            return acc;
-          }, {} as { [code: string]: number })}
+          countryScores={countries.reduce(
+            (acc, c) => {
+              if (c.score !== undefined) acc[c.code] = c.score;
+              return acc;
+            },
+            {} as { [code: string]: number },
+          )}
           minHeight="auto"
           height={400}
           center={[0, 0]}
@@ -129,8 +53,15 @@ const Countries: React.FC = () => {
         <Box>
           {currentUser && (
             <Box>
-              {(countries.length < MOCK_COUNTRIES.length ||
-                countries.some((c) => c.id === c.code)) && (
+              {/* Only show Initialize DB if we effectively only have mocks (no ID distinct from code) 
+                  Actually, if we are merging, we might always have 'full' list. 
+                  Let's show it only if the user forces it or if we detect NO db persistence. 
+                  For now, let's checking if we have any country with an ID longer than 3 chars (usually auto-ids are long).
+              */}
+              {/* Only show this if Mocks are enabled, otherwise it makes no sense to seed 'mocks' */}
+              {ENABLE_MOCKS &&
+                countries.length > 0 &&
+                !countries.some((c) => c.id && c.id.length > 3) && (
                   <Button variant="outlined" color="warning" onClick={handleSeed} sx={{ mr: 2 }}>
                     {t('countries.initialize_db')}
                   </Button>
@@ -151,85 +82,12 @@ const Countries: React.FC = () => {
         <Grid container spacing={4}>
           {countries.map((country) => (
             <Grid size={{ xs: 12, md: 6, lg: 4 }} key={country.id}>
-              <Card
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  borderRadius: 3,
-                  cursor: 'pointer',
-                  transition: 'transform 0.2s',
-                  '&:hover': { transform: 'translateY(-4px)' },
-                }}
-                onClick={() => navigate(`/countries/${country.id}`)}
-              >
-                {country.imageUrl && (
-                  <Box
-                    sx={{
-                      height: 200,
-                      backgroundImage: `url(${country.imageUrl})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                  />
-                )}
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
-                    <Typography variant="h5" fontWeight={600} gutterBottom>
-                      {country.name[currentLang] || country.name['en']}
-                    </Typography>
-                    <Box sx={{ mt: 1 }}>
-                      <Chip
-                        label={t(getScoreLevel(country.score).key)}
-                        color={getScoreLevel(country.score).color}
-                        size="small"
-                        variant={country.score && country.score > 0 ? 'filled' : 'outlined'}
-                        sx={{
-                          fontWeight: 'bold',
-                          minWidth: 80,
-                          height: 24,
-                          ...getScoreLevel(country.score).style,
-                        }}
-                      />
-                    </Box>
-                  </Box>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      display: '-webkit-box',
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    {country.summary[currentLang] || country.summary['en']}
-                  </Typography>
-                </CardContent>
-                {currentUser && (
-                  <CardActions sx={{ justifyContent: 'flex-end', px: 2, pb: 2 }}>
-                    <IconButton
-                      size="small"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleEditClick(country);
-                      }}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      size="small"
-                      color="error"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteClick(country.id);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </CardActions>
-                )}
-              </Card>
+              <CountryCard
+                country={country}
+                currentUser={currentUser}
+                onEdit={handleEditClick}
+                onDelete={handleDeleteClick}
+              />
             </Grid>
           ))}
         </Grid>
@@ -237,7 +95,7 @@ const Countries: React.FC = () => {
 
       <AdminCountryDialog
         open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
+        onClose={handleCloseDialog}
         onSubmit={handleDialogSubmit}
         initialData={editingCountry}
       />

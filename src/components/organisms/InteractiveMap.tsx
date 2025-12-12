@@ -97,9 +97,18 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
                     const level = getScoreLevel(score);
                     // Map score level to theme colors
                     switch (level.color) {
-                      case 'error': fillColor = theme.palette.error.main; hoverColor = theme.palette.error.dark; break;
-                      case 'warning': fillColor = theme.palette.warning.main; hoverColor = theme.palette.warning.dark; break;
-                      case 'info': fillColor = theme.palette.info.main; hoverColor = theme.palette.info.dark; break;
+                      case 'error':
+                        fillColor = theme.palette.error.main;
+                        hoverColor = theme.palette.error.dark;
+                        break;
+                      case 'warning':
+                        fillColor = theme.palette.warning.main;
+                        hoverColor = theme.palette.warning.dark;
+                        break;
+                      case 'info':
+                        fillColor = theme.palette.info.main;
+                        hoverColor = theme.palette.info.dark;
+                        break;
                       case 'success':
                         fillColor = theme.palette.success.main;
                         hoverColor = theme.palette.success.dark;
@@ -175,7 +184,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
         style={{
           backgroundColor: 'transparent',
           padding: 0,
-          boxShadow: 'none'
+          boxShadow: 'none',
         }}
       />
 

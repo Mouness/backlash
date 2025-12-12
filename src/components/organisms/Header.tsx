@@ -17,9 +17,12 @@ import { useTranslation } from 'react-i18next';
 import MenuIcon from '@mui/icons-material/Menu';
 import LanguageIcon from '@mui/icons-material/Language';
 import SearchIcon from '@mui/icons-material/Search';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import Logo from '../atoms/Logo';
 import SearchBar from '../molecules/SearchBar';
 import { useAuth } from '../../contexts/AuthContext';
+import { useThemeContext } from '../../contexts/ThemeContext';
 import LoginModal from './LoginModal';
 
 // Hide on scroll helper (optional, or just shrink)
@@ -59,6 +62,7 @@ const Header: React.FC = (props) => {
   const { t, i18n } = useTranslation();
   const theme = useTheme();
   const location = useLocation();
+  const { mode, toggleTheme } = useThemeContext();
 
   // Mobile Menu State
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -128,6 +132,11 @@ const Header: React.FC = (props) => {
               {/* Mobile Search Icon */}
               <IconButton onClick={() => setShowMobileSearch(!showMobileSearch)} color="inherit">
                 <SearchIcon />
+              </IconButton>
+
+              {/* Theme Toggle (Mobile) */}
+              <IconButton onClick={toggleTheme} color="inherit">
+                {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
               </IconButton>
 
               {/* Mobile Language Switcher */}
@@ -221,6 +230,19 @@ const Header: React.FC = (props) => {
               <Box sx={{ width: 220 }}>
                 <SearchBar />
               </Box>
+
+              {/* Theme Toggle (Desktop) */}
+              <IconButton
+                onClick={toggleTheme}
+                color="inherit"
+                title={mode === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              >
+                {mode === 'dark' ? (
+                  <LightModeIcon color="inherit" />
+                ) : (
+                  <DarkModeIcon color="inherit" />
+                )}
+              </IconButton>
 
               {/* Language Switcher */}
               <IconButton

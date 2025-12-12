@@ -3,7 +3,6 @@ import {
   getDocs,
   getDoc,
   addDoc,
-  updateDoc,
   deleteDoc,
   doc,
   query,
@@ -15,8 +14,8 @@ import { db, storage } from '../firebase';
 
 export interface Publication {
   id?: string;
-  title: { [lang: string]: string };
-  description: { [lang: string]: string };
+  title: string | { [lang: string]: string };
+  description: string | { [lang: string]: string };
   date: Timestamp;
   category: string; // 'news', 'event', 'article'
   link?: string;
@@ -72,7 +71,8 @@ export const publicationService = {
   updatePublication: async (id: string, publication: Partial<Publication>): Promise<void> => {
     try {
       const docRef = doc(db, COLLECTION_NAME, id);
-      await updateDoc(docRef, publication);
+      const { setDoc } = await import('firebase/firestore');
+      await setDoc(docRef, publication, { merge: true });
     } catch (error) {
       console.error('Error updating publication:', error);
       throw error;

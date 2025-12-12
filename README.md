@@ -5,6 +5,8 @@
 ![Status](https://img.shields.io/badge/status-ready_for_deployment-success.svg)
 ![Firebase](https://img.shields.io/badge/firebase-hosted-orange.svg)
 
+![Backlash Preview](public/backlash_preview.png)
+
 **Backlash** is a cutting-edge web platform dedicated to the visualization, analysis, and management of global legal and policy data. Designed for researchers, policymakers, and the public, it bridges the gap between complex data and accessible, interactive insights.
 
 Whether exploring geopolitical shifts through our interactive map or diving deep into specific country reports, Backlash provides a seamless, multilingual experience powered by modern web technologies.

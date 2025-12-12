@@ -12,29 +12,32 @@ import Contact from './pages/Contact';
 import SearchPage from './pages/SearchPage';
 import { AuthProvider } from './contexts/AuthContext';
 import { DataProvider } from './contexts/DataContext';
+import { ThemeContextProvider } from './contexts/ThemeContext';
 
 function App() {
   return (
-    <AuthProvider>
-      <DataProvider>
-        <Router>
-          <MainLayout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/project" element={<Project />} />
-              <Route path="/publications" element={<Publications />} />
-              <Route path="/publications/:id" element={<PublicationDetails />} />
-              <Route path="/countries" element={<Countries />} />
-              <Route path="/countries/:id" element={<CountryDetails />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/team/:id" element={<TeamDetails />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/search" element={<SearchPage />} />
-            </Routes>
-          </MainLayout>
-        </Router>
-      </DataProvider>
-    </AuthProvider>
+    <ThemeContextProvider>
+      <AuthProvider>
+        <DataProvider>
+          <Router>
+            <MainLayout>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/project" element={<Project />} />
+                <Route path="/publications" element={<Publications />} />
+                <Route path="/publications/:id" element={<PublicationDetails />} />
+                <Route path="/countries" element={<Countries />} />
+                <Route path="/countries/:id" element={<CountryDetails />} />
+                <Route path="/team" element={<Team />} />
+                <Route path="/team/:id" element={<TeamDetails />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/search" element={<SearchPage />} />
+              </Routes>
+            </MainLayout>
+          </Router>
+        </DataProvider>
+      </AuthProvider>
+    </ThemeContextProvider>
   );
 }
 

@@ -8,32 +8,18 @@ const Logo: React.FC = () => {
   const theme = useTheme();
   const { t } = useTranslation();
 
-  // Original Brand Colors
-  const brandPrimary = '#5B7C99';
-  const brandSecondary = '#A4C3D2';
-  const brandDark = '#2F516C';
-
   return (
     <Box
       component={RouterLink}
       to="/"
       sx={{ display: 'flex', alignItems: 'center', gap: 1.5, textDecoration: 'none' }}
     >
-      {/* Abstract SVG Icon: Representing fragmentation/backsliding in a federal structure */}
-      <svg
-        width="40"
-        height="40"
-        viewBox="0 0 40 40"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <rect x="5" y="5" width="14" height="14" rx="2" fill={brandPrimary} />
-        <rect x="21" y="5" width="14" height="14" rx="2" fill={brandSecondary} />
-        <rect x="5" y="21" width="14" height="14" rx="2" fill={brandSecondary} />
-        <rect x="21" y="21" width="14" height="14" rx="2" fill={brandDark} />
-        {/* A "crack" or "shift" line to symbolize backlash/sliding */}
-        <path d="M0 40L40 0" stroke="white" strokeWidth="2" strokeOpacity="0.5" />
-      </svg>
+      <img
+        src={theme.palette.mode === 'dark' ? '/logo_white.svg' : '/logo.svg'}
+        alt="Backlash Logo"
+        width="65"
+        height="52"
+      />
 
       <Box>
         <Typography

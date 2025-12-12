@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  Dialog,
-  DialogTitle,
-} from '@mui/material';
+import { Dialog, DialogTitle } from '@mui/material';
 import type { Publication } from '../../services/publicationService';
 import { useTranslation } from 'react-i18next';
 import PublicationForm from '../organisms/PublicationForm';
@@ -24,7 +21,9 @@ const AdminPublicationDialog: React.FC<AdminPublicationDialogProps> = ({
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-      <DialogTitle>{initialData ? t('admin.publication.title_edit') : t('admin.publication.title_new')}</DialogTitle>
+      <DialogTitle>
+        {initialData ? t('admin.publication.title_edit') : t('admin.publication.title_new')}
+      </DialogTitle>
       <PublicationForm
         initialData={initialData}
         onSave={async (data) => {

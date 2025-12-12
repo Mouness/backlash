@@ -21,7 +21,10 @@ import { useTranslation } from 'react-i18next';
 
 const schema = yup
   .object({
-    email: yup.string().email('login_form.validation_email').required('login_form.validation_required'),
+    email: yup
+      .string()
+      .email('login_form.validation_email')
+      .required('login_form.validation_required'),
     password: yup.string().required('login_form.validation_required'),
   })
   .required();
@@ -92,7 +95,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
             autoFocus
             {...register('email')}
             error={!!errors.email}
-            helperText={errors.email?.message ? t(errors.email.message, { field: t('login_form.email_label') }) : ''}
+            helperText={
+              errors.email?.message
+                ? t(errors.email.message, { field: t('login_form.email_label') })
+                : ''
+            }
           />
           <TextField
             margin="normal"
@@ -104,7 +111,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
             autoComplete="current-password"
             {...register('password')}
             error={!!errors.password}
-            helperText={errors.password?.message ? t(errors.password.message, { field: t('login_form.password_label') }) : ''}
+            helperText={
+              errors.password?.message
+                ? t(errors.password.message, { field: t('login_form.password_label') })
+                : ''
+            }
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

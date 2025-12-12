@@ -18,6 +18,8 @@ import Face3Icon from '@mui/icons-material/Face3';
 import Face6Icon from '@mui/icons-material/Face6';
 import ArticleIcon from '@mui/icons-material/Article';
 import InteractiveMap from '../components/organisms/InteractiveMap';
+
+import { getLocalizedContent } from '../utils/dataUtils';
 import { useData } from '../contexts/DataContext';
 // Local Images
 import slide1Image from '../assets/images/slide1-structure.jpg';
@@ -38,10 +40,13 @@ const Home: React.FC = () => {
   // Derived state for map
   // Derived state for map
   const highlightedCodes = countries.map((c) => c.code);
-  const countryScores = countries.reduce((acc, c) => {
-    if (c.score !== undefined) acc[c.code] = c.score;
-    return acc;
-  }, {} as { [code: string]: number });
+  const countryScores = countries.reduce(
+    (acc, c) => {
+      if (c.score !== undefined) acc[c.code] = c.score;
+      return acc;
+    },
+    {} as { [code: string]: number },
+  );
 
   const getCategoryColor = (cat: string) => {
     switch (cat) {
@@ -294,7 +299,7 @@ const Home: React.FC = () => {
                         mb: 1,
                       }}
                     >
-                      {pub.title[currentLang] || pub.title['en']}
+                      {getLocalizedContent(pub.title, currentLang)}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -307,7 +312,7 @@ const Home: React.FC = () => {
                         WebkitBoxOrient: 'vertical',
                       }}
                     >
-                      {pub.description[currentLang] || pub.description['en']}
+                      {getLocalizedContent(pub.description, currentLang)}
                     </Typography>
                   </CardContent>
                 </Card>

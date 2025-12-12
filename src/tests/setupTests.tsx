@@ -167,7 +167,7 @@ vi.mock('../services/publicationService', () => ({
     addPublication: vi.fn(),
     updatePublication: vi.fn(),
     deletePublication: vi.fn(),
-  }
+  },
 }));
 
 vi.mock('../services/countryService', () => ({
@@ -176,7 +176,7 @@ vi.mock('../services/countryService', () => ({
     addCountry: vi.fn(),
     updateCountry: vi.fn(),
     deleteCountry: vi.fn(),
-  }
+  },
 }));
 
 vi.mock('../services/teamService', () => ({
@@ -186,5 +186,20 @@ vi.mock('../services/teamService', () => ({
     updateTeamMember: vi.fn(),
     deleteTeamMember: vi.fn(),
     uploadTeamMemberPhoto: vi.fn().mockResolvedValue('https://mock-url.com/photo.jpg'),
-  }
+  },
 }));
+
+// Mock window.matchMedia
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: vi.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(), // deprecated
+    removeListener: vi.fn(), // deprecated
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+});

@@ -9,7 +9,8 @@ import {
   query,
   orderBy,
 } from 'firebase/firestore';
-import { db } from '../firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db, storage } from '../firebase';
 
 export interface LocalizedContent {
   en: string;
@@ -24,6 +25,7 @@ export interface Country {
   summary: LocalizedContent;
   content: LocalizedContent; // Detailed analysis
   imageUrl?: string;
+  documentUrl?: string; // URL to PDF/DOC analysis
   score?: number; // 0-100 indicating democratic resilience/backlash status
 }
 
@@ -105,6 +107,17 @@ export const countryService = {
       await deleteDoc(doc(db, COLLECTION_NAME, id));
     } catch (error) {
       console.error('Error deleting country:', error);
+      throw error;
+    }
+  },
+
+  uploadCountryDocument: async (file: File): Promise<string> => {
+    try {
+      const storageRef = ref(storage, `country_docs/${Date.now()}_${file.name}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      return await getDownloadURL(snapshot.ref);
+    } catch (error) {
+      console.error('Error uploading country document:', error);
       throw error;
     }
   },

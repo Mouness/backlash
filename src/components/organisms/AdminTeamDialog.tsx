@@ -123,7 +123,12 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent dividers>
           <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-            <TextField label={t('admin.common.name')} fullWidth required {...register('name', { required: true })} />
+            <TextField
+              label={t('admin.common.name')}
+              fullWidth
+              required
+              {...register('name', { required: true })}
+            />
             <TextField
               select
               label={t('admin.team.gender')}
@@ -161,7 +166,13 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
             </Typography>
           </Box>
           {/* Email Field */}
-          <TextField label={t('admin.common.email')} type="email" fullWidth sx={{ mb: 2 }} {...register('email')} />
+          <TextField
+            label={t('admin.common.email')}
+            type="email"
+            fullWidth
+            sx={{ mb: 2 }}
+            {...register('email')}
+          />
 
           <Typography variant="subtitle2" sx={{ mt: 2, mb: 1 }}>
             {t('admin.team.section_multilingual')}
@@ -180,19 +191,40 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
           {/* English Tab */}
           <Box sx={{ display: activeTab === 0 ? 'block' : 'none' }}>
             <TextField label="Role (EN)" fullWidth sx={{ mb: 2 }} {...register('role.en')} />
-            <TextField label="Bio (EN)" fullWidth multiline rows={4} {...register('bio.en')} />
+            <TextField
+              label="Bio (EN)"
+              fullWidth
+              multiline
+              rows={4}
+              {...register('bio.en')}
+              helperText={t('admin.country.content_helper')}
+            />
           </Box>
 
           {/* French Tab */}
           <Box sx={{ display: activeTab === 1 ? 'block' : 'none' }}>
             <TextField label="Role (FR)" fullWidth sx={{ mb: 2 }} {...register('role.fr')} />
-            <TextField label="Bio (FR)" fullWidth multiline rows={4} {...register('bio.fr')} />
+            <TextField
+              label="Bio (FR)"
+              fullWidth
+              multiline
+              rows={4}
+              {...register('bio.fr')}
+              helperText={t('admin.country.content_helper')}
+            />
           </Box>
 
           {/* German Tab */}
           <Box sx={{ display: activeTab === 2 ? 'block' : 'none' }}>
             <TextField label="Role (DE)" fullWidth sx={{ mb: 2 }} {...register('role.de')} />
-            <TextField label="Bio (DE)" fullWidth multiline rows={4} {...register('bio.de')} />
+            <TextField
+              label="Bio (DE)"
+              fullWidth
+              multiline
+              rows={4}
+              {...register('bio.de')}
+              helperText={t('admin.country.content_helper')}
+            />
           </Box>
         </DialogContent>
         <DialogActions>

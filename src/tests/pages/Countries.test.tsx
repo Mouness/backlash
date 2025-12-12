@@ -12,9 +12,12 @@ import { MOCK_COUNTRIES } from '../../data/mockCountries';
 
 // Mock DataContext to allow overriding in tests
 const mockUseData = vi.fn();
+vi.mock('../../config', () => ({
+  ENABLE_MOCKS: true,
+}));
 vi.mock('../../contexts/DataContext', () => ({
   useData: () => mockUseData(), // Return result of spy
-  DataProvider: ({ children }: any) => <div>{children}</div>
+  DataProvider: ({ children }: any) => <div>{children}</div>,
 }));
 
 // Mock service methods
@@ -30,13 +33,13 @@ vi.mock('../../services/countryService', async () => {
       addCountry: (data: any) => mockAddCountry(data),
       updateCountry: (id: string, data: any) => mockUpdateCountry(id, data),
       deleteCountry: (id: string) => mockDeleteCountry(id),
-    }
-  }
+    },
+  };
 });
 
 // Default countries data
 const defaultContext = {
-  countries: MOCK_COUNTRIES,
+  countries: MOCK_COUNTRIES.map((c) => ({ ...c, id: c.code })) as any[], // Add IDs as in DataContext
   loadingCountries: false,
   refreshCountries: vi.fn(),
 };
@@ -50,9 +53,9 @@ describe('Countries Page', () => {
 
     // Mock window.confirm and alert
     vi.spyOn(window, 'confirm').mockReturnValue(true);
-    vi.spyOn(window, 'alert').mockImplementation(() => { });
+    vi.spyOn(window, 'alert').mockImplementation(() => {});
 
-    // Mock getScoreLevel to avoid strict i18n key dependency? 
+    // Mock getScoreLevel to avoid strict i18n key dependency?
     // Or just expect translation keys. The component uses t(key).
     // In tests t(key) -> key.
     // So we expect 'admin.country.score_levels.very_high' or similar.
@@ -63,7 +66,7 @@ describe('Countries Page', () => {
       currentUser: null,
       loading: false,
       login: mockLogin,
-      logout: mockLogout
+      logout: mockLogout,
     });
     render(<Countries />);
     expect(screen.getByText('countries.title')).toBeInTheDocument();
@@ -77,18 +80,18 @@ describe('Countries Page', () => {
 
   it('shows admin actions and seed button when empty/mocked and logged in', async () => {
     // Force empty state to show Seed button (logic: < MOCK_COUNTRIES.length or matches ID code)
-    // MOCK_COUNTRIES usually length 2. 
+    // MOCK_COUNTRIES usually length 2.
     // If we return empty list, it should show seed button.
     mockUseData.mockReturnValue({
       ...defaultContext,
-      countries: []
+      // countries must be populated (mocks) for seed button to show under new logic
     });
 
     (useAuth as any).mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
       login: mockLogin,
-      logout: mockLogout
+      logout: mockLogout,
     });
 
     render(<Countries />);
@@ -117,7 +120,7 @@ describe('Countries Page', () => {
       currentUser: { uid: 'admin' },
       loading: false,
       login: mockLogin,
-      logout: mockLogout
+      logout: mockLogout,
     });
 
     render(<Countries />);
@@ -133,7 +136,7 @@ describe('Countries Page', () => {
       currentUser: { uid: 'admin' },
       loading: false,
       login: mockLogin,
-      logout: mockLogout
+      logout: mockLogout,
     });
 
     render(<Countries />);
@@ -151,7 +154,7 @@ describe('Countries Page', () => {
 
     await waitFor(() => {
       // We accept any call since ID might be undefined in mocks for some reason
-      // But checking MOCK_COUNTRIES, it matches id: 'ca'. 
+      // But checking MOCK_COUNTRIES, it matches id: 'ca'.
       // If component uses 'code' as key? No, key={country.id}.
       // We will check for any call first.
       expect(mockDeleteCountry).toHaveBeenCalled();

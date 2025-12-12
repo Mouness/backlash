@@ -175,14 +175,21 @@
             "saving": "Speichern...",
             "preview": "Vorschau",
             "upload": "Hochladen",
-            "optional": "Optional"
+            "optional": "Optional",
+            "name": "Name",
+            "email": "E-Mail",
+            "title": "Titel",
+            "description": "Beschreibung",
+            "edit": "Bearbeiten",
+            "delete": "Löschen",
+            "confirm_delete": "Sind Sie sicher, dass Sie dieses Element löschen möchten?"
         },
         "country": {
             "title_new": "Neue Länderanalyse",
             "title_edit": "Länderanalyse bearbeiten",
             "code": "Ländercode (ISO 3)",
             "code_helper": "Für Kartenabgleich verwendet (CAN, CHE, ...)",
-            "content_helper": "Verwenden Sie Markdown für Rich Text.",
+            "content_helper": "Unterstützt Markdown oder Klartext.",
             "score": "Demokratie-Score (0-100)",
             "score_levels": {
                 "unknown": "Unbekannt",
@@ -191,7 +198,13 @@
                 "moderate": "Mittel",
                 "high": "Hoch",
                 "very_high": "Sehr Hoch"
-            }
+            },
+            "image_url": "Bild-URL",
+            "summary_label": "Zusammenfassung",
+            "content_label": "Detaillierte Analyse",
+            "doc_upload": "Dokument hochladen (PDF/Word)",
+            "current_doc": "Aktuelles Dokument angehängt",
+            "download_analysis": "Vollständige Analyse herunterladen"
         },
         "team": {
             "title_new": "Mitglied hinzufügen",
@@ -213,7 +226,8 @@
             "link": "Externer Link",
             "doc_upload": "Dokument hochladen (PDF/Word)",
             "current_doc": "Aktuelles Dokument angehängt",
-            "save_error": "Fehler beim Speichern der Publikation"
+            "save_error": "Fehler beim Speichern der Publikation",
+            "upload_image": "Bild hochladen"
         }
     }
 }

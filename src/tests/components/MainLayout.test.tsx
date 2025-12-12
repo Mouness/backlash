@@ -13,7 +13,7 @@ describe('MainLayout', () => {
     (useAuth as any).mockReturnValue({
       currentUser: null,
       loading: false,
-      logout: mockLogout
+      logout: mockLogout,
     });
   });
 
@@ -39,10 +39,14 @@ describe('MainLayout', () => {
     (useAuth as any).mockReturnValue({
       currentUser: null,
       loading: false,
-      logout: mockLogout
+      logout: mockLogout,
     });
 
-    render(<MainLayout><div>Child</div></MainLayout>);
+    render(
+      <MainLayout>
+        <div>Child</div>
+      </MainLayout>,
+    );
     const loginBtns = screen.getAllByText('nav.login');
     expect(loginBtns.length).toBeGreaterThan(0);
   });
@@ -51,16 +55,24 @@ describe('MainLayout', () => {
     (useAuth as any).mockReturnValue({
       currentUser: { uid: '123' },
       loading: false,
-      logout: mockLogout
+      logout: mockLogout,
     });
 
-    render(<MainLayout><div>Child</div></MainLayout>);
+    render(
+      <MainLayout>
+        <div>Child</div>
+      </MainLayout>,
+    );
     expect(screen.getByText('Admin')).toBeInTheDocument();
     expect(screen.getByText('nav.logout')).toBeInTheDocument();
   });
 
   it('opens language menu and changes language', async () => {
-    render(<MainLayout><div>Child</div></MainLayout>);
+    render(
+      <MainLayout>
+        <div>Child</div>
+      </MainLayout>,
+    );
 
     // Find language button (it has title 'languages.change_language')
     // Note: The title attribute is used in the IconButton in Header.tsx

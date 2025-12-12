@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  Dialog,
-  DialogTitle,
-} from '@mui/material';
+import { Dialog, DialogTitle } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import type { Country } from '../../services/countryService';
 import CountryForm from '../organisms/CountryForm';
@@ -24,7 +21,9 @@ const AdminCountryDialog: React.FC<AdminCountryDialogProps> = ({
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-      <DialogTitle>{initialData ? t('admin.country.title_edit') : t('admin.country.title_new')}</DialogTitle>
+      <DialogTitle>
+        {initialData ? t('admin.country.title_edit') : t('admin.country.title_new')}
+      </DialogTitle>
       <CountryForm
         initialData={initialData}
         onSubmit={async (data) => {
@@ -33,7 +32,7 @@ const AdminCountryDialog: React.FC<AdminCountryDialogProps> = ({
         }}
         onCancel={onClose}
       />
-    </Dialog >
+    </Dialog>
   );
 };
 

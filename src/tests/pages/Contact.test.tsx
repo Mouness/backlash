@@ -10,9 +10,9 @@ vi.mock('../../services/contactService', async (importOriginal) => {
     // @ts-ignore
     ...actual,
     contactService: {
-      addMessage: vi.fn().mockResolvedValue(undefined)
-    }
-  }
+      addMessage: vi.fn().mockResolvedValue(undefined),
+    },
+  };
 });
 
 describe('Contact Page', () => {
@@ -33,10 +33,18 @@ describe('Contact Page', () => {
   it('submits form with valid data', async () => {
     render(<Contact />);
 
-    fireEvent.change(screen.getByLabelText('contact.form.name'), { target: { value: 'Test User' } });
-    fireEvent.change(screen.getByLabelText('contact.form.email'), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByLabelText('contact.form.subject'), { target: { value: 'Test Subject' } });
-    fireEvent.change(screen.getByLabelText('contact.form.message'), { target: { value: 'Hello World' } });
+    fireEvent.change(screen.getByLabelText('contact.form.name'), {
+      target: { value: 'Test User' },
+    });
+    fireEvent.change(screen.getByLabelText('contact.form.email'), {
+      target: { value: 'test@example.com' },
+    });
+    fireEvent.change(screen.getByLabelText('contact.form.subject'), {
+      target: { value: 'Test Subject' },
+    });
+    fireEvent.change(screen.getByLabelText('contact.form.message'), {
+      target: { value: 'Hello World' },
+    });
 
     const submitBtn = screen.getByRole('button', { name: 'contact.form.send' });
     fireEvent.click(submitBtn);
@@ -46,7 +54,7 @@ describe('Contact Page', () => {
         name: 'Test User',
         email: 'test@example.com',
         subject: 'Test Subject',
-        message: 'Hello World'
+        message: 'Hello World',
       });
     });
   });

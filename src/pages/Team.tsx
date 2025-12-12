@@ -23,6 +23,7 @@ import type { TeamMember } from '../services/teamService';
 import { MOCK_TEAM } from '../data/mockTeam';
 import AdminTeamDialog from '../components/organisms/AdminTeamDialog';
 import { useTheme } from '@mui/material/styles';
+import { ENABLE_MOCKS } from '../config';
 
 const Team: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -115,7 +116,7 @@ const Team: React.FC = () => {
 
         {currentUser && (
           <Box>
-            {(members.length === 0 || isShowingMocks) && (
+            {ENABLE_MOCKS && (members.length === 0 || isShowingMocks) && (
               <Button variant="outlined" color="warning" onClick={handleSeed} sx={{ mr: 2 }}>
                 {t('team.initialize_db')}
               </Button>

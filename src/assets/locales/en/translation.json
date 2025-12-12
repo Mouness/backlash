@@ -175,14 +175,21 @@
             "saving": "Saving...",
             "preview": "Preview",
             "upload": "Upload",
-            "optional": "Optional"
+            "optional": "Optional",
+            "name": "Name",
+            "email": "Email",
+            "title": "Title",
+            "description": "Description",
+            "edit": "Edit",
+            "delete": "Delete",
+            "confirm_delete": "Are you sure you want to delete this item?"
         },
         "country": {
             "title_new": "New Country Analysis",
             "title_edit": "Edit Country Analysis",
             "code": "Country Code (ISO 3)",
             "code_helper": "Used for map matching (CAN, CHE, DEU, BRA, USA, IND)",
-            "content_helper": "Use full markdown for rich text.",
+            "content_helper": "Supports Markdown or plain text.",
             "score": "Democratic Score (0-100)",
             "score_levels": {
                 "unknown": "Unknown",
@@ -191,7 +198,13 @@
                 "moderate": "Moderate",
                 "high": "High",
                 "very_high": "Very High"
-            }
+            },
+            "image_url": "Image URL",
+            "summary_label": "Summary",
+            "content_label": "Detailed Analysis",
+            "doc_upload": "Upload Document (PDF/Word)",
+            "current_doc": "Current document attached",
+            "download_analysis": "Download Full Analysis"
         },
         "team": {
             "title_new": "Add Team Member",
@@ -213,7 +226,8 @@
             "link": "External Link",
             "doc_upload": "Upload Document (PDF/Word)",
             "current_doc": "Current document attached",
-            "save_error": "Failed to save publication"
+            "save_error": "Failed to save publication",
+            "upload_image": "Upload Image"
         }
     }
 }

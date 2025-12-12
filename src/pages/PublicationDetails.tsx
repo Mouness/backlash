@@ -1,56 +1,64 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Typography, Box, Button, CircularProgress, Chip } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DownloadIcon from '@mui/icons-material/Download';
 import LaunchIcon from '@mui/icons-material/Launch';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 import { publicationService } from '../services/publicationService';
 import type { Publication } from '../services/publicationService';
-import { MOCK_PUBLICATIONS } from '../data/mockPublications';
+import { useAuth } from '../contexts/AuthContext';
+import { useData } from '../contexts/DataContext';
+import AdminPublicationDialog from '../components/organisms/AdminPublicationDialog';
+import ReactMarkdown from 'react-markdown';
+import { getLocalizedContent } from '../utils/dataUtils';
 
 const PublicationDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { i18n } = useTranslation();
-  const [publication, setPublication] = useState<Publication | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { i18n, t } = useTranslation();
+  const { publications, refreshPublications, loadingPublications } = useData();
+  const { currentUser } = useAuth();
+
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const currentLang = i18n.language.split('-')[0] as 'en' | 'fr' | 'de';
 
-  useEffect(() => {
-    const fetchPublication = async () => {
-      if (!id) return;
-      setLoading(true);
-      try {
-        // Try to find in Mocks first if it's a seed test
-        // Actually, real app logic usually checks DB.
-        // But since we use mocks heavily as fallback:
-        let found: Publication | null = null;
+  const publication = useMemo(() => {
+    if (!id || publications.length === 0) return null;
+    return publications.find((p) => p.id === id) || null;
+  }, [id, publications]);
 
-        // Attempt DB fetch
-        try {
-          found = await publicationService.getPublication(id);
-        } catch {
-          console.warn('DB fetch failed, checking mocks');
-        }
-
-        if (!found) {
-          // Check mocks
-          found = MOCK_PUBLICATIONS.find((p) => p.id === id) || null;
-        }
-        setPublication(found);
-      } catch (error) {
-        console.error('Error fetching publication details:', error);
-      } finally {
-        setLoading(false);
+  const handleUpdate = async (data: Omit<Publication, 'id'>) => {
+    if (!publication) return;
+    try {
+      if (publication.id) {
+        await publicationService.updatePublication(publication.id, data);
+        await refreshPublications();
+        // UI will update automatically via useEffect on publications change
       }
-    };
+    } catch (error) {
+      console.error('Failed to update publication', error);
+      alert('Failed to update publication');
+    }
+  };
 
-    fetchPublication();
-  }, [id]);
+  const handleDelete = async () => {
+    if (!publication || !publication.id) return;
+    if (!window.confirm(t('admin.common.confirm_delete'))) return;
+    try {
+      await publicationService.deletePublication(publication.id);
+      await refreshPublications();
+      navigate('/publications');
+    } catch (error) {
+      console.error('Failed to delete publication', error);
+      alert('Failed to delete publication');
+    }
+  };
 
-  if (loading) {
+  if (loadingPublications && publications.length === 0) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
         <CircularProgress />
@@ -75,13 +83,31 @@ const PublicationDetails: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 8 }}>
-      <Button
-        startIcon={<ArrowBackIcon />}
-        onClick={() => navigate('/publications')}
-        sx={{ mb: 4 }}
-      >
-        Back to Publications
-      </Button>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
+        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/publications')}>
+          Back to Publications
+        </Button>
+        {currentUser && (
+          <Box>
+            <Button
+              startIcon={<EditIcon />}
+              variant="contained"
+              onClick={() => setDialogOpen(true)}
+              sx={{ mr: 2 }}
+            >
+              {t('admin.common.edit')}
+            </Button>
+            <Button
+              startIcon={<DeleteIcon />}
+              variant="outlined"
+              color="error"
+              onClick={handleDelete}
+            >
+              {t('admin.common.delete')}
+            </Button>
+          </Box>
+        )}
+      </Box>
 
       {publication.imageUrl && (
         <Box
@@ -106,16 +132,14 @@ const PublicationDetails: React.FC = () => {
       </Box>
 
       <Typography variant="h3" fontWeight={700} gutterBottom>
-        {publication.title[currentLang] || publication.title['en']}
+        {getLocalizedContent(publication.title, currentLang)}
       </Typography>
 
-      <Typography
-        variant="body1"
-        paragraph
-        sx={{ whiteSpace: 'pre-wrap', mb: 4, fontSize: '1.1rem', lineHeight: 1.8 }}
+      <Box
+        sx={{ mb: 4, typography: 'body1', '& p': { mb: 2 }, fontSize: '1.1rem', lineHeight: 1.8 }}
       >
-        {publication.description[currentLang] || publication.description['en']}
-      </Typography>
+        <ReactMarkdown>{getLocalizedContent(publication.description, currentLang)}</ReactMarkdown>
+      </Box>
 
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
         {publication.documentUrl && (
@@ -141,6 +165,13 @@ const PublicationDetails: React.FC = () => {
           </Button>
         )}
       </Box>
+
+      <AdminPublicationDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        onSave={handleUpdate}
+        initialData={publication}
+      />
     </Container>
   );
 };
