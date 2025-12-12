@@ -8,6 +8,7 @@ import {
   getDoc,
   query,
   orderBy,
+  where,
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../firebase';
@@ -66,14 +67,12 @@ export const countryService = {
 
   getCountryByCode: async (code: string): Promise<Country | null> => {
     try {
-      // Note: In a real app with many docs, use a query.
-      // For a few countries, filtering in memory or client-side might be acceptable if list is cached,
-      // but let's query properly if possible. Ideally 'code' should be unique.
-      // For simplicity here, if we don't index 'code', we might fetch all.
-      // Let's assume we can query. Or simpler: fetch all and find.
-      // Since there are only ~6 countries, fetching all is efficient enough.
-      const all = await countryService.getCountries();
-      return all.find((c) => c.code === code) || null;
+
+      const q = query(collection(db, COLLECTION_NAME), where('code', '==', code));
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) return null;
+      const docSnap = querySnapshot.docs[0];
+      return { id: docSnap.id, ...docSnap.data() } as Country;
     } catch (error) {
       console.error('Error getting country by code:', error);
       throw error;

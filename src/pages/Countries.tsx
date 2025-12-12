@@ -53,12 +53,7 @@ const Countries: React.FC = () => {
         <Box>
           {currentUser && (
             <Box>
-              {/* Only show Initialize DB if we effectively only have mocks (no ID distinct from code) 
-                  Actually, if we are merging, we might always have 'full' list. 
-                  Let's show it only if the user forces it or if we detect NO db persistence. 
-                  For now, let's checking if we have any country with an ID longer than 3 chars (usually auto-ids are long).
-              */}
-              {/* Only show this if Mocks are enabled, otherwise it makes no sense to seed 'mocks' */}
+
               {ENABLE_MOCKS &&
                 countries.length > 0 &&
                 !countries.some((c) => c.id && c.id.length > 3) && (
