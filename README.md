@@ -1,8 +1,8 @@
 # Backlash - Global Legal & Policy Analysis Platform
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-1.1.0-blue.svg?cacheSeconds=2592000)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
-![Status](https://img.shields.io/badge/status-ready_for_deployment-success.svg)
+![Status](https://img.shields.io/badge/status-active-success.svg)
 ![Firebase](https://img.shields.io/badge/firebase-hosted-orange.svg)
 
 ![Backlash Preview](public/backlash_preview.png)
@@ -11,18 +11,20 @@
 
 Whether exploring geopolitical shifts through our interactive map or diving deep into specific country reports, Backlash provides a seamless, multilingual experience powered by modern web technologies.
 
+**Live Demo:** [https://backlash-d5a13.web.app](https://backlash-d5a13.web.app)
+
 ---
 
 ## 📑 Table of Contents
 
 - [✨ Key Features](#-key-features)
-- [🏗️ Architecture & Tech Stack](#-architecture--tech-stack)
+- [🏗️ Architecture & Patterns](#-architecture--patterns)
 - [📂 Project Structure](#-project-structure)
 - [🚀 Getting Started](#-getting-started)
 - [💻 Development](#-development)
 - [🌍 Internationalization (i18n)](#-internationalization-i18n)
-- [🔒 Security & Admin](#-security--admin)
-- [🚀 Deployment](#-deployment)
+- [� Security & Admin](#-security--admin)
+- [�🚀 Deployment](#-deployment)
 - [👥 Team](#-team)
 
 ---
@@ -48,21 +50,24 @@ Whether exploring geopolitical shifts through our interactive map or diving deep
 ### 🔐 Robust Administration
 *   **Secure Dashboard**: Protected routes for content management.
 *   **Content Management System (CMS)**:
-    *   Create, Read, Update, Delete (CRUD) for Publications and Team Members.
+    *   Powered by specialized **Custom Hooks** (`usePublicationController`, `useCountryController`) for logic separation.
+    *   Create, Read, Update, Delete (CRUD) for Publications, Countries, and Team Members.
     *   File Uploads (Images & Documents) seamlessly integrated with Firebase Storage.
-    *   Rich Text editing support.
+    *   Rich Text editing support for in-depth analysis.
 
 ### 🎨 Modern User Experience
 *   **Responsive Design**: Mobile-first architecture ensures a perfect experience on phones, tablets, and desktops.
+*   **Atomic Design**: Reusable components (`PublicationCard`, `CountryCard`, `MapTooltip`) for consistency.
 *   **Dark/Light Mode**: (Ready for implementation) Built on a flexible theme system.
 *   **Accessibility**: WCAG compliant components using Material UI.
 
 ---
 
-## 🏗️ Architecture & Tech Stack
+## 🏗️ Architecture & Patterns
 
-Backlash is a Single Page Application (SPA) built for performance and scalability.
+Backlash is a Single Page Application (SPA) built for performance, scalability, and maintainability.
 
+### Tech Stack
 | Layer | Technology | Description |
 | :--- | :--- | :--- |
 | **Frontend Core** | **React 19** | The latest version of the library for building user interfaces. |
@@ -72,7 +77,11 @@ Backlash is a Single Page Application (SPA) built for performance and scalabilit
 | **Routing** | **React Router v7** | Standard routing library for keeping the UI in sync with the URL. |
 | **State Management** | **Context API** | Lightweight global state management for Auth and Data. |
 | **Data Viz** | **React Simple Maps** | Declarative API for generating SVG maps. |
-| **Backend (SaaS)** | **Firebase** | Fully managed backend (Firestore, Auth, Storage, Hosting). |
+| **Backend** | **Firebase** | Fully managed backend (Firestore, Auth, Storage, Hosting). |
+
+### Design Patterns
+*   **Atomic Design**: Components are organized into Atoms, Molecules, and Organisms to ensure reusability.
+*   **View/Logic Separation**: Complex business logic (dialog management, CRUD operations, seeding) is extracted into **Custom Hooks** (e.g., `src/hooks/usePublicationController.ts`), keeping Page components clean and declarative.
 
 ---
 
@@ -86,18 +95,19 @@ src/
 │   └── locales/        # i18n JSON files (en, fr, de)
 ├── components/         # Atomic Design Structure
 │   ├── atoms/          # Basic building blocks (Buttons, Icons)
-│   ├── molecules/      # Simple combinations (Search bars, Cards)
-│   ├── organisms/      # Complex sections (Map, Footer, AdminDialogs)
+│   ├── molecules/      # Composite components (PublicationCard, CountryCard)
+│   ├── organisms/      # Complex sections (InteractiveMap, AdminDialogs)
 │   └── templates/      # Page layouts (MainLayout)
 ├── contexts/           # Global State (AuthContext, DataContext)
 ├── data/               # Mock data for seeding and testing
+├── hooks/              # Custom Logic Hooks (Controllers)
 ├── pages/              # Main Route Views (Home, Countries, Publications)
 ├── services/           # Firebase Interaction Layer
 │   ├── countryService.ts
 │   ├── publicationService.ts
 │   └── ...
 ├── tests/              # Test Suite (Vitest)
-└── utils/              # Helper functions
+└── utils/              # Helper functions (dataUtils, scoreUtils)
 ```
 
 ---
@@ -155,6 +165,7 @@ Follow these instructions to get a copy of the project running on your local mac
 *   `npm run build`: Compiles the app for production (TypeScript + Vite).
 *   `npm run lint`: Runs ESLint to check for code quality issues.
 *   `npm run test`: Executes the test suite with Vitest.
+*   `npm run test -- --coverage`: Check test coverage.
 *   `npm run preview`: Preview the production build locally.
 
 ---
@@ -165,7 +176,7 @@ The platform supports **English**, **French**, and **German** out of the box.
 
 *   Translations are stored in `src/assets/locales/{lang}/translation.json`.
 *   Language detection automatically respects the user's browser settings.
-*   Content in the database is structured to support multiple languages for titles and descriptions.
+*   Content in the database is structured to support multiple languages for titles and descriptions using the `getLocalizedContent()` utility.
 
 ---
 
@@ -178,7 +189,7 @@ The platform supports **English**, **French**, and **German** out of the box.
 
 ---
 
-## � Deployment
+## 🚀 Deployment
 
 The project is pre-configured for **Firebase Hosting**.
 
@@ -189,10 +200,12 @@ The project is pre-configured for **Firebase Hosting**.
 
 2.  **Deploy**
     ```bash
+    npx -y -p firebase-tools firebase deploy --only hosting
+    # OR if you have firebase-tools installed globally:
     firebase deploy --only hosting
     ```
 
-For detailed deployment steps, please refer to the internal `deployment_guide.md` artifact.
+**Live Site:** [https://backlash-d5a13.web.app](https://backlash-d5a13.web.app)
 
 ---
 
