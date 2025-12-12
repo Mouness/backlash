@@ -11,8 +11,6 @@
 
 Whether exploring geopolitical shifts through our interactive map or diving deep into specific country reports, Backlash provides a seamless, multilingual experience powered by modern web technologies.
 
-**Live Demo:** [https://backlash-d5a13.web.app](https://backlash-d5a13.web.app)
-
 ---
 
 ## 📑 Table of Contents
@@ -204,8 +202,6 @@ The project is pre-configured for **Firebase Hosting**.
     # OR if you have firebase-tools installed globally:
     firebase deploy --only hosting
     ```
-
-**Live Site:** [https://backlash-d5a13.web.app](https://backlash-d5a13.web.app)
 
 ---
 
