@@ -133,7 +133,7 @@ const PublicationDetails: React.FC = () => {
             mr: 2,
             borderRadius: 0,
             fontWeight: 'bold',
-            letterSpacing: '0.05em'
+            letterSpacing: '0.05em',
           }}
         />
         <Typography variant="caption" color="text.secondary">

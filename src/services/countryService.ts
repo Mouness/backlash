@@ -12,6 +12,7 @@ import {
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../firebase';
+import { DemocraticScore } from '../utils/scoreUtils';
 
 export interface LocalizedContent {
   en: string;
@@ -27,7 +28,7 @@ export interface Country {
   content: LocalizedContent; // Detailed analysis
   imageUrl?: string;
   documentUrl?: string; // URL to PDF/DOC analysis
-  score?: number; // 0-100 indicating democratic resilience/backlash status
+  score?: DemocraticScore; // Enum indicating democratic resilience/backlash status
 }
 
 const COLLECTION_NAME = 'countries';
@@ -67,7 +68,6 @@ export const countryService = {
 
   getCountryByCode: async (code: string): Promise<Country | null> => {
     try {
-
       const q = query(collection(db, COLLECTION_NAME), where('code', '==', code));
       const querySnapshot = await getDocs(q);
       if (querySnapshot.empty) return null;

@@ -7,7 +7,7 @@ import { contactService } from '../../services/contactService';
 vi.mock('../../services/contactService', async (importOriginal) => {
   const actual = await importOriginal();
   return {
-    // @ts-ignore
+    // @ts-expect-error - mocking partial implementation
     ...actual,
     contactService: {
       addMessage: vi.fn().mockResolvedValue(undefined),

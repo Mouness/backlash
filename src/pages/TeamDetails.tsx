@@ -14,6 +14,7 @@ import type { TeamMember } from '../services/teamService';
 import AdminTeamDialog from '../components/organisms/AdminTeamDialog';
 import Face3Icon from '@mui/icons-material/Face3';
 import Face6Icon from '@mui/icons-material/Face6';
+import ReactMarkdown from 'react-markdown';
 
 const TeamDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -42,7 +43,8 @@ const TeamDetails: React.FC = () => {
   };
 
   const handleDelete = async () => {
-    if (member && member.id && window.confirm(t('admin.common.confirm_delete'))) { // Combined checks and updated translation key
+    if (member && member.id && window.confirm(t('admin.common.confirm_delete'))) {
+      // Combined checks and updated translation key
       try {
         await teamService.deleteTeamMember(member.id);
         await refreshTeam();
@@ -103,7 +105,10 @@ const TeamDetails: React.FC = () => {
         )}
       </Box>
 
-      <Paper elevation={0} sx={{ p: 0, overflow: 'hidden', borderRadius: 0, border: '1px solid #E0E0E0' }}>
+      <Paper
+        elevation={0}
+        sx={{ p: 0, overflow: 'hidden', borderRadius: 0, border: '1px solid #E0E0E0' }}
+      >
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
           {/* Left Column: Image & Contact */}
           <Box
@@ -179,13 +184,19 @@ const TeamDetails: React.FC = () => {
             </Typography>
             <Box sx={{ width: 60, height: 4, bgcolor: 'secondary.main', mb: 4 }} />
 
-            <Typography
-              variant="body1"
-              paragraph
-              sx={{ fontSize: '1.1rem', lineHeight: 1.8, color: 'text.primary' }}
+            <Box
+              sx={{
+                typography: 'body1',
+                '& p': { mb: 2 },
+                fontSize: '1.1rem',
+                lineHeight: 1.8,
+                color: 'text.primary',
+              }}
             >
-              {member.bio ? member.bio[currentLang] || member.bio['en'] : t('team.no_bio')}
-            </Typography>
+              <ReactMarkdown>
+                {member.bio ? member.bio[currentLang] || member.bio['en'] : t('team.no_bio')}
+              </ReactMarkdown>
+            </Box>
           </Box>
         </Box>
       </Paper>

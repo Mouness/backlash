@@ -29,7 +29,9 @@ const SearchPage: React.FC = () => {
     const filteredPublications = publications.filter(
       (p) =>
         (getLocalizedContent(p.title, currentLang) || '').toLowerCase().includes(lowerQuery) ||
-        (getLocalizedContent(p.description, currentLang) || '').toLowerCase().includes(lowerQuery) ||
+        (getLocalizedContent(p.description, currentLang) || '')
+          .toLowerCase()
+          .includes(lowerQuery) ||
         p.category.toLowerCase().includes(lowerQuery),
     );
 

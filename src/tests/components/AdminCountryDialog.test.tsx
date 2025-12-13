@@ -72,7 +72,7 @@ describe('AdminCountryDialog', () => {
         expect.objectContaining({
           code: 'TST',
           name: expect.objectContaining({ en: 'Test Land' }),
-          score: 70,
+          score: 'HIGH',
         }),
       );
     });

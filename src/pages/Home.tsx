@@ -21,6 +21,7 @@ import InteractiveMap from '../components/organisms/InteractiveMap';
 
 import { getLocalizedContent } from '../utils/dataUtils';
 import { useData } from '../contexts/DataContext';
+import { DemocraticScore } from '../utils/scoreUtils';
 // Local Images
 import slide1Image from '../assets/images/slide1-structure.jpg';
 import slide2Image from '../assets/images/slide2-law.jpg';
@@ -45,7 +46,7 @@ const Home: React.FC = () => {
       if (c.score !== undefined) acc[c.code] = c.score;
       return acc;
     },
-    {} as { [code: string]: number },
+    {} as { [code: string]: DemocraticScore },
   );
 
   const getCategoryColor = (cat: string) => {

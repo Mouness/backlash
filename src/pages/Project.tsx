@@ -45,7 +45,15 @@ const Project: React.FC = () => {
         </Typography>
 
         {/* Team Photo */}
-        <Card elevation={4} sx={{ borderRadius: 0, overflow: 'hidden', border: '1px solid #E0E0E0', boxShadow: 'none' }}>
+        <Card
+          elevation={4}
+          sx={{
+            borderRadius: 0,
+            overflow: 'hidden',
+            border: '1px solid #E0E0E0',
+            boxShadow: 'none',
+          }}
+        >
           <Box
             component="img"
             src={projectTeamImage}

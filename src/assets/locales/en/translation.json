@@ -190,7 +190,7 @@
             "code": "Country Code (ISO 3)",
             "code_helper": "Used for map matching (CAN, CHE, DEU, BRA, USA, IND)",
             "content_helper": "Supports Markdown or plain text.",
-            "score": "Democratic Score (0-100)",
+            "score": "Democratic Score",
             "score_levels": {
                 "unknown": "Unknown",
                 "very_low": "Very Low",

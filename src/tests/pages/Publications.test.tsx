@@ -14,8 +14,8 @@ const mockGetPublications = vi.fn().mockResolvedValue(MOCK_PUBLICATIONS);
 vi.mock('../../services/publicationService', () => ({
   publicationService: {
     getPublications: () => mockGetPublications(),
-    addPublication: (data: any) => mockAddPublication(data),
-    updatePublication: (id: string, data: any) => mockUpdatePublication(id, data),
+    addPublication: (data: unknown) => mockAddPublication(data),
+    updatePublication: (id: string, data: unknown) => mockUpdatePublication(id, data),
     deletePublication: (id: string) => mockDeletePublication(id),
   },
 }));
@@ -27,7 +27,7 @@ vi.mock('../../config', () => ({
 }));
 vi.mock('../../contexts/DataContext', () => ({
   useData: () => mockUseData(), // Return result of spy
-  DataProvider: ({ children }: any) => <div>{children}</div>,
+  DataProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
 // Default data
@@ -68,7 +68,7 @@ describe('Publications Page', () => {
       publications: [],
     });
 
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: null, // Seed visible even for guests? No, code says button variant="outlined" ... wait it is inside Box, does it depend on auth? Checking source: No, depends on list length.
       loading: false,
       login: vi.fn(),
@@ -97,13 +97,13 @@ describe('Publications Page', () => {
       ...defaultContext,
       publications: [],
     });
-    (useAuth as any).mockReturnValue({ currentUser: null });
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({ currentUser: null });
     render(<Publications />);
     expect(screen.getByText('publications.no_data')).toBeInTheDocument();
   });
 
   it('renders page title and list of publications', () => {
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: null,
       loading: false,
       login: vi.fn(),
@@ -116,7 +116,7 @@ describe('Publications Page', () => {
   });
 
   it('shows admin actions when logged in', () => {
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
@@ -129,7 +129,7 @@ describe('Publications Page', () => {
   });
 
   it('hides admin actions when logged out', () => {
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: null,
       loading: false,
       login: vi.fn(),
@@ -141,7 +141,7 @@ describe('Publications Page', () => {
   });
 
   it('opens add dialog on click', async () => {
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
@@ -157,7 +157,7 @@ describe('Publications Page', () => {
   });
 
   it('calls delete service on click', async () => {
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
@@ -176,7 +176,7 @@ describe('Publications Page', () => {
   });
 
   it('opens edit dialog on click', async () => {
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),

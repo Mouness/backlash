@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, Typography, Paper, Chip, Divider, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { getScoreLevel } from '../../utils/scoreUtils';
+import { getScoreLevel, DemocraticScore } from '../../utils/scoreUtils';
 
 interface MapTooltipProps {
   isoCode: string | null;
-  score: number | undefined;
+  score: DemocraticScore | undefined;
 }
 
 const MapTooltip: React.FC<MapTooltipProps> = ({ isoCode, score }) => {
@@ -45,11 +45,18 @@ const MapTooltip: React.FC<MapTooltipProps> = ({ isoCode, score }) => {
               borderRadius: 0,
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
-              bgcolor: level.color === 'success' ? theme.palette.success.light : undefined,
-              color: level.color === 'success' ? theme.palette.success.contrastText : undefined,
               ...level.style,
             }}
-            color={level.color as 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'}
+            color={
+              level.color as
+                | 'default'
+                | 'primary'
+                | 'secondary'
+                | 'error'
+                | 'info'
+                | 'success'
+                | 'warning'
+            }
           />
         )}
       </Box>

@@ -114,53 +114,53 @@ export const getTheme = (mode: 'light' | 'dark') => {
       mode,
       ...(mode === 'light'
         ? {
-          // Light Mode (Journal Paper Style)
-          primary: {
-            main: '#1A237E', // Deep Navy
-            light: '#534BAE',
-            dark: '#000051',
-            contrastText: '#FFFFFF',
-          },
-          secondary: {
-            main: '#880E4F', // Burgundy
-            light: '#BC477B',
-            dark: '#560027',
-            contrastText: '#FFFFFF',
-          },
-          background: {
-            default: '#FAFAFA', // Off-white/Cream
-            paper: '#FFFFFF',
-          },
-          text: {
-            primary: '#212121', // Soft black (Charcoal)
-            secondary: '#616161', // Grey
-          },
-          divider: 'rgba(0, 0, 0, 0.08)',
-        }
+            // Light Mode (Journal Paper Style)
+            primary: {
+              main: '#1A237E', // Deep Navy
+              light: '#534BAE',
+              dark: '#000051',
+              contrastText: '#FFFFFF',
+            },
+            secondary: {
+              main: '#880E4F', // Burgundy
+              light: '#BC477B',
+              dark: '#560027',
+              contrastText: '#FFFFFF',
+            },
+            background: {
+              default: '#FAFAFA', // Off-white/Cream
+              paper: '#FFFFFF',
+            },
+            text: {
+              primary: '#212121', // Soft black (Charcoal)
+              secondary: '#616161', // Grey
+            },
+            divider: 'rgba(0, 0, 0, 0.08)',
+          }
         : {
-          // Dark Mode (Late Night Study Style)
-          primary: {
-            main: '#5C6BC0', // Softer Indigo
-            light: '#8E99F3',
-            dark: '#26418F',
-            contrastText: '#FFFFFF',
-          },
-          secondary: {
-            main: '#F48FB1', // Pink/Maroon accent for dark mode
-            light: '#FFC1E3',
-            dark: '#BF5F82',
-            contrastText: '#000000',
-          },
-          background: {
-            default: '#121212', // Material Dark
-            paper: '#1E1E1E',
-          },
-          text: {
-            primary: '#EEEEEE',
-            secondary: '#BDBDBD',
-          },
-          divider: 'rgba(255, 255, 255, 0.08)',
-        }),
+            // Dark Mode (Late Night Study Style)
+            primary: {
+              main: '#5C6BC0', // Softer Indigo
+              light: '#8E99F3',
+              dark: '#26418F',
+              contrastText: '#FFFFFF',
+            },
+            secondary: {
+              main: '#F48FB1', // Pink/Maroon accent for dark mode
+              light: '#FFC1E3',
+              dark: '#BF5F82',
+              contrastText: '#000000',
+            },
+            background: {
+              default: '#121212', // Material Dark
+              paper: '#1E1E1E',
+            },
+            text: {
+              primary: '#EEEEEE',
+              secondary: '#BDBDBD',
+            },
+            divider: 'rgba(255, 255, 255, 0.08)',
+          }),
     },
   });
 };

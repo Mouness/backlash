@@ -11,6 +11,8 @@ import { ENABLE_MOCKS } from '../config';
 import CountryCard from '../components/molecules/CountryCard';
 import AdminCountryDialog from '../components/organisms/AdminCountryDialog';
 import InteractiveMap from '../components/organisms/InteractiveMap';
+import { DemocraticScore } from '../utils/scoreUtils';
+
 const Countries: React.FC = () => {
   const { t } = useTranslation();
   const { currentUser } = useAuth();
@@ -38,7 +40,7 @@ const Countries: React.FC = () => {
               if (c.score !== undefined) acc[c.code] = c.score;
               return acc;
             },
-            {} as { [code: string]: number },
+            {} as { [code: string]: DemocraticScore },
           )}
           minHeight="auto"
           height={400}
@@ -53,7 +55,6 @@ const Countries: React.FC = () => {
         <Box>
           {currentUser && (
             <Box>
-
               {ENABLE_MOCKS &&
                 countries.length > 0 &&
                 !countries.some((c) => c.id && c.id.length > 3) && (
