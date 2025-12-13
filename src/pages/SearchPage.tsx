@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Typography, Box, Card, CardContent, Divider, Chip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useData } from '../contexts/DataContext';
-import { getLocalizedContent } from '../utils/dataUtils';
+import { getLocalizedContent, getLocalizedText, extractTextFromTiptap } from '../utils/dataUtils';
 import Grid from '@mui/material/Grid';
 
 const SearchPage: React.FC = () => {
@@ -28,8 +28,8 @@ const SearchPage: React.FC = () => {
 
     const filteredPublications = publications.filter(
       (p) =>
-        (getLocalizedContent(p.title, currentLang) || '').toLowerCase().includes(lowerQuery) ||
-        (getLocalizedContent(p.description, currentLang) || '')
+        (getLocalizedText(p.title, currentLang) || '').toLowerCase().includes(lowerQuery) ||
+        extractTextFromTiptap(getLocalizedContent(p.description, currentLang))
           .toLowerCase()
           .includes(lowerQuery) ||
         p.category.toLowerCase().includes(lowerQuery),
@@ -124,10 +124,14 @@ const SearchPage: React.FC = () => {
                   )}
                   <CardContent sx={{ flex: 1 }}>
                     <Typography variant="subtitle1" fontWeight="bold">
-                      {getLocalizedContent(pub.title, currentLang)}
+                      {getLocalizedText(pub.title, currentLang)}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" paragraph>
-                      {getLocalizedContent(pub.description, currentLang)}
+                      {/* Show only text preview for search results */}
+                      {extractTextFromTiptap(
+                        getLocalizedContent(pub.description, currentLang),
+                      ).slice(0, 200)}
+                      ...
                     </Typography>
                   </CardContent>
                 </Card>

@@ -182,14 +182,16 @@
             "description": "Description",
             "edit": "Edit",
             "delete": "Delete",
-            "confirm_delete": "Are you sure you want to delete this item?"
+            "confirm_delete": "Are you sure you want to delete this item?",
+            "insert_table": "Insert Table",
+            "delete_table": "Delete Table"
         },
         "country": {
             "title_new": "New Country Analysis",
             "title_edit": "Edit Country Analysis",
             "code": "Country Code (ISO 3)",
             "code_helper": "Used for map matching (CAN, CHE, DEU, BRA, USA, IND)",
-            "content_helper": "Supports Markdown or plain text.",
+            "content_helper": "Use the rich text editor to format content.",
             "score": "Democratic Score",
             "score_levels": {
                 "unknown": "Unknown",

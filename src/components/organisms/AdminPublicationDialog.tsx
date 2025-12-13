@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dialog, DialogTitle } from '@mui/material';
-import type { Publication } from '../../services/publicationService';
+import type { Publication } from '../../types/models';
 import { useTranslation } from 'react-i18next';
 import PublicationForm from '../organisms/PublicationForm';
 

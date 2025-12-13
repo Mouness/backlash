@@ -8,12 +8,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 import { publicationService } from '../services/publicationService';
-import type { Publication } from '../services/publicationService';
+import type { Publication } from '../types/models';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
 import AdminPublicationDialog from '../components/organisms/AdminPublicationDialog';
-import ReactMarkdown from 'react-markdown';
-import { getLocalizedContent } from '../utils/dataUtils';
+import RichTextRenderer from '../components/atoms/RichTextRenderer';
+import { getLocalizedContent, getLocalizedText } from '../utils/dataUtils';
 
 const PublicationDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -142,13 +142,13 @@ const PublicationDetails: React.FC = () => {
       </Box>
 
       <Typography variant="h3" fontWeight={700} gutterBottom>
-        {getLocalizedContent(publication.title, currentLang)}
+        {getLocalizedText(publication.title, currentLang)}
       </Typography>
 
       <Box
         sx={{ mb: 4, typography: 'body1', '& p': { mb: 2 }, fontSize: '1.1rem', lineHeight: 1.8 }}
       >
-        <ReactMarkdown>{getLocalizedContent(publication.description, currentLang)}</ReactMarkdown>
+        <RichTextRenderer content={getLocalizedContent(publication.description, currentLang)} />
       </Box>
 
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>

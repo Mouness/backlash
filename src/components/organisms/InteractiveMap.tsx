@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Box, useTheme } from '@mui/material';
 import geoUrl from '../../assets/geo/countries-110m.json';
-import { getScoreLevel, DemocraticScore } from '../../utils/scoreUtils';
+import { getScoreLevel } from '../../utils/scoreUtils';
+import { DemocraticScore } from '../../types/models';
 import MapTooltip from '../molecules/MapTooltip';
 import MapLegend from '../molecules/MapLegend';
 

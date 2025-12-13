@@ -182,14 +182,16 @@
             "description": "Beschreibung",
             "edit": "Bearbeiten",
             "delete": "Löschen",
-            "confirm_delete": "Sind Sie sicher, dass Sie dieses Element löschen möchten?"
+            "confirm_delete": "Sind Sie sicher, dass Sie dieses Element löschen möchten?",
+            "insert_table": "Tabelle einfügen",
+            "delete_table": "Tabelle löschen"
         },
         "country": {
             "title_new": "Neue Länderanalyse",
             "title_edit": "Länderanalyse bearbeiten",
             "code": "Ländercode (ISO 3)",
             "code_helper": "Für Kartenabgleich verwendet (CAN, CHE, ...)",
-            "content_helper": "Unterstützt Markdown oder Klartext.",
+            "content_helper": "Verwenden Sie den Rich-Text-Editor zum Formatieren.",
             "score": "Demokratie-Score",
             "score_levels": {
                 "unknown": "Unbekannt",

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog, DialogTitle } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import type { Country } from '../../services/countryService';
+import type { Country } from '../../types/models';
 import CountryForm from '../organisms/CountryForm';
 
 interface AdminCountryDialogProps {

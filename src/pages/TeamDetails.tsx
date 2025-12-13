@@ -10,11 +10,11 @@ import { useData } from '../contexts/DataContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '@mui/material/styles';
 import { teamService } from '../services/teamService';
-import type { TeamMember } from '../services/teamService';
+import type { TeamMember } from '../types/models';
 import AdminTeamDialog from '../components/organisms/AdminTeamDialog';
 import Face3Icon from '@mui/icons-material/Face3';
 import Face6Icon from '@mui/icons-material/Face6';
-import ReactMarkdown from 'react-markdown';
+import RichTextRenderer from '../components/atoms/RichTextRenderer';
 
 const TeamDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -193,9 +193,11 @@ const TeamDetails: React.FC = () => {
                 color: 'text.primary',
               }}
             >
-              <ReactMarkdown>
-                {member.bio ? member.bio[currentLang] || member.bio['en'] : t('team.no_bio')}
-              </ReactMarkdown>
+              <RichTextRenderer
+                content={
+                  member.bio ? member.bio[currentLang] || member.bio['en'] : t('team.no_bio')
+                }
+              />
             </Box>
           </Box>
         </Box>

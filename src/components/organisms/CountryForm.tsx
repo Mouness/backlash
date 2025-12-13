@@ -9,10 +9,12 @@ import {
   Tab,
   Typography,
 } from '@mui/material';
+import RichTextEditor from '../molecules/RichTextEditor';
 import { useTranslation } from 'react-i18next';
-import type { Country } from '../../services/countryService';
+import type { Country } from '../../types/models';
+import type { LocalizedRichContent } from '../../types/models';
 import ScoreSelect from '../molecules/ScoreSelect';
-import { DemocraticScore } from '../../utils/scoreUtils';
+import { DemocraticScore } from '../../types/models';
 
 interface CountryFormProps {
   initialData?: Country | null;
@@ -39,7 +41,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ initialData, onSubmit, onCanc
   // Multilingual State
   const [names, setNames] = useState({ en: '', fr: '', de: '' });
   const [summaries, setSummaries] = useState({ en: '', fr: '', de: '' });
-  const [contents, setContents] = useState({ en: '', fr: '', de: '' });
+  const [contents, setContents] = useState<LocalizedRichContent>({ en: '', fr: '', de: '' });
 
   const [docFile, setDocFile] = useState<File | null>(null);
 
@@ -173,15 +175,19 @@ const CountryForm: React.FC<CountryFormProps> = ({ initialData, onSubmit, onCanc
             multiline
             rows={2}
           />
-          <TextField
-            label={`${t('admin.country.content_label', 'Detailed Analysis')} (${LANGUAGES[activeTab].label})`}
-            value={contents[currentLang]}
-            onChange={(e) => setContents({ ...contents, [currentLang]: e.target.value })}
-            fullWidth
-            multiline
-            rows={10}
-            helperText={t('admin.country.content_helper')}
-          />
+          <Box>
+            <Typography variant="caption" color="text.secondary" gutterBottom>
+              {`${t('admin.country.content_label', 'Detailed Analysis')} (${LANGUAGES[activeTab].label})`}
+            </Typography>
+            <RichTextEditor
+              value={contents[currentLang]}
+              onChange={(val) => setContents({ ...contents, [currentLang]: val || '' })}
+              minHeight={400}
+            />
+            <Typography variant="caption" color="text.secondary">
+              {t('admin.country.content_helper')}
+            </Typography>
+          </Box>
         </Box>
       </DialogContent>
       <DialogActions>

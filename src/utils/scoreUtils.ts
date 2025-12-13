@@ -1,4 +1,5 @@
-// Palette Definitions
+import { DemocraticScore } from '../types/models';
+
 // Palette Definitions
 const SCORE_COLORS = {
   UNKNOWN: '#3c474cff', // Dark Blue Grey
@@ -9,17 +10,6 @@ const SCORE_COLORS = {
   HIGH: '#43A047', // Standard Green
   VERY_HIGH: '#1B5E20', // Deep Emerald (Prestige Green, not Teal)
 };
-
-export const DemocraticScore = {
-  UNKNOWN: 'UNKNOWN',
-  VERY_LOW: 'VERY_LOW',
-  LOW: 'LOW',
-  MODERATE: 'MODERATE',
-  HIGH: 'HIGH',
-  VERY_HIGH: 'VERY_HIGH',
-} as const;
-
-export type DemocraticScore = (typeof DemocraticScore)[keyof typeof DemocraticScore];
 
 export type ScoreColor = 'default' | 'error' | 'warning' | 'info' | 'success';
 

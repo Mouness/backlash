@@ -12,24 +12,7 @@ import {
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../firebase';
-import { DemocraticScore } from '../utils/scoreUtils';
-
-export interface LocalizedContent {
-  en: string;
-  fr: string;
-  de: string;
-}
-
-export interface Country {
-  id: string;
-  code: string; // ISO code or ID used for map matching (e.g. CAN, CHE)
-  name: LocalizedContent;
-  summary: LocalizedContent;
-  content: LocalizedContent; // Detailed analysis
-  imageUrl?: string;
-  documentUrl?: string; // URL to PDF/DOC analysis
-  score?: DemocraticScore; // Enum indicating democratic resilience/backlash status
-}
+import type { Country } from '../types/models';
 
 const COLLECTION_NAME = 'countries';
 

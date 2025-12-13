@@ -3,25 +3,16 @@ import {
   getDocs,
   getDoc,
   addDoc,
+  updateDoc,
   deleteDoc,
   doc,
   query,
   orderBy,
-  Timestamp,
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../firebase';
 
-export interface Publication {
-  id?: string;
-  title: string | { [lang: string]: string };
-  description: string | { [lang: string]: string };
-  date: Timestamp;
-  category: string; // 'news', 'event', 'article'
-  link?: string;
-  imageUrl?: string;
-  documentUrl?: string; // URL to PDF/DOC
-}
+import type { Publication } from '../types/models';
 
 const COLLECTION_NAME = 'publications';
 
@@ -71,8 +62,10 @@ export const publicationService = {
   updatePublication: async (id: string, publication: Partial<Publication>): Promise<void> => {
     try {
       const docRef = doc(db, COLLECTION_NAME, id);
-      const { setDoc } = await import('firebase/firestore');
-      await setDoc(docRef, publication, { merge: true });
+      // Ensure we don't accidentally overwrite with ID in data, similar to countryService
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id: _, ...data } = publication;
+      await updateDoc(docRef, data);
     } catch (error) {
       console.error('Error updating publication:', error);
       throw error;

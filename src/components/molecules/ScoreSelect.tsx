@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormControl, InputLabel, Select, MenuItem, type SelectChangeEvent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { DemocraticScore } from '../../utils/scoreUtils';
+import { DemocraticScore } from '../../types/models';
 
 interface ScoreSelectProps {
   value: DemocraticScore | '';

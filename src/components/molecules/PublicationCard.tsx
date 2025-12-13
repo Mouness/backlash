@@ -5,8 +5,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { useTheme } from '@mui/material/styles';
-import type { Publication } from '../../services/publicationService';
-import { getLocalizedContent } from '../../utils/dataUtils';
+import type { Publication } from '../../types/models';
+import {
+  getLocalizedContent,
+  getLocalizedText,
+  extractTextFromTiptap,
+} from '../../utils/dataUtils';
 
 import type { User } from 'firebase/auth';
 
@@ -153,12 +157,20 @@ const PublicationCard: React.FC<PublicationCardProps> = ({
               />
             </Box>
 
-            <Typography variant="h5" fontWeight="bold" gutterBottom>
-              {getLocalizedContent(publication.title, currentLang)}
+            <Typography variant="h6" fontWeight="bold" gutterBottom>
+              {getLocalizedText(publication.title, currentLang)}
             </Typography>
-
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-              {getLocalizedContent(publication.description, currentLang)}
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                display: '-webkit-box',
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+              }}
+            >
+              {extractTextFromTiptap(getLocalizedContent(publication.description, currentLang))}
             </Typography>
 
             {publication.link && (

@@ -203,3 +203,35 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: vi.fn(),
   })),
 });
+
+// Mock RichTextEditor
+vi.mock('../components/molecules/RichTextEditor', () => ({
+  default: ({
+    value,
+    onChange,
+    placeholder,
+  }: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onChange: (val: any) => void;
+    placeholder?: string;
+  }) => (
+    <textarea
+      data-testid="rich-text-editor"
+      value={typeof value === 'string' ? value : JSON.stringify(value || '')}
+      onChange={(e) =>
+        onChange({
+          type: 'doc',
+          content: [
+            {
+              type: 'paragraph',
+              content: [{ type: 'text', text: e.target.value }],
+            },
+          ],
+        })
+      }
+      placeholder={placeholder}
+    />
+  ),
+}));

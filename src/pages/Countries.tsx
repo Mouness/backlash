@@ -11,7 +11,7 @@ import { ENABLE_MOCKS } from '../config';
 import CountryCard from '../components/molecules/CountryCard';
 import AdminCountryDialog from '../components/organisms/AdminCountryDialog';
 import InteractiveMap from '../components/organisms/InteractiveMap';
-import { DemocraticScore } from '../utils/scoreUtils';
+import { DemocraticScore } from '../types/models';
 
 const Countries: React.FC = () => {
   const { t } = useTranslation();

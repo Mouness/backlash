@@ -42,12 +42,14 @@ describe('AdminPublicationDialog', () => {
     render(<AdminPublicationDialog open={true} onClose={mockOnClose} onSave={mockOnSave} />);
 
     // Fill Title EN
-    const titleInputs = screen.getAllByLabelText(/admin.common.title/i);
-    fireEvent.change(titleInputs[0], { target: { value: 'New Pub Title' } }); // Title (EN)
+    // Use getAllByRole to be more specific if labels are ambiguous
+    const titleInputs = screen.getAllByRole('textbox', { name: /admin.common.title/i });
+    // Assuming the loop renders EN first.
+    fireEvent.change(titleInputs[0], { target: { value: 'New Pub Title' } });
 
-    // Select Category (MUI Select is tricky, use hidden input or just skip strict UI select test and rely on form logic)
-    // For simplicity with MUI Select in tests, we often skip complex interaction or use specific helpers.
-    // Let's assume default is 'news' and just submit.
+    // Fill Description EN (RichTextEditor)
+    const editors = screen.getAllByTestId('rich-text-editor');
+    fireEvent.change(editors[0], { target: { value: 'New Pub Description' } });
 
     const saveButton = screen.getByText('admin.common.save');
     fireEvent.click(saveButton);
@@ -60,6 +62,19 @@ describe('AdminPublicationDialog', () => {
     expect(mockOnSave).toHaveBeenCalledWith(
       expect.objectContaining({
         title: expect.objectContaining({ en: 'New Pub Title' }),
+        description: expect.objectContaining({
+          en: expect.objectContaining({
+            type: 'doc',
+            content: expect.arrayContaining([
+              expect.objectContaining({
+                type: 'paragraph',
+                content: expect.arrayContaining([
+                  expect.objectContaining({ type: 'text', text: 'New Pub Description' }),
+                ]),
+              }),
+            ]),
+          }),
+        }),
         category: 'news',
       }),
     );

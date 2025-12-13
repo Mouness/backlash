@@ -19,9 +19,9 @@ import Face6Icon from '@mui/icons-material/Face6';
 import ArticleIcon from '@mui/icons-material/Article';
 import InteractiveMap from '../components/organisms/InteractiveMap';
 
-import { getLocalizedContent } from '../utils/dataUtils';
+import { getLocalizedContent, getLocalizedText, extractTextFromTiptap } from '../utils/dataUtils';
 import { useData } from '../contexts/DataContext';
-import { DemocraticScore } from '../utils/scoreUtils';
+import { DemocraticScore } from '../types/models';
 // Local Images
 import slide1Image from '../assets/images/slide1-structure.jpg';
 import slide2Image from '../assets/images/slide2-law.jpg';
@@ -301,20 +301,20 @@ const Home: React.FC = () => {
                         mb: 1,
                       }}
                     >
-                      {getLocalizedContent(pub.title, currentLang)}
+                      {getLocalizedText(pub.title, currentLang)}
                     </Typography>
                     <Typography
                       variant="body2"
                       color="text.secondary"
                       sx={{
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
                         display: '-webkit-box',
                         WebkitLineClamp: 3,
                         WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        mb: 2,
                       }}
                     >
-                      {getLocalizedContent(pub.description, currentLang)}
+                      {extractTextFromTiptap(getLocalizedContent(pub.description, currentLang))}
                     </Typography>
                   </CardContent>
                 </Card>

@@ -182,14 +182,16 @@
             "description": "Description",
             "edit": "Modifier",
             "delete": "Supprimer",
-            "confirm_delete": "Êtes-vous sûr de vouloir supprimer cet élément ?"
+            "confirm_delete": "Êtes-vous sûr de vouloir supprimer cet élément ?",
+            "insert_table": "Insérer un tableau",
+            "delete_table": "Supprimer le tableau"
         },
         "country": {
             "title_new": "Nouvelle Analyse Pays",
             "title_edit": "Modifier Analyse Pays",
             "code": "Code Pays (ISO 3)",
             "code_helper": "Utilisé pour la correspondance carte (CAN, CHE, ...)",
-            "content_helper": "Supporte Markdown ou texte brut.",
+            "content_helper": "Utilisez l'éditeur de texte enrichi pour formater le contenu.",
             "score": "Score Démocratique",
             "score_levels": {
                 "unknown": "Inconnu",

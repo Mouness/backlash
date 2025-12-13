@@ -19,7 +19,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
 import { teamService } from '../services/teamService';
-import type { TeamMember } from '../services/teamService';
+import type { TeamMember } from '../types/models';
 import { MOCK_TEAM } from '../data/mockTeam';
 import AdminTeamDialog from '../components/organisms/AdminTeamDialog';
 import { useTheme } from '@mui/material/styles';
@@ -99,8 +99,8 @@ const Team: React.FC = () => {
 
   const currentLang = i18n.language.split('-')[0] as 'en' | 'fr' | 'de';
 
-  // Check if we are displaying mocks (items without ID)
-  const isShowingMocks = members.some((m) => !m.id);
+  // Check if we are displaying mocks (items without ID or flagged as mock)
+  const isShowingMocks = members.some((m) => !m.id || m.isMock);
 
   return (
     <Container maxWidth="xl" sx={{ py: 8 }}>

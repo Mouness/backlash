@@ -11,9 +11,10 @@ import {
   Typography,
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
+import RichTextEditor from '../molecules/RichTextEditor';
 import { Timestamp } from 'firebase/firestore';
 import { useTranslation } from 'react-i18next';
-import type { Publication } from '../../services/publicationService';
+import type { Publication } from '../../types/models';
 
 interface PublicationFormProps {
   initialData?: Publication;
@@ -200,16 +201,16 @@ const PublicationForm: React.FC<PublicationFormProps> = ({ initialData, onSave, 
               name={`description.${langCode}` as `description.${'en' | 'fr' | 'de'}`}
               control={control}
               render={({ field }) => (
-                <TextField
-                  {...field}
-                  margin="dense"
-                  label={`${t('admin.common.description', 'Description')} (${langCode.toUpperCase()})`}
-                  fullWidth
-                  multiline
-                  rows={4}
-                  variant="outlined"
-                  helperText={t('admin.country.content_helper')}
-                />
+                <Box>
+                  <Typography variant="caption" color="text.secondary" gutterBottom>
+                    {`${t('admin.common.description', 'Description')} (${langCode.toUpperCase()})`}
+                  </Typography>
+                  <RichTextEditor
+                    value={field.value || ''}
+                    onChange={(val) => field.onChange(val || '')}
+                    minHeight={300}
+                  />
+                </Box>
               )}
             />
           </Box>

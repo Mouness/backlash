@@ -14,8 +14,9 @@ import {
   Typography,
   IconButton,
 } from '@mui/material';
+import RichTextEditor from '../molecules/RichTextEditor';
 import CloseIcon from '@mui/icons-material/Close';
-import type { TeamMember } from '../../services/teamService';
+import type { TeamMember } from '../../types/models';
 import { useTranslation } from 'react-i18next';
 
 interface AdminTeamDialogProps {
@@ -36,7 +37,7 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState(0); // 0=en, 1=fr, 2=de
 
-  const { register, handleSubmit, reset, setValue } = useForm<Omit<TeamMember, 'id'>>({
+  const { register, handleSubmit, reset, setValue, getValues } = useForm<Omit<TeamMember, 'id'>>({
     defaultValues: {
       name: '',
       gender: 'female',
@@ -191,39 +192,30 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
           {/* English Tab */}
           <Box sx={{ display: activeTab === 0 ? 'block' : 'none' }}>
             <TextField label="Role (EN)" fullWidth sx={{ mb: 2 }} {...register('role.en')} />
-            <TextField
-              label="Bio (EN)"
-              fullWidth
-              multiline
-              rows={4}
-              {...register('bio.en')}
-              helperText={t('admin.country.content_helper')}
+            <RichTextEditor
+              value={getValues('bio.en') || ''}
+              onChange={(val) => setValue('bio.en', val || '')}
+              minHeight={200}
             />
           </Box>
 
           {/* French Tab */}
           <Box sx={{ display: activeTab === 1 ? 'block' : 'none' }}>
             <TextField label="Role (FR)" fullWidth sx={{ mb: 2 }} {...register('role.fr')} />
-            <TextField
-              label="Bio (FR)"
-              fullWidth
-              multiline
-              rows={4}
-              {...register('bio.fr')}
-              helperText={t('admin.country.content_helper')}
+            <RichTextEditor
+              value={getValues('bio.fr') || ''}
+              onChange={(val) => setValue('bio.fr', val || '')}
+              minHeight={200}
             />
           </Box>
 
           {/* German Tab */}
           <Box sx={{ display: activeTab === 2 ? 'block' : 'none' }}>
             <TextField label="Role (DE)" fullWidth sx={{ mb: 2 }} {...register('role.de')} />
-            <TextField
-              label="Bio (DE)"
-              fullWidth
-              multiline
-              rows={4}
-              {...register('bio.de')}
-              helperText={t('admin.country.content_helper')}
+            <RichTextEditor
+              value={getValues('bio.de') || ''}
+              onChange={(val) => setValue('bio.de', val || '')}
+              minHeight={200}
             />
           </Box>
         </DialogContent>

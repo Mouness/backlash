@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { countryService } from '../services/countryService';
-import type { Country } from '../services/countryService';
+import type { Country } from '../types/models';
 import { teamService } from '../services/teamService';
-import type { TeamMember } from '../services/teamService';
+import type { TeamMember } from '../types/models';
 import { publicationService } from '../services/publicationService';
-import type { Publication } from '../services/publicationService';
+import type { Publication } from '../types/models';
 import { mergeDataByType } from '../utils/dataUtils';
 import { Snackbar, Alert } from '@mui/material';
 import { ENABLE_MOCKS } from '../config';

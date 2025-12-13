@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useData } from '../contexts/DataContext';
 import { countryService } from '../services/countryService';
-import type { Country } from '../services/countryService';
+import type { Country } from '../types/models';
 import { MOCK_COUNTRIES } from '../data/mockCountries';
 
 export const useCountryController = () => {

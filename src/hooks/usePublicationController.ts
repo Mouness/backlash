@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useData } from '../contexts/DataContext';
 import { publicationService } from '../services/publicationService';
-import type { Publication } from '../services/publicationService';
+import type { Publication } from '../types/models';
+import type { LocalizedText } from '../types/models';
 import { MOCK_PUBLICATIONS } from '../data/mockPublications';
 
 export const usePublicationController = () => {
@@ -54,16 +55,15 @@ export const usePublicationController = () => {
         currentDocs.map((p) => {
           const title = p.title;
           if (typeof title === 'string') return title;
-          const localizedTitle = title as { [key: string]: string };
-          return localizedTitle['en'] || '';
+          const localizedTitle = title as LocalizedText;
+          return localizedTitle.en || '';
         }),
       );
 
       let addedCount = 0;
       for (const p of MOCK_PUBLICATIONS) {
         const title = p.title;
-        const enTitle =
-          typeof title === 'string' ? title : (title as { [key: string]: string })['en'];
+        const enTitle = typeof title === 'string' ? title : (title as LocalizedText).en;
         if (!existingTitles.has(enTitle)) {
           await publicationService.addPublication(p);
           addedCount++;

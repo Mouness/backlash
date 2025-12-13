@@ -11,8 +11,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { countryService } from '../services/countryService';
 import { getScoreLevel } from '../utils/scoreUtils';
 import AdminCountryDialog from '../components/organisms/AdminCountryDialog';
-import type { Country } from '../services/countryService';
-import ReactMarkdown from 'react-markdown';
+import type { Country } from '../types/models';
+import RichTextRenderer from '../components/atoms/RichTextRenderer';
 
 const CountryDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -175,9 +175,9 @@ const CountryDetails: React.FC = () => {
           lineHeight: 1.8,
         }}
       >
-        <ReactMarkdown>
-          {country.content ? country.content[currentLang] || country.content['en'] : ''}
-        </ReactMarkdown>
+        <RichTextRenderer
+          content={country.content ? country.content[currentLang] || country.content['en'] : ''}
+        />
       </Box>
 
       <AdminCountryDialog

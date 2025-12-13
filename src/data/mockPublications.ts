@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
-import type { Publication } from '../services/publicationService';
+import type { Publication } from '../types/models';
 
 // Original hardcoded mocks
 const BASE_MOCKS: Publication[] = [
@@ -11,9 +11,48 @@ const BASE_MOCKS: Publication[] = [
       de: 'Projektstart: Digitale Rechte 2024',
     },
     description: {
-      en: 'We are thrilled to announce the start of our new comprehensive study on digital rights across Europe.',
-      fr: "Nous sommes ravis d'annoncer le début de notre nouvelle étude complète sur les droits numériques en Europe.",
-      de: 'Wir freuen uns, den Start unserer neuen umfassenden Studie zu digitalen Rechten in Europa bekannt zu geben.',
+      en: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'We are thrilled to announce the start of our new comprehensive study on digital rights across Europe.',
+              },
+            ],
+          },
+        ],
+      },
+      fr: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: "Nous sommes ravis d'annoncer le début de notre nouvelle étude complète sur les droits numériques en Europe.",
+              },
+            ],
+          },
+        ],
+      },
+      de: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'Wir freuen uns, den Start unserer neuen umfassenden Studie zu digitalen Rechten in Europa bekannt zu geben.',
+              },
+            ],
+          },
+        ],
+      },
     },
     date: Timestamp.now(),
     category: 'news',
@@ -28,9 +67,48 @@ const BASE_MOCKS: Publication[] = [
       de: 'Jahreskonferenz zum Internetrecht',
     },
     description: {
-      en: 'Join us in Geneva for a 2-day workshop discussing the future of AI regulation.',
-      fr: "Rejoignez-nous à Genève pour un atelier de 2 jours sur l'avenir de la régulation de l'IA.",
-      de: 'Besuchen Sie uns in Genf für einen 2-tägigen Workshop zur Zukunft der KI-Regulierung.',
+      en: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'Join us in Geneva for a 2-day workshop discussing the future of AI regulation.',
+              },
+            ],
+          },
+        ],
+      },
+      fr: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: "Rejoignez-nous à Genève pour un atelier de 2 jours sur l'avenir de la régulation de l'IA.",
+              },
+            ],
+          },
+        ],
+      },
+      de: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'Besuchen Sie uns in Genf für einen 2-tägigen Workshop zur Zukunft der KI-Regulierung.',
+              },
+            ],
+          },
+        ],
+      },
     },
     date: Timestamp.fromDate(new Date(Date.now() - 86400000 * 5)), // 5 days ago
     category: 'event',
@@ -45,9 +123,48 @@ const BASE_MOCKS: Publication[] = [
       de: 'Publikation: Das Datenschutz-Paradoxon',
     },
     description: {
-      en: 'Our latest article explores consumer behavior regarding privacy settings vs actual usage.',
-      fr: "Notre dernier article explore le comportement des consommateurs concernant les paramètres de confidentialité par rapport à l'utilisation réelle.",
-      de: 'Unser neuester Artikel untersucht das Verbraucherverhalten in Bezug auf Datenschutzeinstellungen im Vergleich zur tatsächlichen Nutzung.',
+      en: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'Our latest article explores consumer behavior regarding privacy settings vs actual usage.',
+              },
+            ],
+          },
+        ],
+      },
+      fr: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: "Notre dernier article explore le comportement des consommateurs concernant les paramètres de confidentialité par rapport à l'utilisation réelle.",
+              },
+            ],
+          },
+        ],
+      },
+      de: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'Unser neuester Artikel untersucht das Verbraucherverhalten in Bezug auf Datenschutzeinstellungen im Vergleich zur tatsächlichen Nutzung.',
+              },
+            ],
+          },
+        ],
+      },
     },
     date: Timestamp.fromDate(new Date(Date.now() - 86400000 * 15)), // 15 days ago
     category: 'article',
@@ -63,9 +180,48 @@ const BASE_MOCKS: Publication[] = [
       de: 'Buchrezension: Das Zeitalter des Überwachungskapitalismus',
     },
     description: {
-      en: "An in-depth look at Shoshana Zuboff's seminal work and its implications for modern society.",
-      fr: "Un regard approfondi sur l'œuvre fondamentale de Shoshana Zuboff et ses implications pour la société moderne.",
-      de: 'Ein eingehender Blick auf Shoshana Zuboffs wegweisendes Werk und seine Auswirkungen auf die moderne Gesellschaft.',
+      en: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: "An in-depth look at Shoshana Zuboff's seminal work and its implications for modern society.",
+              },
+            ],
+          },
+        ],
+      },
+      fr: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: "Un regard approfondi sur l'œuvre fondamentale de Shoshana Zuboff et ses implications pour la société moderne.",
+              },
+            ],
+          },
+        ],
+      },
+      de: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'Ein eingehender Blick auf Shoshana Zuboffs wegweisendes Werk und seine Auswirkungen auf die moderne Gesellschaft.',
+              },
+            ],
+          },
+        ],
+      },
     },
     date: Timestamp.fromDate(new Date(Date.now() - 86400000 * 25)), // 25 days ago
     category: 'book',
@@ -80,9 +236,48 @@ const BASE_MOCKS: Publication[] = [
       de: 'Politik-Alarm: Neuer Entwurf des EU-KI-Gesetzes',
     },
     description: {
-      en: 'Analysis of the latest amendments to the European Artificial Intelligence Act.',
-      fr: "Analyse des derniers amendements à la loi européenne sur l'intelligence artificielle.",
-      de: 'Analyse der neuesten Änderungen am europäischen Gesetz über künstliche Intelligenz.',
+      en: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'Analysis of the latest amendments to the European Artificial Intelligence Act.',
+              },
+            ],
+          },
+        ],
+      },
+      fr: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: "Analyse des derniers amendements à la loi européenne sur l'intelligence artificielle.",
+              },
+            ],
+          },
+        ],
+      },
+      de: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'Analyse der neuesten Änderungen am europäischen Gesetz über künstliche Intelligenz.',
+              },
+            ],
+          },
+        ],
+      },
     },
     date: Timestamp.fromDate(new Date(Date.now() - 86400000 * 35)), // 35 days ago
     category: 'news',

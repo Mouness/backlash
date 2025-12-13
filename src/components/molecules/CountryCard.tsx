@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
-import type { Country } from '../../services/countryService';
-import { getScoreLevel, DemocraticScore } from '../../utils/scoreUtils';
+import type { Country } from '../../types/models';
+import { getScoreLevel } from '../../utils/scoreUtils';
+import { DemocraticScore } from '../../types/models';
 
 import type { User } from 'firebase/auth';
 

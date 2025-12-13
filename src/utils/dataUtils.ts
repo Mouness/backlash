@@ -2,17 +2,51 @@ import { ENABLE_MOCKS } from '../config';
 import { MOCK_COUNTRIES } from '../data/mockCountries';
 import { MOCK_TEAM } from '../data/mockTeam';
 import { MOCK_PUBLICATIONS } from '../data/mockPublications';
-import type { Country } from '../services/countryService';
-import type { TeamMember } from '../services/teamService';
-import type { Publication } from '../services/publicationService';
+import type { Country } from '../types/models';
+import type { TeamMember } from '../types/models';
+import type { Publication } from '../types/models';
 
 type DataType = 'country' | 'team' | 'publication';
 
-export const getLocalizedContent = (content: unknown, lang: string) => {
+import type { JSONContent } from '@tiptap/react';
+import type { LocalizedText, LocalizedRichContent } from '../types/models';
+
+export const getLocalizedContent = (
+  content: string | LocalizedText | LocalizedRichContent | null | undefined,
+  lang: string,
+): string | JSONContent => {
   if (!content) return '';
   if (typeof content === 'string') return content;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (content as any)[lang] || (content as any)['en'] || '';
+};
+
+export const getLocalizedText = (
+  content: string | LocalizedText | null | undefined,
+  lang: string,
+): string => {
+  if (!content) return '';
+  if (typeof content === 'string') return content;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (content as any)[lang] || (content as any)['en'] || '';
+};
+
+export const extractTextFromTiptap = (content: string | JSONContent | null | undefined): string => {
+  if (!content) return '';
+  if (typeof content === 'string') return content;
+
+  let text = '';
+  if (content.text) {
+    text += content.text;
+  }
+
+  if (content.content) {
+    content.content.forEach((child) => {
+      text += ' ' + extractTextFromTiptap(child);
+    });
+  }
+
+  return text.trim();
 };
 
 export const mergeDataByType = (dbData: unknown[], type: DataType): unknown[] => {
@@ -48,7 +82,13 @@ const mergeCountries = (dbData: Country[], mockData: Country[]) => {
 };
 
 const mergeTeam = (dbData: TeamMember[], mockData: TeamMember[]) => {
-  const merged = [...mockData];
+  // Assign temporary IDs to mock items if they don't have one
+  const merged: TeamMember[] = mockData.map((m) => ({
+    ...m,
+    id: m.id || m.email || m.name.toLowerCase().replace(/\s+/g, '-'),
+    isMock: !m.id, // If it didn't have an ID, it's a mock we are filling in (or if it's from mockData list and we are iterating it)
+  }));
+
   const dbMap = new Map(dbData.map((d) => [d.email, d]));
 
   for (let i = 0; i < merged.length; i++) {

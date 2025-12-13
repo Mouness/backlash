@@ -1,7 +1,8 @@
 import React from 'react';
 import { Box, Typography, Paper, Chip, Divider, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { getScoreLevel, DemocraticScore } from '../../utils/scoreUtils';
+import { getScoreLevel } from '../../utils/scoreUtils';
+import { DemocraticScore } from '../../types/models';
 
 interface MapTooltipProps {
   isoCode: string | null;
