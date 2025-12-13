@@ -146,14 +146,14 @@ const CountryDetails: React.FC = () => {
       {country.documentUrl && (
         <Box sx={{ mb: 4 }}>
           <Button
-            variant="contained"
-            color="secondary"
+            variant="outlined"
+            size="small"
+            startIcon={<ArticleIcon />}
             href={country.documentUrl}
             target="_blank"
             rel="noopener noreferrer"
-            startIcon={<ArticleIcon />}
           >
-            {i18n.t('countries.download_analysis')}
+            {i18n.t('admin.country.download_analysis')}
           </Button>
         </Box>
       )}
