@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { countryService } from '../services/countryService';
 import type { Country } from '../services/countryService';
 import { teamService } from '../services/teamService';
@@ -37,7 +37,6 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loadingCountries, setLoadingCountries] = useState(true);
 
   // Team State
-  // Initialize with mock data to avoid empty flash if desired, or empty array
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [loadingTeam, setLoadingTeam] = useState(true);
 
@@ -54,77 +53,87 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setErrorSnackbar({ ...errorSnackbar, open: false });
   };
 
-  const refreshCountries = async () => {
-    setLoadingCountries(true);
-    try {
-      const dbData = await countryService.getCountries();
-      let finalData = dbData;
+  // Generic Data Fetcher Helper
+  const fetchAndMergeData = useCallback(
+    async <T,>(
+      fetcher: () => Promise<T[]>,
+      type: 'country' | 'team' | 'publication',
+      setter: React.Dispatch<React.SetStateAction<T[]>>,
+      loadingSetter: React.Dispatch<React.SetStateAction<boolean>>,
+      errorMessage: string,
+      sortFn?: (a: T, b: T) => number,
+    ) => {
+      loadingSetter(true);
+      try {
+        const dbData = await fetcher();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let finalData: any[] = dbData;
 
-      if (ENABLE_MOCKS) {
-        finalData = mergeDataByType(dbData, 'country') as Country[];
+        if (ENABLE_MOCKS) {
+          finalData = mergeDataByType(dbData, type) as T[];
+        }
+
+        if (sortFn) {
+          finalData.sort(sortFn);
+        }
+
+        setter(finalData as T[]);
+      } catch (error) {
+        console.error(`Failed to fetch ${type} in DataContext`, error);
+        setErrorSnackbar({ open: true, message: errorMessage });
+        if (ENABLE_MOCKS) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          setter(mergeDataByType([], type) as any[]);
+        } else {
+          setter([]);
+        }
+      } finally {
+        loadingSetter(false);
       }
+    },
+    [],
+  );
 
-      setCountries(finalData);
-    } catch (error) {
-      console.error('Failed to fetch countries in DataContext', error);
-      setErrorSnackbar({ open: true, message: 'Failed to fetch countries data.' });
-      setCountries([]);
-    } finally {
-      setLoadingCountries(false);
-    }
-  };
+  const refreshCountries = useCallback(() => {
+    return fetchAndMergeData(
+      countryService.getCountries,
+      'country',
+      setCountries,
+      setLoadingCountries,
+      'Failed to fetch countries data.',
+    );
+  }, [fetchAndMergeData]);
 
-  const refreshTeam = async () => {
-    setLoadingTeam(true);
-    try {
-      const dbData = await teamService.getTeamMembers();
-      let finalData = dbData;
+  const refreshTeam = useCallback(() => {
+    return fetchAndMergeData(
+      teamService.getTeamMembers,
+      'team',
+      setTeamMembers,
+      setLoadingTeam,
+      'Failed to fetch team data.',
+    );
+  }, [fetchAndMergeData]);
 
-      if (ENABLE_MOCKS) {
-        finalData = mergeDataByType(dbData, 'team') as TeamMember[];
-      }
-
-      setTeamMembers(finalData);
-    } catch (error) {
-      console.error('Failed to fetch team in DataContext', error);
-      setErrorSnackbar({ open: true, message: 'Failed to fetch team data.' });
-      setTeamMembers([]);
-    } finally {
-      setLoadingTeam(false);
-    }
-  };
-
-  const refreshPublications = async () => {
-    setLoadingPublications(true);
-    try {
-      const dbData = await publicationService.getPublications();
-      let finalData = dbData;
-
-      if (ENABLE_MOCKS) {
-        finalData = mergeDataByType(dbData, 'publication') as Publication[];
-      }
-
-      finalData.sort((a, b) => {
+  const refreshPublications = useCallback(() => {
+    return fetchAndMergeData(
+      publicationService.getPublications,
+      'publication',
+      setPublications,
+      setLoadingPublications,
+      'Failed to fetch publications data.',
+      (a, b) => {
         const dateA = a.date?.toMillis() || 0;
         const dateB = b.date?.toMillis() || 0;
         return dateB - dateA;
-      });
-
-      setPublications(finalData);
-    } catch (error) {
-      console.error('Failed to fetch publications in DataContext', error);
-      setErrorSnackbar({ open: true, message: 'Failed to fetch publications data.' });
-      setPublications([]);
-    } finally {
-      setLoadingPublications(false);
-    }
-  };
+      },
+    );
+  }, [fetchAndMergeData]);
 
   useEffect(() => {
     refreshCountries();
     refreshTeam();
     refreshPublications();
-  }, []);
+  }, [refreshCountries, refreshTeam, refreshPublications]);
 
   return (
     <DataContext.Provider

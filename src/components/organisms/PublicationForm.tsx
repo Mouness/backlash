@@ -124,8 +124,6 @@ const PublicationForm: React.FC<PublicationFormProps> = ({ initialData, onSave, 
     }
   };
 
-
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <DialogContent>
@@ -184,10 +182,7 @@ const PublicationForm: React.FC<PublicationFormProps> = ({ initialData, onSave, 
 
         {/* Title & Description for ALL languages (rendering all, hiding inactive) */}
         {['en', 'fr', 'de'].map((langCode, index) => (
-          <Box
-            key={langCode}
-            sx={{ mb: 2, display: activeTab === index ? 'block' : 'none' }}
-          >
+          <Box key={langCode} sx={{ mb: 2, display: activeTab === index ? 'block' : 'none' }}>
             <Controller
               name={`title.${langCode}` as `title.${'en' | 'fr' | 'de'}`}
               control={control}

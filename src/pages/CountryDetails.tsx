@@ -106,12 +106,13 @@ const CountryDetails: React.FC = () => {
           sx={{
             width: '100%',
             height: { xs: 200, md: 400 },
-            borderRadius: 4,
+            borderRadius: 0, // Sharp for academic
             backgroundImage: `url(${country.imageUrl})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             mb: 4,
-            boxShadow: 3,
+            boxShadow: 'none',
+            border: '1px solid #E0E0E0',
           }}
         />
       )}
@@ -133,6 +134,9 @@ const CountryDetails: React.FC = () => {
               height: 32,
               px: 1,
               fontWeight: 'bold',
+              borderRadius: 0,
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
               ...getScoreLevel(country.score).style,
             }}
           />

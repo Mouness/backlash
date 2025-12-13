@@ -10,7 +10,7 @@ describe('MainLayout', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     // Default safe mock
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: null,
       loading: false,
       logout: mockLogout,
@@ -36,7 +36,7 @@ describe('MainLayout', () => {
   });
 
   it('shows login button when guest', () => {
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: null,
       loading: false,
       logout: mockLogout,
@@ -52,7 +52,7 @@ describe('MainLayout', () => {
   });
 
   it('shows admin badge and logout when logged in', () => {
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: { uid: '123' },
       loading: false,
       logout: mockLogout,
@@ -63,7 +63,7 @@ describe('MainLayout', () => {
         <div>Child</div>
       </MainLayout>,
     );
-    expect(screen.getByText('Admin')).toBeInTheDocument();
+    expect(screen.getByText('ADMIN')).toBeInTheDocument();
     expect(screen.getByText('nav.logout')).toBeInTheDocument();
   });
 

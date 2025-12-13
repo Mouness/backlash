@@ -190,7 +190,7 @@
             "code": "Ländercode (ISO 3)",
             "code_helper": "Für Kartenabgleich verwendet (CAN, CHE, ...)",
             "content_helper": "Unterstützt Markdown oder Klartext.",
-            "score": "Demokratie-Score (0-100)",
+            "score": "Demokratie-Score",
             "score_levels": {
                 "unknown": "Unbekannt",
                 "very_low": "Sehr Niedrig",

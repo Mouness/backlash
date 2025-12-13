@@ -143,8 +143,9 @@ const Team: React.FC = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   p: 4,
-                  boxShadow: theme.shadows[3],
-                  borderRadius: 4,
+                  boxShadow: 'none',
+                  // borderRadius: 4, // REMOVED
+                  border: '1px solid #E0E0E0',
                   position: 'relative',
                   width: '100%',
                   cursor: 'pointer',

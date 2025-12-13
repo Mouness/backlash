@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Box, useTheme } from '@mui/material';
 import geoUrl from '../../assets/geo/countries-110m.json';
-import { getScoreLevel } from '../../utils/scoreUtils';
+import { getScoreLevel, DemocraticScore } from '../../utils/scoreUtils';
 import MapTooltip from '../molecules/MapTooltip';
 import MapLegend from '../molecules/MapLegend';
 
@@ -14,7 +14,7 @@ interface InteractiveMapProps {
   height?: number;
   center?: [number, number];
   scale?: number;
-  countryScores?: { [code: string]: number | undefined };
+  countryScores?: { [code: string]: DemocraticScore | undefined };
 }
 
 const InteractiveMap: React.FC<InteractiveMapProps> = ({
@@ -46,7 +46,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
         height: '100%',
         minHeight: minHeight,
         bgcolor: theme.palette.background.default,
-        borderRadius: 4,
+        borderRadius: 0, // Sharp for academic theme
         overflow: 'hidden',
         position: 'relative',
         boxShadow: 3,
@@ -84,44 +84,15 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
                   isTarget && (!highlightedCodes || highlightedCodes.includes(isoCode));
 
                 const score = countryScores[isoCode];
-                let fillColor = '#D6D6DA';
-                let hoverColor = '#D6D6DA';
+                let fillColor = '#c2c2c2ff'; // Light Grey for non-referenced (User Request)
+                let hoverColor = '#adadadff';
 
                 // Determine colors if highlighted
+                // Determine colors if highlighted
                 if (isHighlighted) {
-                  // If score is undefined or 0, user requested BLUE (Primary)
-                  if (!score || score === 0) {
-                    fillColor = theme.palette.primary.main;
-                    hoverColor = theme.palette.primary.dark;
-                  } else {
-                    const level = getScoreLevel(score);
-                    // Map score level to theme colors
-                    switch (level.color) {
-                      case 'error':
-                        fillColor = theme.palette.error.main;
-                        hoverColor = theme.palette.error.dark;
-                        break;
-                      case 'warning':
-                        fillColor = theme.palette.warning.main;
-                        hoverColor = theme.palette.warning.dark;
-                        break;
-                      case 'info':
-                        fillColor = theme.palette.info.main;
-                        hoverColor = theme.palette.info.dark;
-                        break;
-                      case 'success':
-                        fillColor = theme.palette.success.main;
-                        hoverColor = theme.palette.success.dark;
-                        if (score > 80) {
-                          fillColor = theme.palette.success.dark;
-                          hoverColor = '#003300';
-                        }
-                        break;
-                      default:
-                        fillColor = theme.palette.primary.main;
-                        hoverColor = theme.palette.primary.dark;
-                    }
-                  }
+                  const level = getScoreLevel(score);
+                  fillColor = level.style.backgroundColor;
+                  hoverColor = level.style.backgroundColor; // Hover effect handled by brightness filter
                 }
 
                 return (

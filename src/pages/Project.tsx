@@ -21,7 +21,7 @@ const Project: React.FC = () => {
               height: 6,
               bgcolor: theme.palette.secondary.main,
               mx: 'auto',
-              borderRadius: 2,
+              borderRadius: 0,
             }}
           />
         </Box>
@@ -45,7 +45,15 @@ const Project: React.FC = () => {
         </Typography>
 
         {/* Team Photo */}
-        <Card elevation={4} sx={{ borderRadius: 4, overflow: 'hidden' }}>
+        <Card
+          elevation={4}
+          sx={{
+            borderRadius: 0,
+            overflow: 'hidden',
+            border: '1px solid #E0E0E0',
+            boxShadow: 'none',
+          }}
+        >
           <Box
             component="img"
             src={projectTeamImage}

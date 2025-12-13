@@ -7,14 +7,16 @@ const MapLegend: React.FC = () => {
 
   return (
     <Paper
-      elevation={3}
+      elevation={0}
       sx={{
         position: 'absolute',
         bottom: 20,
         left: 20,
         p: 2,
         bgcolor: 'rgba(255,255,255,0.9)',
-        borderRadius: 2,
+        borderRadius: 0, // Sharp Academic Style
+        border: '1px solid #E0E0E0',
+        boxShadow: 'none',
         maxWidth: 300,
         display: { xs: 'none', md: 'block' },
       }}

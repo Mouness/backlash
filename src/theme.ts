@@ -1,40 +1,106 @@
 import { createTheme, type ThemeOptions } from '@mui/material/styles';
 
-// Institutional Pastel Blue Palette
-// Primary: A soft, trustworthy blue
-// Secondary: A complementary lighter blue or grey-blue
-// Background: Clean white/off-white
-
 const baseTheme: ThemeOptions = {
   typography: {
-    fontFamily: '"Roboto", "Inter", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"Lato", "Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
+      fontFamily: '"Merriweather", "Times New Roman", serif',
       fontWeight: 700,
       fontSize: '2.5rem',
+      letterSpacing: '-0.01em',
     },
     h2: {
-      fontWeight: 600,
+      fontFamily: '"Merriweather", "Times New Roman", serif',
+      fontWeight: 700,
       fontSize: '2rem',
+      letterSpacing: '-0.01em',
     },
     h3: {
+      fontFamily: '"Merriweather", "Times New Roman", serif',
       fontWeight: 600,
       fontSize: '1.75rem',
+    },
+    h4: {
+      fontFamily: '"Merriweather", "Times New Roman", serif',
+      fontWeight: 600,
+      fontSize: '1.5rem',
+    },
+    h5: {
+      fontFamily: '"Merriweather", "Times New Roman", serif',
+      fontWeight: 500,
+    },
+    h6: {
+      fontFamily: '"Lato", sans-serif',
+      fontWeight: 700,
+      textTransform: 'uppercase',
+      letterSpacing: '0.05em',
+      fontSize: '1rem',
+    },
+    body1: {
+      lineHeight: 1.6,
+      fontSize: '1.05rem',
+    },
+    button: {
+      fontFamily: '"Lato", sans-serif',
+      fontWeight: 700,
+      textTransform: 'uppercase',
+      letterSpacing: '0.05em',
     },
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 8,
-          textTransform: 'none',
-          fontWeight: 600,
+          borderRadius: 0,
+          padding: '8px 22px',
+          boxShadow: 'none',
+          '&:hover': {
+            boxShadow: 'none',
+          },
+        },
+        contained: {
+          boxShadow: 'none',
         },
       },
     },
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
+          borderRadius: 0, // Sharp corners
+          boxShadow: 'none',
+          border: '1px solid #E0E0E0',
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        rounded: {
+          borderRadius: 0, // Enforce sharp corners everywhere
+        },
+      },
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: 0,
+          border: '1px solid #E0E0E0',
+          boxShadow: '0px 10px 40px rgba(0,0,0,0.1)',
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          boxShadow: 'none',
+          borderBottom: '1px solid rgba(255,255,255,0.1)',
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: 4,
+          fontWeight: 600,
         },
       },
     },
@@ -48,65 +114,55 @@ export const getTheme = (mode: 'light' | 'dark') => {
       mode,
       ...(mode === 'light'
         ? {
-            // Light Mode Palette
+            // Light Mode (Journal Paper Style)
             primary: {
-              main: '#7DA5C2',
-              light: '#E0FBFC',
-              dark: '#3D5A80',
-              contrastText: '#2C3E50',
+              main: '#1A237E', // Deep Navy
+              light: '#534BAE',
+              dark: '#000051',
+              contrastText: '#FFFFFF',
             },
             secondary: {
-              main: '#E0FBFC',
-              light: '#FFFFFF',
-              dark: '#98C1D9',
-              contrastText: '#2C3E50',
+              main: '#880E4F', // Burgundy
+              light: '#BC477B',
+              dark: '#560027',
+              contrastText: '#FFFFFF',
             },
             background: {
-              default: '#F0F4F8',
+              default: '#FAFAFA', // Off-white/Cream
               paper: '#FFFFFF',
             },
             text: {
-              primary: '#2C3E50',
-              secondary: '#546E7A',
+              primary: '#212121', // Soft black (Charcoal)
+              secondary: '#616161', // Grey
             },
+            divider: 'rgba(0, 0, 0, 0.08)',
           }
         : {
-            // Dark Mode Palette
+            // Dark Mode (Late Night Study Style)
             primary: {
-              main: '#90CAF9', // Lighter blue for contrast on dark
-              light: '#E3F2FD',
-              dark: '#42A5F5',
-              contrastText: '#000000',
+              main: '#5C6BC0', // Softer Indigo
+              light: '#8E99F3',
+              dark: '#26418F',
+              contrastText: '#FFFFFF',
             },
             secondary: {
-              main: '#26A69A', // Teal accent
-              light: '#4DB6AC',
-              dark: '#00796B',
-              contrastText: '#ffffff',
+              main: '#F48FB1', // Pink/Maroon accent for dark mode
+              light: '#FFC1E3',
+              dark: '#BF5F82',
+              contrastText: '#000000',
             },
             background: {
-              default: '#0A1929', // Deep dark blue/grey
-              paper: '#132F4C', // Slightly lighter for cards
+              default: '#121212', // Material Dark
+              paper: '#1E1E1E',
             },
             text: {
-              primary: '#E7EBF0', // Off-white
-              secondary: '#B2BAC2', // Light grey
+              primary: '#EEEEEE',
+              secondary: '#BDBDBD',
             },
+            divider: 'rgba(255, 255, 255, 0.08)',
           }),
-    },
-    components: {
-      ...baseTheme.components,
-      MuiCard: {
-        styleOverrides: {
-          root: {
-            borderRadius: 12,
-            boxShadow:
-              mode === 'light' ? '0 4px 12px rgba(0,0,0,0.05)' : '0 4px 12px rgba(0,0,0,0.3)',
-          },
-        },
-      },
     },
   });
 };
 
-export default getTheme('light'); // Default export for backwards compatibility if needed
+export default getTheme('light');

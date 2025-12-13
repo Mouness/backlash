@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, Typography, Paper, Chip, Divider, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { getScoreLevel } from '../../utils/scoreUtils';
+import { getScoreLevel, DemocraticScore } from '../../utils/scoreUtils';
 
 interface MapTooltipProps {
   isoCode: string | null;
-  score: number | undefined;
+  score: DemocraticScore | undefined;
 }
 
 const MapTooltip: React.FC<MapTooltipProps> = ({ isoCode, score }) => {
@@ -24,7 +24,7 @@ const MapTooltip: React.FC<MapTooltipProps> = ({ isoCode, score }) => {
       sx={{
         p: 2,
         maxWidth: 300,
-        borderRadius: 2,
+        borderRadius: 0, // Sharp corners
         bgcolor: 'background.paper',
         border: `1px solid ${theme.palette.divider}`,
       }}
@@ -42,11 +42,21 @@ const MapTooltip: React.FC<MapTooltipProps> = ({ isoCode, score }) => {
               fontSize: '0.7rem',
               ml: 1,
               fontWeight: 'bold',
-              bgcolor: level.color === 'success' ? theme.palette.success.light : undefined,
-              color: level.color === 'success' ? theme.palette.success.contrastText : undefined,
+              borderRadius: 0,
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
               ...level.style,
             }}
-            color={level.color as 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'}
+            color={
+              level.color as
+                | 'default'
+                | 'primary'
+                | 'secondary'
+                | 'error'
+                | 'info'
+                | 'success'
+                | 'warning'
+            }
           />
         )}
       </Box>

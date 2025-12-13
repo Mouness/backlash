@@ -1,4 +1,5 @@
 import type { Country } from '../services/countryService';
+import { DemocraticScore } from '../utils/scoreUtils';
 
 export const MOCK_COUNTRIES: Omit<Country, 'id'>[] = [
   {
@@ -50,7 +51,7 @@ Kanada wird oft als Modell für Stabilität angesehen, steht jedoch vor Herausfo
     },
     imageUrl:
       'https://images.unsplash.com/photo-1517935706615-2717063c2225?q=80&w=800&auto=format&fit=crop', // Toronto
-    score: 85,
+    score: DemocraticScore.VERY_HIGH,
   },
   {
     code: 'CHE',
@@ -98,7 +99,7 @@ Das Schweizer System der **Direkten Demokratie** steht unter Druck durch populis
     },
     imageUrl:
       'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?q=80&w=800&auto=format&fit=crop', // Alps/Nature
-    score: 90,
+    score: DemocraticScore.VERY_HIGH,
   },
   {
     code: 'DEU',
@@ -149,7 +150,7 @@ Deutschlands **Wehrhafte Demokratie** wird durch den Aufstieg der **AfD**, insbe
     },
     imageUrl:
       'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=800&auto=format&fit=crop', // Berlin/City
-    score: 88,
+    score: DemocraticScore.HIGH,
   },
   {
     code: 'BRA',
@@ -197,7 +198,7 @@ Brasilien zeigt den **Föderalismus als Schutzschild**. Unter Bolsonaro wurden d
     },
     imageUrl:
       'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?q=80&w=800&auto=format&fit=crop', // Rio
-    score: 65,
+    score: DemocraticScore.MODERATE,
   },
   {
     code: 'USA',
@@ -248,7 +249,7 @@ Die USA erleben eine **Große Divergenz**, in der rote und blaue Staaten zu unte
     },
     imageUrl:
       'https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=800&auto=format&fit=crop', // Generic US/Coffee/City? Changed to generic
-    score: 75,
+    score: DemocraticScore.HIGH,
   },
   {
     code: 'IND',
@@ -302,6 +303,6 @@ Wandel vom kooperativen zum zwanghaften Föderalismus unter einer nationalisitis
     },
     imageUrl:
       'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=800&auto=format&fit=crop', // India/Taj
-    score: 60,
+    score: DemocraticScore.LOW,
   },
 ];

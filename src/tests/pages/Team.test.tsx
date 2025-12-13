@@ -15,17 +15,27 @@ vi.mock('../../config', () => ({
 
 vi.mock('../../contexts/AuthContext', () => ({
   useAuth: mocks.useAuth,
-  AuthProvider: ({ children }: any) => <div>{children}</div>,
+  AuthProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
 vi.mock('../../contexts/DataContext', () => ({
   useData: mocks.useData,
-  DataProvider: ({ children }: any) => <div>{children}</div>,
+  DataProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
 vi.mock('../../services/teamService');
 vi.mock('../../components/organisms/AdminTeamDialog', () => ({
-  default: ({ open, onClose, onSave, initialData }: any) =>
+  default: ({
+    open,
+    onClose,
+    onSave,
+    initialData,
+  }: {
+    open: boolean;
+    onClose: () => void;
+    onSave: (d: unknown) => void;
+    initialData: unknown;
+  }) =>
     open ? (
       <div role="dialog">
         {initialData ? 'admin.team.title_edit' : 'admin.team.title_new'}
@@ -44,8 +54,8 @@ const mockGetTeamMembers = vi.fn().mockResolvedValue(MOCK_TEAM);
 vi.mock('../../services/teamService', () => ({
   teamService: {
     getTeamMembers: () => mockGetTeamMembers(),
-    addTeamMember: (data: any) => mockAddMember(data),
-    updateTeamMember: (id: string, data: any) => mockUpdateMember(id, data),
+    addTeamMember: (data: unknown) => mockAddMember(data),
+    updateTeamMember: (id: string, data: unknown) => mockUpdateMember(id, data),
     deleteTeamMember: (id: string) => mockDeleteMember(id),
   },
 }));

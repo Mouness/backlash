@@ -12,6 +12,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import type { Country } from '../../services/countryService';
 import ScoreSelect from '../molecules/ScoreSelect';
+import { DemocraticScore } from '../../utils/scoreUtils';
 
 interface CountryFormProps {
   initialData?: Country | null;
@@ -33,7 +34,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ initialData, onSubmit, onCanc
   // Form State
   const [code, setCode] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-  const [score, setScore] = useState<number | ''>('');
+  const [score, setScore] = useState<DemocraticScore | ''>('');
 
   // Multilingual State
   const [names, setNames] = useState({ en: '', fr: '', de: '' });
@@ -96,7 +97,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ initialData, onSubmit, onCanc
       }
 
       if (score !== '') {
-        countryData.score = Number(score);
+        countryData.score = score as DemocraticScore;
       }
 
       await onSubmit(countryData as Omit<Country, 'id'>);

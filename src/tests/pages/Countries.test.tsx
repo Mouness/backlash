@@ -17,7 +17,7 @@ vi.mock('../../config', () => ({
 }));
 vi.mock('../../contexts/DataContext', () => ({
   useData: () => mockUseData(), // Return result of spy
-  DataProvider: ({ children }: any) => <div>{children}</div>,
+  DataProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
 // Mock service methods
@@ -30,8 +30,8 @@ vi.mock('../../services/countryService', async () => {
   return {
     countryService: {
       getCountries: () => mockGetCountries(),
-      addCountry: (data: any) => mockAddCountry(data),
-      updateCountry: (id: string, data: any) => mockUpdateCountry(id, data),
+      addCountry: (data: unknown) => mockAddCountry(data),
+      updateCountry: (id: string, data: unknown) => mockUpdateCountry(id, data),
       deleteCountry: (id: string) => mockDeleteCountry(id),
     },
   };
@@ -39,7 +39,7 @@ vi.mock('../../services/countryService', async () => {
 
 // Default countries data
 const defaultContext = {
-  countries: MOCK_COUNTRIES.map((c) => ({ ...c, id: c.code })) as any[], // Add IDs as in DataContext
+  countries: MOCK_COUNTRIES.map((c) => ({ ...c, id: c.code })), // Add IDs as in DataContext
   loadingCountries: false,
   refreshCountries: vi.fn(),
 };
@@ -62,7 +62,7 @@ describe('Countries Page', () => {
   });
 
   it('renders page title and list of countries (Guest)', () => {
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: null,
       loading: false,
       login: mockLogin,
@@ -87,7 +87,7 @@ describe('Countries Page', () => {
       // countries must be populated (mocks) for seed button to show under new logic
     });
 
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
       login: mockLogin,
@@ -116,7 +116,7 @@ describe('Countries Page', () => {
   });
 
   it('opens add dialog on click', async () => {
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
       login: mockLogin,
@@ -132,7 +132,7 @@ describe('Countries Page', () => {
   });
 
   it('calls delete service on click', async () => {
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
       login: mockLogin,
