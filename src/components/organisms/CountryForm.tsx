@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  Box,
-  Tabs,
-  Tab,
-  Typography,
-} from '@mui/material';
-import RichTextEditor from '../molecules/RichTextEditor';
+import { DialogContent, DialogActions, Button, TextField, Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import type { Country } from '../../types/models';
 import type { LocalizedRichContent } from '../../types/models';
 import ScoreSelect from '../molecules/ScoreSelect';
 import { DemocraticScore } from '../../types/models';
+import CountryLocalizedFields from './CountryLocalizedFields';
 
 interface CountryFormProps {
   initialData?: Country | null;
@@ -22,15 +13,8 @@ interface CountryFormProps {
   onCancel: () => void;
 }
 
-const LANGUAGES = [
-  { code: 'en', label: 'English' },
-  { code: 'fr', label: 'Français' },
-  { code: 'de', label: 'Deutsch' },
-];
-
 const CountryForm: React.FC<CountryFormProps> = ({ initialData, onSubmit, onCancel }) => {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState(0);
   const [submitting, setSubmitting] = useState(false);
 
   // Form State
@@ -65,10 +49,6 @@ const CountryForm: React.FC<CountryFormProps> = ({ initialData, onSubmit, onCanc
     }
   }, [initialData]);
 
-  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setActiveTab(newValue);
-  };
-
   const handleDocChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setDocFile(e.target.files[0]);
@@ -82,6 +62,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ initialData, onSubmit, onCanc
       let documentUrl = initialData?.documentUrl;
 
       if (docFile) {
+        // Dynamic import to avoid circular dependency if any, though likely not needed here but safe
         const { countryService } = await import('../../services/countryService');
         documentUrl = await countryService.uploadCountryDocument(docFile);
       }
@@ -109,8 +90,6 @@ const CountryForm: React.FC<CountryFormProps> = ({ initialData, onSubmit, onCanc
       setSubmitting(false);
     }
   };
-
-  const currentLang = LANGUAGES[activeTab].code as 'en' | 'fr' | 'de';
 
   return (
     <>
@@ -150,45 +129,14 @@ const CountryForm: React.FC<CountryFormProps> = ({ initialData, onSubmit, onCanc
           </Box>
         </Box>
 
-        <Tabs
-          value={activeTab}
-          onChange={handleTabChange}
-          sx={{ mb: 2, borderBottom: 1, borderColor: 'divider' }}
-        >
-          {LANGUAGES.map((lang) => (
-            <Tab key={lang.code} label={lang.label} />
-          ))}
-        </Tabs>
-
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-          <TextField
-            label={`${t('admin.common.name', 'Name')} (${LANGUAGES[activeTab].label})`}
-            value={names[currentLang]}
-            onChange={(e) => setNames({ ...names, [currentLang]: e.target.value })}
-            fullWidth
-          />
-          <TextField
-            label={`${t('admin.country.summary_label', 'Summary')} (${LANGUAGES[activeTab].label})`}
-            value={summaries[currentLang]}
-            onChange={(e) => setSummaries({ ...summaries, [currentLang]: e.target.value })}
-            fullWidth
-            multiline
-            rows={2}
-          />
-          <Box>
-            <Typography variant="caption" color="text.secondary" gutterBottom>
-              {`${t('admin.country.content_label', 'Detailed Analysis')} (${LANGUAGES[activeTab].label})`}
-            </Typography>
-            <RichTextEditor
-              value={contents[currentLang]}
-              onChange={(val) => setContents({ ...contents, [currentLang]: val || '' })}
-              minHeight={400}
-            />
-            <Typography variant="caption" color="text.secondary">
-              {t('admin.country.content_helper')}
-            </Typography>
-          </Box>
-        </Box>
+        <CountryLocalizedFields
+          names={names}
+          setNames={setNames}
+          summaries={summaries}
+          setSummaries={setSummaries}
+          contents={contents}
+          setContents={setContents}
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel} disabled={submitting}>

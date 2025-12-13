@@ -34,15 +34,18 @@
         "hero": {
             "slide1": {
                 "title": "Understanding Backlash",
-                "subtitle": "Analyzing democratic backsliding in federal states."
+                "subtitle": "Analyzing democratic backsliding in federal states.",
+                "button": "Discover the Project"
             },
             "slide2": {
                 "title": "Comparative Research",
-                "subtitle": "A deep dive into constitutional law and human rights."
+                "subtitle": "A deep dive into constitutional law and human rights.",
+                "button": "Read Publications"
             },
             "slide3": {
                 "title": "Global Perspective",
-                "subtitle": "Case studies from Canada, Switzerland, Germany, Brazil, and India."
+                "subtitle": "Case studies from Canada, Switzerland, Germany, Brazil, and India.",
+                "button": "Explore Countries"
             }
         },
         "team_preview": {

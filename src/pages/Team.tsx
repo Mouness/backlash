@@ -1,20 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  Container,
-  Typography,
-  Box,
-  Card,
-  IconButton,
-  Button,
-  CircularProgress,
-} from '@mui/material';
+import { Container, Typography, Box, Button, CircularProgress } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useTranslation } from 'react-i18next';
-import Face3Icon from '@mui/icons-material/Face3';
-import Face6Icon from '@mui/icons-material/Face6';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
@@ -22,14 +9,12 @@ import { teamService } from '../services/teamService';
 import type { TeamMember } from '../types/models';
 import { MOCK_TEAM } from '../data/mockTeam';
 import AdminTeamDialog from '../components/organisms/AdminTeamDialog';
-import { useTheme } from '@mui/material/styles';
+import TeamCard from '../components/molecules/TeamCard';
 import { ENABLE_MOCKS } from '../config';
 
 const Team: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { currentUser } = useAuth();
-  const theme = useTheme();
-  const navigate = useNavigate();
   // Use Shared Data Context
   const { teamMembers: members, loadingTeam: loading, refreshTeam } = useData();
 
@@ -97,8 +82,6 @@ const Team: React.FC = () => {
     }
   };
 
-  const currentLang = i18n.language.split('-')[0] as 'en' | 'fr' | 'de';
-
   // Check if we are displaying mocks (items without ID or flagged as mock)
   const isShowingMocks = members.some((m) => !m.id || m.isMock);
 
@@ -136,81 +119,12 @@ const Team: React.FC = () => {
         <Grid container spacing={4}>
           {members.map((member, index) => (
             <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={member.id || index}>
-              <Card
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  p: 4,
-                  boxShadow: 'none',
-                  // borderRadius: 4, // REMOVED
-                  border: '1px solid #E0E0E0',
-                  position: 'relative',
-                  width: '100%',
-                  cursor: 'pointer',
-                  transition: 'transform 0.2s',
-                  '&:hover': { transform: 'translateY(-4px)' },
-                }}
-                onClick={() => navigate(`/team/${member.id}`)}
-              >
-                {currentUser && member.id && (
-                  <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
-                    <IconButton
-                      size="small"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleOpenDialog(member);
-                      }}
-                    >
-                      <EditIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton
-                      size="small"
-                      color="error"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(member.id!);
-                      }}
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
-                  </Box>
-                )}
-
-                <Box
-                  sx={{
-                    width: 120,
-                    height: 120,
-                    borderRadius: '50%',
-                    bgcolor: theme.palette.primary.light,
-                    mb: 3,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {member.photoUrl ? (
-                    <Box
-                      component="img"
-                      src={member.photoUrl}
-                      alt={member.name}
-                      sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                  ) : member.gender === 'female' ? (
-                    <Face3Icon sx={{ fontSize: 70, color: theme.palette.primary.main }} />
-                  ) : (
-                    <Face6Icon sx={{ fontSize: 70, color: theme.palette.primary.main }} />
-                  )}
-                </Box>
-                <Typography variant="h5" fontWeight="bold" textAlign="center" gutterBottom>
-                  {member.name}
-                </Typography>
-                <Typography variant="body1" color="text.secondary" textAlign="center">
-                  {member.role[currentLang] || member.role['en']}
-                </Typography>
-              </Card>
+              <TeamCard
+                member={member}
+                canEdit={!!currentUser}
+                onEdit={handleOpenDialog}
+                onDelete={handleDelete}
+              />
             </Grid>
           ))}
         </Grid>

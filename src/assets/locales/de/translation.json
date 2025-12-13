@@ -34,15 +34,18 @@
         "hero": {
             "slide1": {
                 "title": "Backlash Verstehen",
-                "subtitle": "Analyse des demokratischen Rückschritts in Bundesstaaten."
+                "subtitle": "Analyse des demokratischen Rückschritts in Bundesstaaten.",
+                "button": "Projekt Entdecken"
             },
             "slide2": {
                 "title": "Vergleichende Forschung",
-                "subtitle": "Ein tiefer Einblick in Verfassungsrecht und Menschenrechte."
+                "subtitle": "Ein tiefer Einblick in Verfassungsrecht und Menschenrechte.",
+                "button": "Publikationen Lesen"
             },
             "slide3": {
                 "title": "Globale Perspektive",
-                "subtitle": "Fallstudien: Kanada, Schweiz, Deutschland, Brasilien und Indien."
+                "subtitle": "Fallstudien: Kanada, Schweiz, Deutschland, Brasilien und Indien.",
+                "button": "Länder Erkunden"
             }
         },
         "team_preview": {

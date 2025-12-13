@@ -34,15 +34,18 @@
         "hero": {
             "slide1": {
                 "title": "Comprendre le Backlash",
-                "subtitle": "Analyser le recul démocratique dans les états fédéraux."
+                "subtitle": "Analyser le recul démocratique dans les états fédéraux.",
+                "button": "Découvrir le Projet"
             },
             "slide2": {
                 "title": "Recherche Comparative",
-                "subtitle": "Une plongée dans le droit constitutionnel et les droits humains."
+                "subtitle": "Une plongée dans le droit constitutionnel et les droits humains.",
+                "button": "Lire les Publications"
             },
             "slide3": {
                 "title": "Perspective Mondiale",
-                "subtitle": "Études de cas : Canada, Suisse, Allemagne, Brésil et Inde."
+                "subtitle": "Études de cas : Canada, Suisse, Allemagne, Brésil et Inde.",
+                "button": "Explorer les Pays"
             }
         },
         "team_preview": {

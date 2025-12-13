@@ -1,20 +1,11 @@
 import React, { useState } from 'react';
-import {
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  Box,
-  Tabs,
-  Tab,
-  MenuItem,
-  Typography,
-} from '@mui/material';
+import { DialogContent, DialogActions, Button, TextField, Box, MenuItem } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
-import RichTextEditor from '../molecules/RichTextEditor';
 import { Timestamp } from 'firebase/firestore';
 import { useTranslation } from 'react-i18next';
 import type { Publication } from '../../types/models';
+import PublicationLocalizedTabs from './PublicationLocalizedTabs';
+import PublicationMediaUpload from './PublicationMediaUpload';
 
 interface PublicationFormProps {
   initialData?: Publication;
@@ -27,6 +18,7 @@ const CATEGORIES = [
   { value: 'event', label: 'Event' },
   { value: 'article', label: 'Article' },
   { value: 'book', label: 'Book' },
+  { value: 'academic', label: 'Academic' }, // Added useful category
 ];
 
 const PublicationForm: React.FC<PublicationFormProps> = ({ initialData, onSave, onCancel }) => {
@@ -41,7 +33,6 @@ const PublicationForm: React.FC<PublicationFormProps> = ({ initialData, onSave, 
     },
   });
 
-  const [activeTab, setActiveTab] = useState(0);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [docFile, setDocFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -173,48 +164,7 @@ const PublicationForm: React.FC<PublicationFormProps> = ({ initialData, onSave, 
           </Box>
         </Box>
 
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 2, mb: 2 }}>
-          <Tabs value={activeTab} onChange={(_e, v) => setActiveTab(v)}>
-            <Tab label="English" />
-            <Tab label="Français" />
-            <Tab label="Deutsch" />
-          </Tabs>
-        </Box>
-
-        {/* Title & Description for ALL languages (rendering all, hiding inactive) */}
-        {['en', 'fr', 'de'].map((langCode, index) => (
-          <Box key={langCode} sx={{ mb: 2, display: activeTab === index ? 'block' : 'none' }}>
-            <Controller
-              name={`title.${langCode}` as `title.${'en' | 'fr' | 'de'}`}
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  margin="dense"
-                  label={`${t('admin.common.title', 'Title')} (${langCode.toUpperCase()})`}
-                  fullWidth
-                  variant="outlined"
-                />
-              )}
-            />
-            <Controller
-              name={`description.${langCode}` as `description.${'en' | 'fr' | 'de'}`}
-              control={control}
-              render={({ field }) => (
-                <Box>
-                  <Typography variant="caption" color="text.secondary" gutterBottom>
-                    {`${t('admin.common.description', 'Description')} (${langCode.toUpperCase()})`}
-                  </Typography>
-                  <RichTextEditor
-                    value={field.value || ''}
-                    onChange={(val) => field.onChange(val || '')}
-                    minHeight={300}
-                  />
-                </Box>
-              )}
-            />
-          </Box>
-        ))}
+        <PublicationLocalizedTabs control={control} />
 
         <Controller
           name="link"
@@ -231,31 +181,13 @@ const PublicationForm: React.FC<PublicationFormProps> = ({ initialData, onSave, 
           )}
         />
 
-        <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start', mt: 3, mb: 2 }}>
-          <Box sx={{ flex: 1 }}>
-            <Button variant="contained" component="label" fullWidth>
-              {t('admin.publication.upload_image', 'Upload Image')}
-              <input type="file" hidden accept="image/*" onChange={handleFileChange} />
-            </Button>
-            {previewUrl && (
-              <Box sx={{ mt: 1, height: 100, borderRadius: 1, overflow: 'hidden' }}>
-                <img src={previewUrl} alt="Preview" style={{ height: '100%', width: 'auto' }} />
-              </Box>
-            )}
-          </Box>
-
-          <Box sx={{ flex: 1 }}>
-            <Button variant="outlined" component="label" fullWidth>
-              {t('admin.publication.doc_upload')}
-              <input type="file" hidden accept=".pdf,.doc,.docx" onChange={handleDocChange} />
-            </Button>
-            {(docFile || (initialData && initialData.documentUrl)) && (
-              <Typography variant="caption" display="block" sx={{ mt: 1, px: 1 }}>
-                {docFile ? docFile.name : t('admin.publication.current_doc')}
-              </Typography>
-            )}
-          </Box>
-        </Box>
+        <PublicationMediaUpload
+          onImageChange={handleFileChange}
+          onDocChange={handleDocChange}
+          previewUrl={previewUrl}
+          docFile={docFile}
+          currentDocUrl={initialData?.documentUrl}
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel}>{t('admin.common.cancel')}</Button>

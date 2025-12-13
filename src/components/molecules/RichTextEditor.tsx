@@ -23,7 +23,7 @@ import {
   RichTextField,
   MenuButton,
 } from 'mui-tiptap';
-import { Box, useTheme } from '@mui/material';
+import { Box, useTheme, type Theme } from '@mui/material';
 import TableViewIcon from '@mui/icons-material/TableView';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
@@ -92,58 +92,58 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     editor.commands.setContent(value);
   }, [value, editor]);
 
-  return (
-    <Box
-      sx={{
-        border: `1px solid ${theme.palette.divider}`,
-        borderRadius: 1,
+  const tableStyles = (theme: Theme, minHeight: number | string) => ({
+    border: `1px solid ${theme.palette.divider}`,
+    borderRadius: 1,
+    overflow: 'hidden',
+    bgcolor: 'background.paper',
+    '& .ProseMirror': {
+      minHeight: minHeight,
+      '& table': {
+        borderCollapse: 'collapse',
+        tableLayout: 'fixed',
+        width: '100%',
+        margin: 0,
         overflow: 'hidden',
-        bgcolor: 'background.paper',
-        '& .ProseMirror': {
-          minHeight: minHeight,
-          '& table': {
-            borderCollapse: 'collapse',
-            tableLayout: 'fixed',
-            width: '100%',
-            margin: 0,
-            overflow: 'hidden',
-          },
-          '& td, & th': {
-            minWidth: '1em',
-            border: `2px solid ${theme.palette.divider}`,
-            padding: '3px 5px',
-            verticalAlign: 'top',
-            boxSizing: 'border-box',
-            position: 'relative',
-          },
-          '& th': {
-            fontWeight: 'bold',
-            textAlign: 'left',
-            backgroundColor: theme.palette.action.hover,
-          },
-          '& .selectedCell:after': {
-            zIndex: 2,
-            position: 'absolute',
-            content: '""',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            background: 'rgba(200, 200, 255, 0.4)',
-            pointerEvents: 'none',
-          },
-          '& .column-resize-handle': {
-            position: 'absolute',
-            right: -2,
-            top: 0,
-            bottom: 0,
-            width: 4,
-            backgroundColor: '#adf',
-            pointerEvents: 'none',
-          },
-        },
-      }}
-    >
+      },
+      '& td, & th': {
+        minWidth: '1em',
+        border: `2px solid ${theme.palette.divider}`,
+        padding: '3px 5px',
+        verticalAlign: 'top',
+        boxSizing: 'border-box',
+        position: 'relative',
+      },
+      '& th': {
+        fontWeight: 'bold',
+        textAlign: 'left',
+        backgroundColor: theme.palette.action.hover,
+      },
+      '& .selectedCell:after': {
+        zIndex: 2,
+        position: 'absolute',
+        content: '""',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        background: 'rgba(200, 200, 255, 0.4)',
+        pointerEvents: 'none',
+      },
+      '& .column-resize-handle': {
+        position: 'absolute',
+        right: -2,
+        top: 0,
+        bottom: 0,
+        width: 4,
+        backgroundColor: '#adf',
+        pointerEvents: 'none',
+      },
+    },
+  });
+
+  return (
+    <Box sx={tableStyles(theme, minHeight)}>
       <RichTextEditorProvider editor={editor}>
         <MenuControlsContainer>
           <MenuSelectHeading />

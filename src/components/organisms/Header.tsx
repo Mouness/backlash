@@ -193,7 +193,7 @@ const Header: React.FC = (props) => {
                 flexGrow: 1,
                 display: { xs: 'none', md: 'flex' },
                 justifyContent: 'center',
-                gap: 0.5, // Reduced gap as requested
+                gap: 0, // Reduced gap as requested
               }}
             >
               {navItems.map((item) => {

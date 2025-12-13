@@ -7,14 +7,12 @@ import {
   DialogActions,
   Button,
   TextField,
-  Tabs,
-  Tab,
   Box,
   MenuItem,
   Typography,
   IconButton,
 } from '@mui/material';
-import RichTextEditor from '../molecules/RichTextEditor';
+import TeamLocalizedTabs from './TeamLocalizedTabs';
 import CloseIcon from '@mui/icons-material/Close';
 import type { TeamMember } from '../../types/models';
 import { useTranslation } from 'react-i18next';
@@ -35,9 +33,8 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
   const { t } = useTranslation();
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState(0); // 0=en, 1=fr, 2=de
 
-  const { register, handleSubmit, reset, setValue, getValues } = useForm<Omit<TeamMember, 'id'>>({
+  const { register, handleSubmit, reset, setValue, control } = useForm<Omit<TeamMember, 'id'>>({
     defaultValues: {
       name: '',
       gender: 'female',
@@ -74,10 +71,6 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
     setPhotoFile(null);
   }, [initialData, setValue, reset, open]);
 
-  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setActiveTab(newValue);
-  };
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -88,15 +81,6 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
 
   const onSubmit = async (data: Omit<TeamMember, 'id'>) => {
     if (photoFile) {
-      // Upload logic handled by parent via onSave, or we handle it here?
-      // The prop onSave expects Omit<TeamMember, 'id'>.
-      // We should ideally modify onSave to handle the file, OR we upload here and pass the URL.
-      // Let's upload here to keep onSave simple or delegate.
-      // Actually, best practice: Service handles it. But we defined uploadTeamMemberPhoto in service separate from add/update.
-      // Let's import teamService here or assume onSave handles it?
-      // The prompt said "Update AdminTeamDialog with File Input... On Save -> upload -> get URL".
-      // Since we can't easily change the prop signature without changing parent, let's do the upload here explicitly using the service.
-      // But we need to import teamService (it is available).
 
       try {
         // Dynamic import to avoid circular dep
@@ -178,46 +162,8 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
           <Typography variant="subtitle2" sx={{ mt: 2, mb: 1 }}>
             {t('admin.team.section_multilingual')}
           </Typography>
-          <Tabs
-            value={activeTab}
-            onChange={handleTabChange}
-            aria-label="language tabs"
-            sx={{ mb: 2 }}
-          >
-            <Tab label="English" />
-            <Tab label="Français" />
-            <Tab label="Deutsch" />
-          </Tabs>
 
-          {/* English Tab */}
-          <Box sx={{ display: activeTab === 0 ? 'block' : 'none' }}>
-            <TextField label="Role (EN)" fullWidth sx={{ mb: 2 }} {...register('role.en')} />
-            <RichTextEditor
-              value={getValues('bio.en') || ''}
-              onChange={(val) => setValue('bio.en', val || '')}
-              minHeight={200}
-            />
-          </Box>
-
-          {/* French Tab */}
-          <Box sx={{ display: activeTab === 1 ? 'block' : 'none' }}>
-            <TextField label="Role (FR)" fullWidth sx={{ mb: 2 }} {...register('role.fr')} />
-            <RichTextEditor
-              value={getValues('bio.fr') || ''}
-              onChange={(val) => setValue('bio.fr', val || '')}
-              minHeight={200}
-            />
-          </Box>
-
-          {/* German Tab */}
-          <Box sx={{ display: activeTab === 2 ? 'block' : 'none' }}>
-            <TextField label="Role (DE)" fullWidth sx={{ mb: 2 }} {...register('role.de')} />
-            <RichTextEditor
-              value={getValues('bio.de') || ''}
-              onChange={(val) => setValue('bio.de', val || '')}
-              minHeight={200}
-            />
-          </Box>
+          <TeamLocalizedTabs control={control} />
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>{t('admin.common.cancel')}</Button>

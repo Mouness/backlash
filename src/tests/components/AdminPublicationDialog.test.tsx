@@ -42,10 +42,8 @@ describe('AdminPublicationDialog', () => {
     render(<AdminPublicationDialog open={true} onClose={mockOnClose} onSave={mockOnSave} />);
 
     // Fill Title EN
-    // Use getAllByRole to be more specific if labels are ambiguous
-    const titleInputs = screen.getAllByRole('textbox', { name: /admin.common.title/i });
-    // Assuming the loop renders EN first.
-    fireEvent.change(titleInputs[0], { target: { value: 'New Pub Title' } });
+    const titleInput = screen.getByTestId('title-input-en');
+    fireEvent.change(titleInput, { target: { value: 'New Pub Title' } });
 
     // Fill Description EN (RichTextEditor)
     const editors = screen.getAllByTestId('rich-text-editor');

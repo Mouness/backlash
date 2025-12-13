@@ -28,5 +28,5 @@ const renderWithProviders = (
   );
 };
 
-export * from '@testing-library/react';
 export { renderWithProviders as render };
+export * from '@testing-library/react';
