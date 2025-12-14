@@ -9,7 +9,9 @@ import { MOCK_PUBLICATIONS } from '../../data/mockPublications';
 const mockDeletePublication = vi.fn().mockResolvedValue(undefined);
 const mockAddPublication = vi.fn().mockResolvedValue(undefined);
 const mockUpdatePublication = vi.fn().mockResolvedValue(undefined);
-const mockGetPublications = vi.fn().mockResolvedValue(MOCK_PUBLICATIONS);
+const mockGetPublications = vi
+  .fn()
+  .mockResolvedValue({ publications: MOCK_PUBLICATIONS, lastDoc: null });
 
 vi.mock('../../services/publicationService', () => ({
   publicationService: {
@@ -20,13 +22,17 @@ vi.mock('../../services/publicationService', () => ({
   },
 }));
 
-// Mock DataContext to allow overriding in tests
-const mockUseData = vi.fn();
+// Define mock using vi.hoisted to ensure accessibility in vi.mock factory
+const { mockUseData } = vi.hoisted(() => {
+  return { mockUseData: vi.fn() };
+});
+
 vi.mock('../../config', () => ({
   ENABLE_MOCKS: true,
 }));
+
 vi.mock('../../contexts/DataContext', () => ({
-  useData: () => mockUseData(), // Return result of spy
+  useData: mockUseData, // Pass the mock function directly if it returns the hook result, or wrapping it
   DataProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
@@ -39,23 +45,52 @@ const defaultContext = {
       description: { en: 'Desc' },
       category: 'article',
       imageUrl: 'url',
-      date: {
-        seconds: 123,
-        toDate: () => new Date('2024-01-01'),
-      },
+      date: new Date('2024-01-01'), // toDate() simulated? No, Component calls .toDate().
       link: 'http://test.com',
     },
   ],
   loadingPublications: false,
   refreshPublications: vi.fn(),
+  loadMorePublications: vi.fn(),
+  hasMorePubs: false,
+  // Add other missing properties to satisfy Typescript/Context
+  countries: [],
+  loadingCountries: false,
+  refreshCountries: vi.fn(),
+  teamMembers: [],
+  loadingTeam: false,
+  refreshTeam: vi.fn(),
 };
+
+// Fix date mock to have toDate
+
+defaultContext.publications[0].date = {
+  toDate: () => new Date('2024-01-01'),
+  seconds: 1234567890,
+  nanoseconds: 0,
+} as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 // Mock useAuth is handled in setupTests
 
 describe('Publications Page', () => {
   beforeEach(() => {
+    // Mock IntersectionObserver
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).IntersectionObserver = class {
+      constructor() {}
+      observe() {
+        return null;
+      }
+      unobserve() {
+        return null;
+      }
+      disconnect() {
+        return null;
+      }
+    };
+
     vi.clearAllMocks();
-    mockGetPublications.mockResolvedValue(MOCK_PUBLICATIONS);
+    mockGetPublications.mockResolvedValue({ publications: MOCK_PUBLICATIONS, lastDoc: null });
     mockUseData.mockReturnValue(defaultContext);
     // Spy on alert
     vi.spyOn(window, 'alert').mockImplementation(() => {});
@@ -68,8 +103,8 @@ describe('Publications Page', () => {
       publications: [],
     });
 
-    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      currentUser: null, // Seed visible even for guests? No, code says button variant="outlined" ... wait it is inside Box, does it depend on auth? Checking source: No, depends on list length.
+    vi.mocked(useAuth).mockReturnValue({
+      currentUser: null,
       loading: false,
       login: vi.fn(),
       logout: vi.fn(),

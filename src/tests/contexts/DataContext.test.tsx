@@ -39,7 +39,9 @@ describe('DataContext', () => {
     // Spy on the real service objects
     countrySpy = vi.spyOn(countryService, 'getCountries').mockResolvedValue([]);
     teamSpy = vi.spyOn(teamService, 'getTeamMembers').mockResolvedValue([]);
-    pubSpy = vi.spyOn(publicationService, 'getPublications').mockResolvedValue([]);
+    pubSpy = vi
+      .spyOn(publicationService, 'getPublications')
+      .mockResolvedValue({ publications: [], lastDoc: null });
   });
 
   afterEach(() => {
@@ -69,7 +71,7 @@ describe('DataContext', () => {
 
     countrySpy.mockResolvedValue(mockCountries);
     teamSpy.mockResolvedValue(mockTeam);
-    pubSpy.mockResolvedValue(mockPubs);
+    pubSpy.mockResolvedValue({ publications: mockPubs, lastDoc: null });
 
     render(
       <DataProvider>

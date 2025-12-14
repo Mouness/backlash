@@ -8,26 +8,47 @@ import {
   doc,
   query,
   orderBy,
+  limit,
+  startAfter,
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../firebase';
 
 import type { Publication } from '../types/models';
+import type { DocumentSnapshot } from 'firebase/firestore';
 
 const COLLECTION_NAME = 'publications';
 
 export const publicationService = {
-  getPublications: async (): Promise<Publication[]> => {
+  getPublications: async (
+    limitCount: number = 10,
+    lastDoc: DocumentSnapshot | null = null,
+  ): Promise<{ publications: Publication[]; lastDoc: DocumentSnapshot | null }> => {
     try {
-      const q = query(collection(db, COLLECTION_NAME), orderBy('date', 'desc'));
+      let q = query(collection(db, COLLECTION_NAME), orderBy('date', 'desc'), limit(limitCount));
+
+      if (lastDoc) {
+        q = query(
+          collection(db, COLLECTION_NAME),
+          orderBy('date', 'desc'),
+          startAfter(lastDoc),
+          limit(limitCount),
+        );
+      }
+
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map(
+      const publications = querySnapshot.docs.map(
         (doc) =>
           ({
             ...doc.data(),
             id: doc.id,
           }) as Publication,
       );
+
+      return {
+        publications,
+        lastDoc: querySnapshot.docs[querySnapshot.docs.length - 1] || null,
+      };
     } catch (error) {
       console.error('Error getting publications:', error);
       throw error;

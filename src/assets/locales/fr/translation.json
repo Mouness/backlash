@@ -67,7 +67,6 @@
     "publications": {
         "subtitle": "Dernières nouvelles, événements et articles.",
         "add_post": "Ajouter un article",
-        "read_more": "Lire la suite",
         "no_data": "Aucune publication trouvée.",
         "seed_db": "Initialiser la BDD (Seed)",
         "seed_confirm": "Initialiser la base de données avec les publications par défaut ?",
@@ -78,7 +77,11 @@
         "seed_success": "{{count}} publications ajoutées avec succès !",
         "seed_uptodate": "La BDD des publications est déjà à jour.",
         "seed_error": "Erreur lors de l'initialisation : {{error}}",
-        "delete_error": "Erreur lors de la suppression de la publication"
+        "delete_error": "Erreur lors de la suppression de la publication",
+        "not_found": "Publication introuvable.",
+        "back_to_list": "Retour aux publications",
+        "download_doc": "Télécharger le document",
+        "read_more": "Lire la suite / Lien externe"
     },
     "countries": {
         "title": "Analyse Pays",
@@ -113,7 +116,9 @@
         "seed_uptodate": "La base de données est déjà à jour.",
         "seed_error": "Erreur lors de l'initialisation : {{error}}",
         "delete_error": "Échec de la suppression du pays.",
-        "score_label": "Score Démocratique"
+        "score_label": "Score Démocratique",
+        "back_to_list": "Retour aux pays",
+        "not_found": "Analyse pays introuvable ({{id}})."
     },
     "project": {
         "title": "La Recherche",
@@ -187,7 +192,12 @@
             "delete": "Supprimer",
             "confirm_delete": "Êtes-vous sûr de vouloir supprimer cet élément ?",
             "insert_table": "Insérer un tableau",
-            "delete_table": "Supprimer le tableau"
+            "delete_table": "Supprimer le tableau",
+            "highlight": "Surligner",
+            "insert_youtube": "Insérer YouTube",
+            "enter_youtube_url": "Entrer l'URL YouTube",
+            "words": "mots",
+            "characters": "caractères"
         },
         "country": {
             "title_new": "Nouvelle Analyse Pays",

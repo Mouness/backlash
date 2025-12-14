@@ -69,13 +69,13 @@ const PublicationDetails: React.FC = () => {
   if (!publication) {
     return (
       <Container sx={{ py: 8 }}>
-        <Typography variant="h5">Publication not found.</Typography>
+        <Typography variant="h5">{t('publications.not_found')}</Typography>
         <Button
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate('/publications')}
           sx={{ mt: 2 }}
         >
-          Back to Publications
+          {t('publications.back_to_list')}
         </Button>
       </Container>
     );
@@ -85,7 +85,7 @@ const PublicationDetails: React.FC = () => {
     <Container maxWidth="lg" sx={{ py: 8 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
         <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/publications')}>
-          Back to Publications
+          {t('publications.back_to_list')}
         </Button>
         {currentUser && (
           <Box>
@@ -160,7 +160,7 @@ const PublicationDetails: React.FC = () => {
             href={publication.documentUrl}
             target="_blank"
           >
-            Download Document
+            {t('publications.download_doc')}
           </Button>
         )}
 
@@ -171,7 +171,7 @@ const PublicationDetails: React.FC = () => {
             href={publication.link}
             target="_blank"
           >
-            Read More / External Link
+            {t('publications.read_more')}
           </Button>
         )}
       </Box>

@@ -67,7 +67,6 @@
     "publications": {
         "subtitle": "Neueste Nachrichten, Veranstaltungen und Artikel.",
         "add_post": "Beitrag hinzufügen",
-        "read_more": "Weiterlesen",
         "no_data": "Keine Publikationen gefunden.",
         "seed_db": "DB initialisieren (Seed)",
         "seed_confirm": "Datenbank mit Standardpublikationen füllen?",
@@ -78,7 +77,11 @@
         "seed_success": "{{count}} Publikationen erfolgreich hinzugefügt!",
         "seed_uptodate": "Publikations-DB ist bereits aktuell.",
         "seed_error": "Fehler bei der Initialisierung: {{error}}",
-        "delete_error": "Fehler beim Löschen der Publikation"
+        "delete_error": "Fehler beim Löschen der Publikation",
+        "not_found": "Publikation nicht gefunden.",
+        "back_to_list": "Zurück zu Publikationen",
+        "download_doc": "Dokument herunterladen",
+        "read_more": "Weiterlesen / Externer Link"
     },
     "countries": {
         "title": "Länderanalyse",
@@ -113,7 +116,9 @@
         "seed_uptodate": "Datenbank ist bereits auf dem neuesten Stand.",
         "seed_error": "Fehler bei der Initialisierung: {{error}}",
         "delete_error": "Länderlöschung fehlgeschlagen.",
-        "score_label": "Demokratie-Score"
+        "score_label": "Demokratie-Score",
+        "back_to_list": "Zurück zu Ländern",
+        "not_found": "Länderanalyse nicht gefunden ({{id}})."
     },
     "project": {
         "title": "Die Forschung",
@@ -187,7 +192,12 @@
             "delete": "Löschen",
             "confirm_delete": "Sind Sie sicher, dass Sie dieses Element löschen möchten?",
             "insert_table": "Tabelle einfügen",
-            "delete_table": "Tabelle löschen"
+            "delete_table": "Tabelle löschen",
+            "highlight": "Hervorheben",
+            "insert_youtube": "YouTube einfügen",
+            "enter_youtube_url": "YouTube-URL eingeben",
+            "words": "Wörter",
+            "characters": "Zeichen"
         },
         "country": {
             "title_new": "Neue Länderanalyse",

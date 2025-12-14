@@ -1,7 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 vi.unmock('../../services/publicationService');
 import { publicationService } from '../../services/publicationService';
-import { getDocs, orderBy, query } from 'firebase/firestore';
+import {
+  getDocs,
+  orderBy,
+  query,
+  limit,
+  startAfter,
+  type DocumentSnapshot,
+} from 'firebase/firestore';
 
 // Mock Firebase
 vi.mock('../../firebase', () => ({
@@ -18,6 +25,8 @@ vi.mock('firebase/firestore', () => ({
   deleteDoc: vi.fn(),
   orderBy: vi.fn(),
   query: vi.fn(),
+  limit: vi.fn(),
+  startAfter: vi.fn(),
   Timestamp: { now: () => ({ toDate: () => new Date() }) },
 }));
 
@@ -33,9 +42,24 @@ describe('publicationService', () => {
     } as unknown);
 
     const result = await publicationService.getPublications();
-    expect(result).toHaveLength(1);
-    expect((result[0].title as { en: string }).en).toBe('Pub 1');
+    expect(result.publications).toHaveLength(1);
+    expect((result.publications[0].title as { en: string }).en).toBe('Pub 1');
     expect(query).toHaveBeenCalled();
     expect(orderBy).toHaveBeenCalledWith('date', 'desc');
+    expect(limit).toHaveBeenCalledWith(10);
+  });
+
+  it('fetches next page with startAfter', async () => {
+    const mockData = [{ id: '2', data: () => ({ title: { en: 'Pub 2' } }) }];
+    (getDocs as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({
+      docs: mockData,
+    } as unknown);
+
+    const lastDoc = { id: '1' } as unknown as DocumentSnapshot;
+    const result = await publicationService.getPublications(10, lastDoc);
+
+    expect(result.publications).toHaveLength(1);
+    expect(startAfter).toHaveBeenCalledWith(lastDoc);
+    expect(limit).toHaveBeenCalledWith(10);
   });
 });

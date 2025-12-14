@@ -1,5 +1,5 @@
 import { Container, Typography, Box, Button, CircularProgress } from '@mui/material';
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import { useAuth } from '../contexts/AuthContext';
@@ -27,7 +27,33 @@ const Publications: React.FC = () => {
     handleSave,
     handleDelete,
     handleSeed,
+    loadMorePublications,
+    hasMorePubs,
   } = usePublicationController();
+
+  const observerTarget = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMorePubs && !loading) {
+          loadMorePublications();
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    const currentTarget = observerTarget.current;
+    if (currentTarget) {
+      observer.observe(currentTarget);
+    }
+
+    return () => {
+      if (currentTarget) {
+        observer.unobserve(currentTarget);
+      }
+    };
+  }, [hasMorePubs, loading, loadMorePublications]);
 
   return (
     <Container maxWidth="xl" sx={{ py: 8 }}>
@@ -58,7 +84,7 @@ const Publications: React.FC = () => {
         </Box>
       </Box>
 
-      {loading ? (
+      {loading && publications.length === 0 ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 8 }}>
           <CircularProgress />
         </Box>
@@ -102,6 +128,17 @@ const Publications: React.FC = () => {
               </Box>
             );
           })}
+
+          {/* Infinite Scroll Sentinel */}
+          {hasMorePubs && (
+            <Box
+              ref={observerTarget}
+              sx={{ display: 'flex', justifyContent: 'center', mt: 4, py: 2 }}
+            >
+              <CircularProgress size={28} />
+            </Box>
+          )}
+
           {!loading && publications.length === 0 && (
             <Box sx={{ width: '100%', textAlign: 'center', mt: 4 }}>
               <Typography color="text.secondary">{t('publications.no_data')}</Typography>

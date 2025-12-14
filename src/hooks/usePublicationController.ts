@@ -8,7 +8,13 @@ import { MOCK_PUBLICATIONS } from '../data/mockPublications';
 
 export const usePublicationController = () => {
   const { t } = useTranslation();
-  const { publications, loadingPublications: loading, refreshPublications } = useData();
+  const {
+    publications,
+    loadingPublications: loading,
+    refreshPublications,
+    loadMorePublications,
+    hasMorePubs,
+  } = useData();
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingPub, setEditingPub] = useState<Publication | undefined>(undefined);
@@ -50,7 +56,7 @@ export const usePublicationController = () => {
     alert(t('publications.seed_start'));
 
     try {
-      const currentDocs = await publicationService.getPublications();
+      const { publications: currentDocs } = await publicationService.getPublications(100);
       const existingTitles = new Set(
         currentDocs.map((p) => {
           const title = p.title;
@@ -92,5 +98,7 @@ export const usePublicationController = () => {
     handleSave,
     handleDelete,
     handleSeed,
+    loadMorePublications,
+    hasMorePubs,
   };
 };

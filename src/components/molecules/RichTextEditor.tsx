@@ -2,8 +2,16 @@ import React from 'react';
 import { useEditor, type JSONContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
-import ItemStack from '@tiptap/extension-text-align';
 import Placeholder from '@tiptap/extension-placeholder';
+import Link from '@tiptap/extension-link';
+import Underline from '@tiptap/extension-underline';
+import Subscript from '@tiptap/extension-subscript';
+import Superscript from '@tiptap/extension-superscript';
+import Highlight from '@tiptap/extension-highlight';
+import TextAlign from '@tiptap/extension-text-align';
+import Youtube from '@tiptap/extension-youtube';
+import CharacterCount from '@tiptap/extension-character-count';
+import TypographyExtension from '@tiptap/extension-typography';
 import { Table } from '@tiptap/extension-table';
 import { TableRow } from '@tiptap/extension-table-row';
 import { TableCell } from '@tiptap/extension-table-cell';
@@ -11,6 +19,9 @@ import { TableHeader } from '@tiptap/extension-table-header';
 import {
   MenuButtonBold,
   MenuButtonItalic,
+  MenuButtonUnderline,
+  MenuButtonSubscript,
+  MenuButtonSuperscript,
   MenuDivider,
   MenuButtonOrderedList,
   MenuButtonBulletedList,
@@ -19,13 +30,18 @@ import {
   MenuButtonRedo,
   MenuControlsContainer,
   MenuSelectHeading,
+  MenuSelectTextAlign,
   RichTextEditorProvider,
   RichTextField,
   MenuButton,
+  MenuButtonEditLink,
+  TableBubbleMenu,
 } from 'mui-tiptap';
-import { Box, useTheme, type Theme } from '@mui/material';
+import { Box, useTheme, Typography, type Theme } from '@mui/material';
 import TableViewIcon from '@mui/icons-material/TableView';
 import DeleteIcon from '@mui/icons-material/Delete';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import HighlightIcon from '@mui/icons-material/Highlight';
 import { useTranslation } from 'react-i18next';
 
 // ... (props interface)
@@ -49,9 +65,20 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     () => [
       StarterKit,
       Image,
-      ItemStack.configure({ types: ['heading', 'paragraph'] }),
+      Underline,
+      Subscript,
+      Superscript,
+      Highlight,
+      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      Youtube.configure({ controls: true }),
+      CharacterCount,
+      TypographyExtension,
       Placeholder.configure({
         placeholder: placeholder || '',
+      }),
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
       }),
       Table.configure({
         resizable: true,
@@ -145,11 +172,33 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   return (
     <Box sx={tableStyles(theme, minHeight)}>
       <RichTextEditorProvider editor={editor}>
+        <TableBubbleMenu />
         <MenuControlsContainer>
           <MenuSelectHeading />
+          <MenuSelectTextAlign />
           <MenuDivider />
           <MenuButtonBold />
           <MenuButtonItalic />
+          <MenuButtonUnderline />
+          <MenuButton
+            tooltipLabel={t('admin.common.highlight')}
+            IconComponent={HighlightIcon}
+            selected={editor?.isActive('highlight')}
+            onClick={() => editor?.chain().focus().toggleHighlight().run()}
+          />
+          <MenuButtonSubscript />
+          <MenuButtonSuperscript />
+          <MenuButtonEditLink />
+          <MenuButton
+            tooltipLabel={t('admin.common.insert_youtube')}
+            IconComponent={YouTubeIcon}
+            onClick={() => {
+              const url = window.prompt(t('admin.common.enter_youtube_url'));
+              if (url) {
+                editor?.commands.setYoutubeVideo({ src: url });
+              }
+            }}
+          />
           <MenuDivider />
           <MenuButtonOrderedList />
           <MenuButtonBulletedList />
@@ -174,6 +223,23 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           <MenuButtonRedo />
         </MenuControlsContainer>
         <RichTextField variant="standard" />
+        <Box
+          sx={{
+            p: 1,
+            borderTop: 1,
+            borderColor: 'divider',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            gap: 2,
+          }}
+        >
+          <Typography variant="caption" color="text.secondary">
+            {editor?.storage.characterCount.words()} {t('admin.common.words')}
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            {editor?.storage.characterCount.characters()} {t('admin.common.characters')}
+          </Typography>
+        </Box>
       </RichTextEditorProvider>
     </Box>
   );

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import type { DocumentSnapshot } from 'firebase/firestore';
 import { countryService } from '../services/countryService';
 import type { Country } from '../types/models';
 import { teamService } from '../services/teamService';
@@ -19,6 +20,8 @@ interface DataContextProps {
   publications: Publication[];
   loadingPublications: boolean;
   refreshPublications: () => Promise<void>;
+  loadMorePublications: () => Promise<void>;
+  hasMorePubs: boolean;
 }
 
 const DataContext = createContext<DataContextProps | undefined>(undefined);
@@ -43,6 +46,8 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Publications State
   const [publications, setPublications] = useState<Publication[]>([]);
   const [loadingPublications, setLoadingPublications] = useState(true);
+  const [lastPubDoc, setLastPubDoc] = useState<DocumentSnapshot | null>(null);
+  const [hasMorePubs, setHasMorePubs] = useState(true);
 
   const [errorSnackbar, setErrorSnackbar] = useState<{ open: boolean; message: string }>({
     open: false,
@@ -53,11 +58,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setErrorSnackbar({ ...errorSnackbar, open: false });
   };
 
-  // Generic Data Fetcher Helper
+  // Generic Data Fetcher Helper (for Country and Team)
   const fetchAndMergeData = useCallback(
     async <T,>(
       fetcher: () => Promise<T[]>,
-      type: 'country' | 'team' | 'publication',
+      type: 'country' | 'team',
       setter: React.Dispatch<React.SetStateAction<T[]>>,
       loadingSetter: React.Dispatch<React.SetStateAction<boolean>>,
       errorMessage: string,
@@ -114,20 +119,66 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
   }, [fetchAndMergeData]);
 
-  const refreshPublications = useCallback(() => {
-    return fetchAndMergeData(
-      publicationService.getPublications,
-      'publication',
-      setPublications,
-      setLoadingPublications,
-      'Failed to fetch publications data.',
-      (a, b) => {
+  // Specific Publication Fetcher with Pagination
+  const refreshPublications = useCallback(async () => {
+    setLoadingPublications(true);
+    try {
+      // Fetch first page (limit 5)
+      const { publications: dbPubs, lastDoc } = await publicationService.getPublications(5, null);
+
+      let finalPubs: Publication[] = dbPubs;
+
+      if (ENABLE_MOCKS) {
+        // Merge with mocks if enabled, though pagination + mocks is tricky.
+        // For simplicity, we merge initial load with mocks and treat it as base.
+        // Infinite scroll will only fetch from DB.
+        finalPubs = mergeDataByType(dbPubs, 'publication') as Publication[];
+      }
+
+      // Sort desc date
+      finalPubs.sort((a, b) => {
         const dateA = a.date?.toMillis() || 0;
         const dateB = b.date?.toMillis() || 0;
         return dateB - dateA;
-      },
-    );
-  }, [fetchAndMergeData]);
+      });
+
+      setPublications(finalPubs);
+      setLastPubDoc(lastDoc);
+      setHasMorePubs(!!lastDoc);
+    } catch (error) {
+      console.error('Failed to fetch publications:', error);
+      setErrorSnackbar({ open: true, message: 'Failed to fetch publications.' });
+      if (ENABLE_MOCKS) {
+        setPublications(mergeDataByType([], 'publication') as Publication[]);
+      } else {
+        setPublications([]);
+      }
+    } finally {
+      setLoadingPublications(false);
+    }
+  }, []);
+
+  const loadMorePublications = useCallback(async () => {
+    if (!lastPubDoc) return;
+
+    try {
+      const { publications: newPubs, lastDoc } = await publicationService.getPublications(
+        10,
+        lastPubDoc,
+      );
+
+      if (newPubs.length > 0) {
+        setPublications((prev) => [...prev, ...newPubs]);
+        setLastPubDoc(lastDoc);
+        setHasMorePubs(!!lastDoc);
+      } else {
+        setHasMorePubs(false);
+      }
+    } catch (error) {
+      console.error('Failed to load more publications:', error);
+      setErrorSnackbar({ open: true, message: 'Failed to load more publications.' });
+    }
+  }, [lastPubDoc]);
 
   useEffect(() => {
     refreshCountries();
@@ -147,6 +198,8 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         publications,
         loadingPublications,
         refreshPublications,
+        loadMorePublications,
+        hasMorePubs,
       }}
     >
       {children}

@@ -81,7 +81,6 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
 
   const onSubmit = async (data: Omit<TeamMember, 'id'>) => {
     if (photoFile) {
-
       try {
         // Dynamic import to avoid circular dep
         const { teamService } = await import('../../services/teamService');

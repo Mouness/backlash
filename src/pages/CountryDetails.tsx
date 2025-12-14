@@ -65,9 +65,9 @@ const CountryDetails: React.FC = () => {
   if (!country) {
     return (
       <Container sx={{ py: 8 }}>
-        <Typography variant="h5">Country analysis not found ({id}).</Typography>
+        <Typography variant="h5">{t('countries.not_found', { id })}</Typography>
         <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/countries')} sx={{ mt: 2 }}>
-          Back to Countries
+          {t('countries.back_to_list')}
         </Button>
       </Container>
     );
@@ -77,7 +77,7 @@ const CountryDetails: React.FC = () => {
     <Container maxWidth="lg" sx={{ py: 8 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
         <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/countries')}>
-          Back to Countries
+          {t('countries.back_to_list')}
         </Button>
         {currentUser && (
           <Box>
