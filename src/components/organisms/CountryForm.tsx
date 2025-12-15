@@ -103,12 +103,14 @@ const CountryForm: React.FC<CountryFormProps> = ({ initialData, onSubmit, onCanc
             fullWidth
             required
             helperText={t('admin.country.code_helper')}
+            slotProps={{ htmlInput: { 'data-testid': 'country-code-input' } }}
           />
           <TextField
             label={t('admin.country.image_url', 'Image URL (Optional)')}
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
             fullWidth
+            slotProps={{ htmlInput: { 'data-testid': 'country-image-input' } }}
           />
         </Box>
 

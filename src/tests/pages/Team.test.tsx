@@ -24,26 +24,7 @@ vi.mock('../../contexts/DataContext', () => ({
 }));
 
 vi.mock('../../services/teamService');
-vi.mock('../../components/organisms/AdminTeamDialog', () => ({
-  default: ({
-    open,
-    onClose,
-    onSave,
-    initialData,
-  }: {
-    open: boolean;
-    onClose: () => void;
-    onSave: (d: unknown) => void;
-    initialData: unknown;
-  }) =>
-    open ? (
-      <div role="dialog">
-        {initialData ? 'admin.team.title_edit' : 'admin.team.title_new'}
-        <button onClick={onClose}>Close</button>
-        <button onClick={() => onSave({ name: 'New Member' })}>Save</button>
-      </div>
-    ) : null,
-}));
+
 
 // Mock service implementations
 const mockDeleteMember = vi.fn().mockResolvedValue(undefined);
@@ -81,7 +62,7 @@ describe('Team Page', () => {
       logout: vi.fn(),
     });
 
-    vi.spyOn(window, 'alert').mockImplementation(() => {});
+    vi.spyOn(window, 'alert').mockImplementation(() => { });
   });
 
   it('renders seed button when empty/mock and calls seed logic', async () => {
@@ -142,52 +123,100 @@ describe('Team Page', () => {
     expect(screen.queryByTestId('DeleteIcon')).not.toBeInTheDocument();
   });
 
-  it('opens add dialog on click', async () => {
+  it('completes add member flow', async () => {
     mocks.useAuth.mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
       logout: vi.fn(),
     });
+
     render(<Team />);
     const addButton = screen.getByText('team.add_member');
     fireEvent.click(addButton);
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getByText('admin.team.title_new')).toBeInTheDocument();
+
+    // Fill Name
+    const nameInput = screen.getByTestId('team-name-input');
+    fireEvent.change(nameInput, { target: { value: 'New Test Member' } });
+
+    // Fill Email
+    const emailInput = screen.getByTestId('team-email-input');
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+
+    // Click Save
+    const saveButton = screen.getByText('admin.common.save');
+    fireEvent.click(saveButton);
+
+    await waitFor(() => {
+      expect(mockAddMember).toHaveBeenCalled();
+      const calls = mockAddMember.mock.calls;
+      const data = calls[0][0];
+      expect(data.name).toBe('New Test Member');
+      expect(data.email).toBe('test@example.com');
+    });
   });
 
-  it('calls delete service on click', async () => {
+  it('completes edit member flow', async () => {
     mocks.useAuth.mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
       logout: vi.fn(),
     });
-    render(<Team />);
-    const deleteIcons = screen.getAllByTestId('DeleteIcon');
-    const deleteBtn = deleteIcons[0].closest('button');
 
-    if (deleteBtn) {
-      fireEvent.click(deleteBtn);
-      await waitFor(() => {
-        expect(mockDeleteMember).toHaveBeenCalled();
-      });
-    }
-  });
-
-  it('opens edit dialog on click', async () => {
-    mocks.useAuth.mockReturnValue({
-      currentUser: { uid: 'admin' },
-      loading: false,
-      login: vi.fn(),
-      logout: vi.fn(),
-    });
     render(<Team />);
+    // Wait for list
+    expect(screen.getByText('Nesa Zimmermann')).toBeInTheDocument();
+
     const editIcons = screen.getAllByTestId('EditIcon');
     const editBtn = editIcons[0].closest('button');
+    fireEvent.click(editBtn!);
 
-    if (editBtn) {
-      fireEvent.click(editBtn);
-      expect(screen.getByText('admin.team.title_edit')).toBeInTheDocument();
-    }
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+    // Check initial value
+    const nameInput = screen.getByTestId('team-name-input');
+    expect(nameInput).toHaveValue('Nesa Zimmermann');
+
+    // Change Name
+    fireEvent.change(nameInput, { target: { value: 'Edited Member Name' } });
+
+    // Click Save
+    const saveButton = screen.getByText('admin.common.save');
+    fireEvent.click(saveButton);
+
+    await waitFor(() => {
+      expect(mockUpdateMember).toHaveBeenCalled();
+      expect(mockUpdateMember).toHaveBeenCalledWith('mock-0', expect.objectContaining({
+        name: 'Edited Member Name'
+      }));
+    });
+  });
+
+  it('completes delete member flow', async () => {
+    mocks.useAuth.mockReturnValue({
+      currentUser: { uid: 'admin' },
+      loading: false,
+      login: vi.fn(),
+      logout: vi.fn(),
+    });
+
+    render(<Team />);
+    expect(screen.getByText('Nesa Zimmermann')).toBeInTheDocument();
+
+    const deleteIcons = screen.getAllByTestId('DeleteIcon');
+    const deleteBtn = deleteIcons[0].closest('button');
+    fireEvent.click(deleteBtn!);
+
+    // No window.confirm in Team page either? Checking logic... 
+    // TeamCard calls onDelete. Team page handleDelete calls service.
+    // Assuming same pattern as Publications (direct delete or alert on error).
+
+    await waitFor(() => {
+      expect(mockDeleteMember).toHaveBeenCalledWith('mock-0');
+    });
   });
 });

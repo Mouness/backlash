@@ -13,6 +13,17 @@ vi.mock('../../services/publicationService', () => ({
   },
 }));
 
+// Mock RichTextEditor to avoid Tiptap complexity
+vi.mock('../../components/molecules/RichTextEditor', () => ({
+  default: ({ onChange, value }: any) => (
+    <textarea
+      data-testid="rich-text-editor"
+      onChange={(e) => onChange(e.target.value)}
+      value={value || ''}
+    />
+  ),
+}));
+
 describe('AdminPublicationDialog', () => {
   const mockOnSave = vi.fn();
   const mockOnClose = vi.fn();
@@ -61,17 +72,7 @@ describe('AdminPublicationDialog', () => {
       expect.objectContaining({
         title: expect.objectContaining({ en: 'New Pub Title' }),
         description: expect.objectContaining({
-          en: expect.objectContaining({
-            type: 'doc',
-            content: expect.arrayContaining([
-              expect.objectContaining({
-                type: 'paragraph',
-                content: expect.arrayContaining([
-                  expect.objectContaining({ type: 'text', text: 'New Pub Description' }),
-                ]),
-              }),
-            ]),
-          }),
+          en: 'New Pub Description',
         }),
         category: 'news',
       }),

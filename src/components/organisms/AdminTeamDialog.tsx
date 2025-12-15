@@ -112,6 +112,7 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
               fullWidth
               required
               {...register('name', { required: true })}
+              slotProps={{ htmlInput: { 'data-testid': 'team-name-input' } }}
             />
             <TextField
               select
@@ -156,6 +157,7 @@ const AdminTeamDialog: React.FC<AdminTeamDialogProps> = ({
             fullWidth
             sx={{ mb: 2 }}
             {...register('email')}
+            slotProps={{ htmlInput: { 'data-testid': 'team-email-input' } }}
           />
 
           <Typography variant="subtitle2" sx={{ mt: 2, mb: 1 }}>

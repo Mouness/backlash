@@ -53,7 +53,7 @@ describe('Countries Page', () => {
 
     // Mock window.confirm and alert
     vi.spyOn(window, 'confirm').mockReturnValue(true);
-    vi.spyOn(window, 'alert').mockImplementation(() => {});
+    vi.spyOn(window, 'alert').mockImplementation(() => { });
 
     // Mock getScoreLevel to avoid strict i18n key dependency?
     // Or just expect translation keys. The component uses t(key).
@@ -115,7 +115,7 @@ describe('Countries Page', () => {
     });
   });
 
-  it('opens add dialog on click', async () => {
+  it('completes add country flow', async () => {
     (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
@@ -128,10 +128,24 @@ describe('Countries Page', () => {
     fireEvent.click(addButton);
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getByText('admin.country.title_new')).toBeInTheDocument();
+
+    // Fill Code
+    const codeInput = screen.getByTestId('country-code-input');
+    fireEvent.change(codeInput, { target: { value: 'TEST' } });
+
+    // Click Save
+    const saveButton = screen.getByText('admin.common.save');
+    fireEvent.click(saveButton);
+
+    await waitFor(() => {
+      expect(mockAddCountry).toHaveBeenCalled();
+      const calls = mockAddCountry.mock.calls;
+      const data = calls[0][0];
+      expect(data.code).toBe('TEST');
+    });
   });
 
-  it('calls delete service on click', async () => {
+  it('completes edit country flow', async () => {
     (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
@@ -140,23 +154,56 @@ describe('Countries Page', () => {
     });
 
     render(<Countries />);
+    expect(screen.getByText('Canada')).toBeInTheDocument();
 
-    // Wait for countries to load
+    const editIcons = screen.getAllByTestId('EditIcon');
+    const editBtn = editIcons[0].closest('button');
+    fireEvent.click(editBtn!);
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+    // Check initial value (CA or similar)
+    const codeInput = screen.getByTestId('country-code-input');
+    // MOCK_COUNTRIES Canada code is likely 'CA' or 'can'
+    // Let's assume 'CA' based on common mocks. If fails, we check mock values.
+
+    // Change Code
+    fireEvent.change(codeInput, { target: { value: 'EDITED' } });
+
+    // Click Save
+    const saveButton = screen.getByText('admin.common.save');
+    fireEvent.click(saveButton);
+
     await waitFor(() => {
-      expect(screen.getByText('Canada')).toBeInTheDocument();
+      expect(mockUpdateCountry).toHaveBeenCalled();
+      // args: (id, data). ID of Canada mock?
+      // defaultContext maps id to code. MOCK_COUNTRIES[0] is Canada.
+      // If mock has code 'ca', id is 'ca'. 
+      // We will check call content roughly or strict if known.
+      const calls = mockUpdateCountry.mock.calls;
+      expect(calls[0][1].code).toBe('EDITED');
+    });
+  });
+
+  it('completes delete country flow', async () => {
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+      currentUser: { uid: 'admin' },
+      loading: false,
+      login: mockLogin,
+      logout: mockLogout,
     });
 
-    const deleteButtons = screen.getAllByTestId('DeleteIcon');
-    expect(deleteButtons.length).toBeGreaterThan(0);
+    render(<Countries />);
+    expect(screen.getByText('Canada')).toBeInTheDocument();
 
-    const firstDeleteBtn = deleteButtons[0].closest('button');
-    fireEvent.click(firstDeleteBtn!);
+    const deleteIcons = screen.getAllByTestId('DeleteIcon');
+    const deleteBtn = deleteIcons[0].closest('button');
+    fireEvent.click(deleteBtn!);
+
+    // Confirm is not used in this flow
+    // expect(window.confirm).toHaveBeenCalled();
 
     await waitFor(() => {
-      // We accept any call since ID might be undefined in mocks for some reason
-      // But checking MOCK_COUNTRIES, it matches id: 'ca'.
-      // If component uses 'code' as key? No, key={country.id}.
-      // We will check for any call first.
       expect(mockDeleteCountry).toHaveBeenCalled();
     });
   });

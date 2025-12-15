@@ -77,7 +77,7 @@ describe('Publications Page', () => {
     // Mock IntersectionObserver
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).IntersectionObserver = class {
-      constructor() {}
+      constructor() { }
       observe() {
         return null;
       }
@@ -93,7 +93,7 @@ describe('Publications Page', () => {
     mockGetPublications.mockResolvedValue({ publications: MOCK_PUBLICATIONS, lastDoc: null });
     mockUseData.mockReturnValue(defaultContext);
     // Spy on alert
-    vi.spyOn(window, 'alert').mockImplementation(() => {});
+    vi.spyOn(window, 'alert').mockImplementation(() => { });
   });
 
   it('renders seed button when empty and calls seed logic', async () => {
@@ -175,55 +175,111 @@ describe('Publications Page', () => {
     expect(screen.queryByTestId('DeleteIcon')).not.toBeInTheDocument();
   });
 
-  it('opens add dialog on click', async () => {
+  it('completes add publication flow', async () => {
     (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
       logout: vi.fn(),
     });
+
     render(<Publications />);
     const addButton = screen.getByText('publications.add_post');
     fireEvent.click(addButton);
-    // Expect dialog title. Often 'Add Publication' or 'New Publication'
-    // In AdminPublicationDialog, it's typically 'New Publication' or similar hardcoded string
+
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getByText('admin.publication.title_new')).toBeInTheDocument();
+
+    // Fill Title EN
+    const titleInputEn = screen.getByTestId('title-input-en');
+    fireEvent.change(titleInputEn, { target: { value: 'New Integration Test Pub' } });
+
+    // Select Category (MUI Select)
+    // Label is admin.publication.category
+    // MUI Select behaves like a button or needs mouseDown to open menu
+    const categorySelect = screen.getByLabelText('admin.publication.category');
+    fireEvent.mouseDown(categorySelect);
+    // Wait for popover? usually sync in standard render, but floating-ui might need wait.
+    // Let's assume sync for now, if fails we add wait.
+    const articleOption = screen.getByText('Article');
+    fireEvent.click(articleOption);
+
+    // Click Save
+    const saveButton = screen.getByText('admin.common.save');
+    fireEvent.click(saveButton);
+
+    await waitFor(() => {
+      expect(mockAddPublication).toHaveBeenCalled();
+      const calls = mockAddPublication.mock.calls;
+      const data = calls[0][0];
+      // Expected payload structure
+      expect(data.title.en).toBe('New Integration Test Pub');
+      expect(data.category).toBe('article');
+    });
   });
 
-  it('calls delete service on click', async () => {
+  it('completes edit publication flow', async () => {
     (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentUser: { uid: 'admin' },
       loading: false,
       login: vi.fn(),
       logout: vi.fn(),
     });
-    render(<Publications />);
-    const deleteIcons = screen.getAllByTestId('DeleteIcon');
-    const deleteBtn = deleteIcons[0].closest('button');
 
-    if (deleteBtn) {
-      fireEvent.click(deleteBtn);
-      await waitFor(() => {
-        expect(mockDeletePublication).toHaveBeenCalled();
-      });
-    }
-  });
-
-  it('opens edit dialog on click', async () => {
-    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      currentUser: { uid: 'admin' },
-      loading: false,
-      login: vi.fn(),
-      logout: vi.fn(),
-    });
     render(<Publications />);
+
+    // Find edit button for the existing item ('Test Pub')
+    // MOCK_PUBLICATIONS usually renders. 
+    // We expect 'Test Pub' from `defaultContext` in beforeEach.
+    expect(screen.getByText('Test Pub')).toBeInTheDocument();
+
     const editIcons = screen.getAllByTestId('EditIcon');
     const editBtn = editIcons[0].closest('button');
+    expect(editBtn).toBeInTheDocument();
+    fireEvent.click(editBtn!);
 
-    if (editBtn) {
-      fireEvent.click(editBtn);
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
-    }
+    // Dialog opens
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    // Check if title input is populated
+    const titleInputEn = screen.getByTestId('title-input-en');
+    expect(titleInputEn).toHaveValue('Test Pub');
+
+    // Change Title
+    fireEvent.change(titleInputEn, { target: { value: 'Edited Pub Title' } });
+
+    // Click Save
+    const saveButton = screen.getByText('admin.common.save');
+    fireEvent.click(saveButton);
+
+    await waitFor(() => {
+      expect(mockUpdatePublication).toHaveBeenCalled();
+      // args: (id, data)
+      expect(mockUpdatePublication).toHaveBeenCalledWith('pub1', expect.objectContaining({
+        title: expect.objectContaining({ en: 'Edited Pub Title' })
+      }));
+    });
+  });
+
+  it('completes delete publication flow', async () => {
+    (useAuth as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+      currentUser: { uid: 'admin' },
+      loading: false,
+      login: vi.fn(),
+      logout: vi.fn(),
+    });
+
+    render(<Publications />);
+    expect(screen.getByText('Test Pub')).toBeInTheDocument();
+
+    const deleteIcons = screen.getAllByTestId('DeleteIcon');
+    const deleteBtn = deleteIcons[0].closest('button');
+    fireEvent.click(deleteBtn!);
+
+    // No confirm in current UI implementation
+    // expect(window.confirm).toHaveBeenCalled(); 
+
+    await waitFor(() => {
+      expect(mockDeletePublication).toHaveBeenCalledWith('pub1');
+    });
   });
 });

@@ -51,7 +51,7 @@ const SearchBar: React.FC = () => {
       <InputBase
         sx={{ ml: 1, flex: 1, fontSize: '0.875rem' }}
         placeholder={t('nav.search_placeholder', 'Search...')}
-        inputProps={{ 'aria-label': 'search' }}
+        slotProps={{ input: { 'aria-label': 'search' } }}
         {...register('searchTerm')}
       />
       <IconButton type="submit" size="small" sx={{ p: '4px' }} aria-label="search">
