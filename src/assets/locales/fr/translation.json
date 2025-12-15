@@ -84,7 +84,8 @@
         "read_more": "Lire la suite / Lien externe"
     },
     "countries": {
-        "title": "Analyse Pays",
+        "title": "Études de Cas",
+        "description": "Découvrez nos analyses approfondies sur les dynamiques constitutionnelles et politiques de chaque pays.",
         "add_analysis": "Ajouter une Analyse",
         "initialize_db": "Initialiser BDD",
         "CAN": {

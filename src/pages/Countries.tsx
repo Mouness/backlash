@@ -33,6 +33,14 @@ const Countries: React.FC = () => {
     <Container maxWidth="xl" sx={{ py: 8 }}>
       {/* Map Section */}
       <Box sx={{ mb: 8 }}>
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h4" component="h2" fontWeight="bold" gutterBottom color="primary">
+            {t('map.title')}
+          </Typography>
+          <Typography variant="subtitle1" color="text.secondary">
+            {t('map.description')}
+          </Typography>
+        </Box>
         <InteractiveMap
           highlightedCodes={countries.map((c) => c.code)}
           countryScores={countries.reduce(
@@ -49,9 +57,14 @@ const Countries: React.FC = () => {
       </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 6 }}>
-        <Typography variant="h3" fontWeight={700} color="primary.main">
-          {t('countries.title')}
-        </Typography>
+        <Box>
+          <Typography variant="h3" fontWeight={700} color="primary.main" gutterBottom>
+            {t('countries.title')}
+          </Typography>
+          <Typography variant="subtitle1" color="text.secondary">
+            {t('countries.description')}
+          </Typography>
+        </Box>
         <Box>
           {currentUser && (
             <Box>

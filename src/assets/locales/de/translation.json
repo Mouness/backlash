@@ -84,7 +84,8 @@
         "read_more": "Weiterlesen / Externer Link"
     },
     "countries": {
-        "title": "Länderanalyse",
+        "title": "Fallstudien",
+        "description": "Entdecken Sie unsere eingehenden Analysen der verfassungsrechtlichen und politischen Dynamiken jedes Landes.",
         "add_analysis": "Analyse hinzufügen",
         "initialize_db": "DB Initialisieren",
         "CAN": {

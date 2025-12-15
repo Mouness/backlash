@@ -84,7 +84,8 @@
         "read_more": "Read More / External Link"
     },
     "countries": {
-        "title": "Country Analysis",
+        "title": "Case Studies",
+        "description": "Discover our in-depth analyses of the constitutional and political dynamics of each country.",
         "add_analysis": "Add Analysis",
         "initialize_db": "Initialize DB",
         "CAN": {
